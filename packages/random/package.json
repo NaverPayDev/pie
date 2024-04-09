@@ -1,0 +1,16 @@
+{
+    "name": "@dd/random",
+    "description": "모노레포 패키지 예제",
+    "sideEffects": false,
+    "version": "0.0.1",
+    "main": "./dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc --build",
+        "clean": "rm -rf dist"
+    },
+    "devDependencies": {},
+    "dependencies": {}
+}

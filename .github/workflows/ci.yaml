@@ -1,0 +1,26 @@
+name: CI
+on:
+    pull_request:
+        branches:
+            - '**'
+
+jobs:
+    PrettierAndLint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - run: npm i -g pnpm
+            - run: node -v && pnpm -v
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run prettier
+            - run: pnpm run lint
+            - run: pnpm run markdownlint
+
+    Test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - run: npm i -g pnpm
+            - run: node -v && pnpm -v
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run test
