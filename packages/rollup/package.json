@@ -1,0 +1,40 @@
+{
+    "name": "@naverpay/rollup",
+    "version": "0.0.0",
+    "main": "dist/index.js",
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "version": "pnpm version",
+        "deploy": "pnpm publish"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.16",
+        "@naverpay/tsconfig": "workspace:^",
+        "@types/babel__core": "^7.1.14",
+        "rollup": "^2.79.1",
+        "tslib": "^2.5.0"
+    },
+    "dependencies": {
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^22.0.2",
+        "@rollup/plugin-image": "^2.0.6",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-multi-entry": "^4.0.0",
+        "@rollup/plugin-node-resolve": "^14.1.0",
+        "@rollup/plugin-terser": "^0.4.0",
+        "builtin-modules": "^3.3.0",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-preserve-directives": "^0.1.1",
+        "rollup-plugin-typescript2": "^0.34.1"
+    },
+    "peerDependencies": {
+        "rollup": "^2"
+    }
+}
