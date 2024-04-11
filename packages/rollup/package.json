@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/rollup",
-    "version": "0.0.0",
+    "version": "3.6.0",
     "main": "dist/index.js",
     "exports": {
         ".": {
@@ -12,25 +12,32 @@
     "scripts": {
         "build": "tsc -p tsconfig.json"
     },
-    "devDependencies": {
-        "@babel/core": "^7.13.16",
-        "@naverpay/tsconfig": "workspace:^",
-        "@types/babel__core": "^7.1.14",
-        "rollup": "^2.79.1",
-        "tslib": "^2.5.0"
-    },
     "dependencies": {
+        "@babel/cli": "^7.13.16",
+        "@babel/core": "^7.13.16",
+        "@babel/plugin-transform-class-properties": "^7.18.6",
+        "@babel/plugin-transform-react-jsx": "^7.20.13",
+        "@babel/preset-env": "^7.13.15",
+        "@babel/preset-react": "^7.13.13",
+        "@babel/preset-typescript": "^7.13.0",
         "@rollup/plugin-babel": "^5.3.1",
         "@rollup/plugin-commonjs": "^22.0.2",
-        "@rollup/plugin-image": "^2.0.6",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-multi-entry": "^4.0.0",
         "@rollup/plugin-node-resolve": "^14.1.0",
         "@rollup/plugin-terser": "^0.4.0",
         "builtin-modules": "^3.3.0",
+        "postcss": "^8.4.31",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-preserve-directives": "^0.1.1",
-        "rollup-plugin-typescript2": "^0.34.1"
+        "rollup-plugin-typescript2": "^0.34.1",
+        "tslib": "^2.5.0"
+    },
+    "devDependencies": {
+        "@naverpay/browserslist-config": "1.6.1",
+        "@naverpay/tsconfig": "workspace:^",
+        "@types/babel__core": "^7.1.14",
+        "rollup": "^2.79.1"
     },
     "peerDependencies": {
         "rollup": "^2"

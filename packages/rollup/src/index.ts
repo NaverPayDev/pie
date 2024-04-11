@@ -1,5 +1,6 @@
 import path from 'path'
 
+import browserslist from '@naverpay/browserslist-config'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
@@ -9,7 +10,6 @@ import builtins from 'builtin-modules'
 import postcss from 'rollup-plugin-postcss'
 import preserveDirectives from 'rollup-plugin-preserve-directives'
 
-import type {TransformOptions} from '@babel/core'
 import type {RollupOptions, OutputOptions, ModuleFormat} from 'rollup'
 
 function verifyPackageJSON(packageDir: string) {
@@ -19,10 +19,31 @@ function verifyPackageJSON(packageDir: string) {
         throw new Error('package.json에 file 필드가 필요합니다. 이 필드는 npm publish 시에 배포되는 파일 목록입니다.')
     }
 
+    if (!(packageJSON.main || packageJSON.exports['.'])) {
+        throw new Error('package.json에 main, exports 필드가 필요합니다.')
+    }
+
     return packageJSON
 }
 
 const SUPPORT_MODULES: readonly ModuleFormat[] = ['cjs', 'esm']
+
+function getBabelPresets(react: boolean, ie: boolean) {
+    const presetEnv = [
+        '@babel/preset-env',
+        {
+            useBuiltIns: 'usage',
+            targets: ie ? '> 0.25%, not dead, ie >= 11, not op_mini all' : browserslist.join(', '),
+            corejs: {version: 3.29, proposals: false},
+        },
+    ]
+
+    if (!react) {
+        return [presetEnv, '@babel/preset-typescript']
+    }
+
+    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: 'automatic'}]]
+}
 
 interface GenerateRollupConfigOptions {
     entrypoint: string | Record<'index' & string, string>
@@ -34,6 +55,7 @@ interface GenerateRollupConfigOptions {
     packageDir: string
     extensions?: string[]
     plugins: RollupOptions['plugins']
+    react: boolean
     scss: false | {ssr: boolean}
     ie: boolean
     minify: boolean
@@ -46,8 +68,9 @@ export function generateRollupConfig({
     packageDir,
     extensions = ['.ts', '.tsx'],
     plugins: extraPlugins = [],
+    react = true,
     scss = false,
-    ie = true,
+    ie = false,
     minify = true,
     supportModules = SUPPORT_MODULES,
 }: GenerateRollupConfigOptions): RollupOptions[] {
@@ -90,21 +113,6 @@ export function generateRollupConfig({
             },
         ]
 
-        const babelPreset: {presets?: TransformOptions['presets']} = ie
-            ? {
-                  presets: [
-                      [
-                          '@babel/preset-env',
-                          {
-                              useBuiltIns: 'usage',
-                              targets: '> 0.25%, not dead, ie >= 11, not op_mini all',
-                              corejs: {version: 3.29, proposals: false},
-                          },
-                      ],
-                  ],
-              }
-            : {}
-
         const plugins = [
             resolve({
                 extensions,
@@ -113,9 +121,9 @@ export function generateRollupConfig({
             babel({
                 babelHelpers: 'bundled',
                 exclude: /node_modules/,
-                rootMode: 'upward',
                 extensions,
-                ...babelPreset,
+                presets: getBabelPresets(react, ie),
+                plugins: ['@babel/plugin-transform-class-properties'],
             }),
             json(),
             ...(scss !== false
@@ -134,7 +142,6 @@ export function generateRollupConfig({
                       }),
                   ]
                 : []),
-            preserveDirectives(),
             ...(minify ? [terser()] : []),
             ...extraPlugins,
             preserveDirectives(),
