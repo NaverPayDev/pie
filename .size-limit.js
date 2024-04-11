@@ -12,6 +12,7 @@ const packageJsonList = glob
         return {
             name: packageName,
             path: `packages/${packageName}${main.slice(1)}`,
+            limit: '500 ms',
         }
     })
 
