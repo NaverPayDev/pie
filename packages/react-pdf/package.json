@@ -1,0 +1,35 @@
+{
+    "name": "@naverpay/react-pdf",
+    "version": "0.0.0",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "require": "./dist/cjs/index.js",
+            "import": "./dist/esm/index.js",
+            "types": "./dist/cjs/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
+    "keywords": [
+        "naver",
+        "naverpay",
+        "pdf",
+        "react-pdf"
+    ],
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rm -rf dist",
+        "build-declarations": "tsc --declarationDir dist/cjs && tsc --declarationDir dist/esm",
+        "build": "pnpm run clean && pnpm run build-declarations && rollup -c"
+    },
+    "devDependencies": {
+        "rollup": "^2.79.1",
+        "@naverpay/tsconfig": "workspace:^",
+        "@naverpay/rollup": "workspace:^"
+    },
+    "dependencies": {}
+}
