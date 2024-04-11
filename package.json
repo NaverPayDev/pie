@@ -1,11 +1,11 @@
 {
-    "name": "ts-monorepo-template",
+    "name": "pie",
     "author": "@NaverPayDev/frontend",
     "repository": {
         "type": "git",
-        "url": "https://github.com/NaverPayDev/ts-monorepo-template.git"
+        "url": "https://github.com/NaverPayDev/pie.git"
     },
-    "description": "ts-monorepo-template",
+    "description": "common packages of naver financial fe",
     "version": "0.0.0",
     "scripts": {
         "start": "turbo run start",
@@ -31,6 +31,8 @@
         "@naverpay/markdown-lint": "^0.0.2",
         "@naverpay/prettier-config": "^0.0.2",
         "@size-limit/preset-big-lib": "^11.0.2",
+        "@types/node": "^20.12.7",
+        "@types/react": "^18.2.75",
         "glob": "^9.3.4",
         "husky": "^8.0.3",
         "lint-staged": "^15.0.1",
