@@ -1,0 +1,15 @@
+{
+    "extends": "@naverpay/tsconfig/base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "outDir": "./dist",
+        "declarationDir": "./dist",
+        "module": "CommonJS",
+        "removeComments": false,
+        "target": "es2017"
+    },
+    "include": ["./src"],
+    "exclude": ["node_modules", "dist"]
+}
