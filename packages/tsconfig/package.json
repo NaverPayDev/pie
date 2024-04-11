@@ -1,6 +1,10 @@
 {
     "name": "@naverpay/tsconfig",
     "version": "0.0.0",
+    "main": "base.json",
+    "files": [
+        "base.json"
+    ],
     "scripts": {
         "version": "pnpm version",
         "deploy": "pnpm publish"
