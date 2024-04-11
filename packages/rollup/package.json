@@ -10,9 +10,7 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "tsc -p tsconfig.json",
-        "version": "pnpm version",
-        "deploy": "pnpm publish"
+        "build": "tsc -p tsconfig.json"
     },
     "devDependencies": {
         "@babel/core": "^7.13.16",
