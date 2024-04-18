@@ -1,0 +1,5 @@
+{
+    "watch": ["../../**/*.md", "./scripts/**/*.ts"],
+    "ignore": ["./docs/**/*"],
+    "ext": "md ts"
+}
