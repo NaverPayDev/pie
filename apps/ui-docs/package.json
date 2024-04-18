@@ -1,0 +1,32 @@
+{
+    "name": "ui-docs",
+    "description": "",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "clean": "rm -rf dist",
+        "start": "storybook dev -p 6006",
+        "build:docs": "storybook build -o ./dist"
+    },
+    "devDependencies": {
+        "core-js": "^3.29.0",
+        "@storybook/addon-essentials": "^7.6.10",
+        "@storybook/addon-interactions": "^7.6.10",
+        "@storybook/addon-links": "^7.6.10",
+        "@storybook/addon-onboarding": "^1.0.10",
+        "@storybook/addon-styling-webpack": "^0.0.6",
+        "@storybook/blocks": "^7.6.10",
+        "@storybook/react-webpack5": "^7.6.10",
+        "css-loader": "^5.2.6",
+        "postcss": "^8.4.31",
+        "prop-types": "^15.8.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "sass": "^1.32.11",
+        "sass-loader": "^10.2.0",
+        "storybook": "^7.6.10",
+        "storybook-addon-state": "^1.0.3",
+        "style-loader": "^2.0.0",
+        "tsconfig-paths-webpack-plugin": "^3.5.1"
+    }
+}
