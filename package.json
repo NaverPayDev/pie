@@ -19,7 +19,8 @@
         "markdownlint:fix": "markdownlint --fix '**/*.md' '#.changeset' '#**/CHANGELOG.md'",
         "clean": "turbo run clean && rm -rf ./node_modules && pnpm i",
         "release:canary": "pnpm run build && changeset publish --no-git-tag",
-        "release": "pnpm run build && changeset publish"
+        "release": "pnpm run build && changeset publish",
+        "build:docs": "turbo build:docs"
     },
     "lint-staged": {
         "**/*.{json,yaml,ts,tsx,js,jsx}": "prettier --check",
