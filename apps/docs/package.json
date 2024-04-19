@@ -12,8 +12,7 @@
         "serve": "docusaurus serve",
         "write-translations": "docusaurus write-translations",
         "write-heading-ids": "docusaurus write-heading-ids",
-        "typecheck": "tsc",
-        "prepare-docs:watch": "nodemon --exec 'pnpm run prepare-docs'"
+        "typecheck": "tsc"
     },
     "dependencies": {
         "@docusaurus/core": "3.0.1",
