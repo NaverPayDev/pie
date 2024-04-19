@@ -4,5 +4,6 @@ module.exports = generateRollupConfig({
     packageDir: __dirname,
     entrypoint: './src/index.ts',
     minify: false,
+    ie: true,
     supportModules: ['cjs', 'esm'],
 })
