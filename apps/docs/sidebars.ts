@@ -20,7 +20,6 @@ readmdMdPaths.forEach((readmdMdPath) => {
     const packageName = readmdMdPath.split('/')[0]
     const packageJsonPath = `${pkgRootPath}/${packageName}/package.json`
     const {name} = JSON.parse(readFileSync(packageJsonPath, 'utf8'))
-    const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)?$/i
 
     const mdPaths: string[] = globSync('**/*.md', {
         cwd: path.join(docsPath, packageName),
@@ -37,11 +36,11 @@ readmdMdPaths.forEach((readmdMdPath) => {
         })
         .filter((md) => !md.includes('CHANGELOG.md'))
         .map((mdPath) => `${packageName}/${mdPath}`.replace(/\.md$/, ''))
-        .filter((mdPath) => !semverRegex.exec(mdPath.split('/')[1]))
+        .filter((mdPath) => semver.valid(mdPath.split('/')[1]))
 
     const versions = readdirSync(path.join(docsPath, packageName), {withFileTypes: true})
         .filter((dirent) => {
-            return dirent.isDirectory() && !!semverRegex.exec(dirent.name.split('/')[0])
+            return dirent.isDirectory() && semver.valid(dirent.name.split('/')[0])
         })
         .map((dirent) => dirent.name)
         .sort((a, b) => (semver.gt(a, b) ? -1 : 1))
