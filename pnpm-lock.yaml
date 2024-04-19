@@ -129,12 +129,6 @@ importers:
       css-loader:
         specifier: ^5.2.6
         version: 5.2.7(webpack@5.90.3)
-      postcss:
-        specifier: ^8.4.31
-        version: 8.4.38
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
