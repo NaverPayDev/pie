@@ -5,7 +5,7 @@
     "scripts": {
         "clean": "rm -rf dist && docusaurus clear",
         "docusaurus": "docusaurus",
-        "start": "concurrently \"pnpm run prepare-docs:watch\" \"docusaurus start\"",
+        "start": "docusaurus start",
         "build:docs": "docusaurus build --out-dir ./dist",
         "swizzle": "docusaurus swizzle",
         "deploy": "docusaurus deploy",
@@ -31,20 +31,9 @@
         "@docusaurus/tsconfig": "3.0.1",
         "@docusaurus/types": "3.0.1",
         "@easyops-cn/docusaurus-search-local": "^0.40.1",
+        "@naverpay/browserslist-config": "1.6.1",
         "concurrently": "^8.2.2",
         "nodemon": "^3.0.3"
-    },
-    "browserslist": {
-        "production": [
-            ">0.5%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 3 chrome version",
-            "last 3 firefox version",
-            "last 5 safari version"
-        ]
     },
     "engines": {
         "node": ">=18.0"
