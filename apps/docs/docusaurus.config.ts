@@ -41,8 +41,7 @@ const config: Config = {
             {
                 docs: {
                     sidebarPath: './sidebars.ts',
-                    editUrl: (params) =>
-                        `https://github.com/NaverPayDev/pie/tree/main/packages/${params.docPath}`,
+                    editUrl: (params) => `https://github.com/NaverPayDev/pie/tree/main/packages/${params.docPath}`,
                 },
                 blog: {
                     showReadingTime: true,
