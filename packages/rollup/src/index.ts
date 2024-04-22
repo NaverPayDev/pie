@@ -75,6 +75,18 @@ export function generateRollupConfig({
     supportModules = SUPPORT_MODULES,
 }: GenerateRollupConfigOptions): RollupOptions[] {
     const packageJSON = verifyPackageJSON(packageDir)
+    const pkgTypeField = packageJSON.type
+
+    const isESMTypePkg = pkgTypeField === 'module'
+    const isCJSTypePkg = pkgTypeField === undefined || pkgTypeField === 'commonjs'
+
+    // type 필드도 있는데 exports에 require, import가 있는 경우 경고
+    if (pkgTypeField && packageJSON?.exports?.['.']?.require && packageJSON?.exports?.['.']?.import) {
+        // eslint-disable-next-line no-console
+        console.warn(
+            `package.json의 type을 설정하시는 것 보다 exports를 사용한 dual package export를 추천합니다. type 필드는 dual 패키지가 아닐 때만 사용해주세요. 참고: https://nodejs.org/api/packages.html#dual-commonjses-module-packages`,
+        )
+    }
 
     const outputPath = outpoint || (packageJSON.exports ? packageJSON.exports['.'] : packageJSON.main)
 
@@ -112,6 +124,26 @@ export function generateRollupConfig({
                       }),
             },
         ]
+
+        output.forEach((item) => {
+            const ext = typeof item.entryFileNames === 'string' ? item.entryFileNames : undefined
+
+            if (isESM && !isESMTypePkg && ext && path.extname(ext) !== '.mjs') {
+                throw new Error(
+                    `ESM 타입의 패키지는 .mjs 확장자를 사용해야 합니다. package.json의 type 필드를 module로 바꾸거나, entrypoint의 확장자를 .mjs로 바꿔주세요. ${JSON.stringify(
+                        item,
+                    )}`,
+                )
+            }
+
+            if (isCommonJS && !isCJSTypePkg && ext && ['.js', '.cjs'].includes(path.extname(ext))) {
+                throw new Error(
+                    `CommonJS 타입의 패키지는 .js 또는 .cjs 확장자를 사용해야 합니다. package.json의 type 필드를 commonjs로 바꾸거나, entrypoint의 확장자를 .js 또는 .cjs로 바꿔주세요. ${JSON.stringify(
+                        item,
+                    )}`,
+                )
+            }
+        })
 
         const plugins = [
             resolve({
