@@ -10,6 +10,6 @@
         "removeComments": false,
         "target": "es2017"
     },
-    "include": ["./src"],
-    "exclude": ["node_modules", "dist"]
+    "include": ["./src/**/*.ts*", "./src/**/*.js*", "./typings"],
+    "exclude": ["node_modules", "dist", "src/pdfjs-dist"]
 }

@@ -63,3 +63,6 @@ dist
 apps/docs/docs
 
 .changeset/*
+
+# react pdf에 사용될 pdfjs-dist build 파일은 eslint 확인에서 제거합니다.
+packages/react-pdf/src/pdfjs-dist/**
