@@ -11259,8 +11259,8 @@ function () {
     this._params = params;
     // @see: https://oss.fin.navercorp.com/common-fe/pie/issues/1372
     this.CMapReaderFactory = new params.CMapReaderFactory({
-      baseUrl: `${process.env.BUILD_ENV}/react-pdf/cmaps/`,
-      isCompressed: true,
+      baseUrl: params.cMapUrl,
+      isCompressed: params.cMapPacked
     });
     this.destroyed = false;
     this.destroyCapability = null;
@@ -13864,10 +13864,6 @@ var compatibilityParams = Object.create(null);
   })();
 
   (function checkFontFaceAndImage() {
-    if (false) {
-      compatibilityParams.disableFontFace = true;
-      compatibilityParams.nativeImageDecoderSupport = 'none';
-    }
   })();
 }
 exports.apiCompatibilityParams = Object.freeze(compatibilityParams);
