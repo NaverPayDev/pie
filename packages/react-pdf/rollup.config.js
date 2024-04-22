@@ -10,5 +10,6 @@ module.exports = generateRollupConfig({
     },
     minify: false,
     ie: true,
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     supportModules: ['cjs', 'esm'],
 })
