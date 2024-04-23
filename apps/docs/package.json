@@ -6,13 +6,15 @@
         "clean": "rm -rf dist && docusaurus clear",
         "docusaurus": "docusaurus",
         "start": "docusaurus start",
-        "build:docs": "docusaurus build --out-dir ./dist",
+        "build:docs": "pnpm run prepare-docs && docusaurus build --out-dir ./dist",
         "swizzle": "docusaurus swizzle",
         "deploy": "docusaurus deploy",
         "serve": "docusaurus serve",
         "write-translations": "docusaurus write-translations",
         "write-heading-ids": "docusaurus write-heading-ids",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "prepare-docs": "pnpm ts-node ./scripts/index.mjs",
+        "prepare-docs:watch": "nodemon --exec 'pnpm run prepare-docs'"
     },
     "dependencies": {
         "@docusaurus/core": "3.0.1",
