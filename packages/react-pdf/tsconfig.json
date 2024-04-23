@@ -8,5 +8,5 @@
         "allowJs": false
     },
     "include": ["./src/**/*.ts*", "./typings"],
-    "exclude": ["node_modules", "dist", "./src/pdfjs-dist"]
+    "exclude": ["node_modules", "dist"]
 }
