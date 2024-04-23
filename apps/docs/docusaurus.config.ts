@@ -87,7 +87,7 @@ const config: Config = {
                     title: 'More',
                     items: [
                         {
-                            label: 'OSS',
+                            label: 'GitHub',
                             href: 'https://github.com/NaverPayDev/pie',
                         },
                     ],
