@@ -81,3 +81,6 @@ out/
 
 # telemetry disable 설정 릴리즈시점에 커밋에 섞여들어옴. 이를 방지하기 위함
 apps/web/cache/
+
+# pdfjs dist build 파일은 git에 포함합니다.
+!packages/react-pdf/src/pdfjs-dist/legacy/build
