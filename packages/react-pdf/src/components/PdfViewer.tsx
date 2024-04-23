@@ -1,11 +1,15 @@
-import {ReactNode, useEffect, useState} from 'react'
+import {ReactNode, useState} from 'react'
 
-import {PDFProvider, PDFProviderContext} from '../contexts/pdf'
+import {PDFProvider} from '../contexts/pdf'
+import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
 import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
+import {Pages, PagesProps} from './Pages'
 
-export type PDFViewerProps = Omit<PDFProviderContext, 'pdf'> & {
+export type PDFViewerProps = PagesProps & {
     pdfUrl: string
+
+    header?: ReactNode
     footer?: ReactNode
     tokenize?: boolean
     onClickWords?: {target: string | RegExp; callback: () => void | Promise<void>}[]
@@ -20,10 +24,10 @@ export type PDFViewerProps = Omit<PDFProviderContext, 'pdf'> & {
     }
 }
 
-export function PDFViewer({pdfUrl, renderMode, options}: PDFViewerProps) {
+export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, options}: PDFViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         async function init() {
             const pdfDocument = await getPdfDocument({
                 file: pdfUrl,
@@ -48,5 +52,11 @@ export function PDFViewer({pdfUrl, renderMode, options}: PDFViewerProps) {
         return null
     }
 
-    return <PDFProvider pdf={pdf} renderMode={renderMode}></PDFProvider>
+    return (
+        <PDFProvider pdf={pdf}>
+            {header}
+            <Pages renderMode={renderMode} />
+            {footer}
+        </PDFProvider>
+    )
 }
