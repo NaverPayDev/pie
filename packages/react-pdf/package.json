@@ -31,5 +31,7 @@
         "@naverpay/tsconfig": "workspace:^",
         "@naverpay/rollup": "workspace:^"
     },
-    "dependencies": {}
+    "peerDependencies": {
+        "react": "^17 || ^18"
+    }
 }
