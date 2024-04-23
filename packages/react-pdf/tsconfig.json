@@ -2,14 +2,11 @@
     "extends": "@naverpay/tsconfig/base.json",
     "compilerOptions": {
         "baseUrl": ".",
-        "declaration": true,
-        "emitDeclarationOnly": false,
-        "outDir": "./dist",
+        "emitDeclarationOnly": true,
         "declarationDir": "./dist",
-        "module": "CommonJS",
         "removeComments": false,
-        "target": "es2017"
+        "allowJs": false
     },
-    "include": ["./src/**/*.ts*", "./src/**/*.js*", "./typings"],
-    "exclude": ["node_modules", "dist", "src/pdfjs-dist"]
+    "include": ["./src/**/*.ts*", "./typings"],
+    "exclude": ["node_modules", "dist", "./src/pdfjs-dist"]
 }
