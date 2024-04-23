@@ -4,7 +4,6 @@
         "baseUrl": ".",
         "emitDeclarationOnly": true,
         "declarationDir": "./dist",
-        "removeComments": false,
         "allowJs": false
     },
     "include": ["./src/**/*.ts*", "./typings"],
