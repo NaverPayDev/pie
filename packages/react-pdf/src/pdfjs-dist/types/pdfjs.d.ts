@@ -462,12 +462,15 @@ interface PDFPageProxy {
     /**
      * marked as future feature
      **/
-    //getOperationList(): Promise<>;
+    getOperatorList(): Promise<any>;
 
     /**
      * Destroyes resources allocated by the page.
      **/
     destroy(): void;
+
+    commonObjs: object
+    objs: object
 }
 
 interface TextContentItem {
