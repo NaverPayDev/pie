@@ -7,6 +7,17 @@
         "prettier": {"cache": false},
         "prettier:fix": {"cache": false},
         "test": {"cache": false},
-        "clean": {"cache": false}
+        "clean": {"cache": false},
+        "docs#build:docs": {
+            "outputs": ["dist/**"]
+        },
+        "ui-docs#build:docs": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**"]
+        },
+        "docs#start": {},
+        "ui-docs#start": {
+            "dependsOn": ["^build"]
+        }
     }
 }
