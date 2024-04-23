@@ -4,13 +4,12 @@ import type {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 
 export interface PDFProviderContext {
     pdf: PDFDocumentProxy
-    renderMode?: 'canvas' | 'svg'
 }
 
 const Context = createContext<PDFProviderContext | undefined>(undefined)
 
-export function PDFProvider({pdf, renderMode = 'canvas', children}: PropsWithChildren<PDFProviderContext>) {
-    const value = useMemo(() => ({pdf, renderMode}), [pdf, renderMode])
+export function PDFProvider({pdf, children}: PropsWithChildren<PDFProviderContext>) {
+    const value = useMemo(() => ({pdf}), [pdf])
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
