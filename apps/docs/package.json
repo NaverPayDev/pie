@@ -5,7 +5,7 @@
     "scripts": {
         "clean": "rm -rf dist && docusaurus clear",
         "docusaurus": "docusaurus",
-        "start": "docusaurus start",
+        "start": "concurrently \"pnpm run prepare-docs:watch\" \"docusaurus start\"",
         "build:docs": "pnpm run prepare-docs && docusaurus build --out-dir ./dist",
         "swizzle": "docusaurus swizzle",
         "deploy": "docusaurus deploy",
