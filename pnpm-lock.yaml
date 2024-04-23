@@ -155,6 +155,10 @@ importers:
         version: 3.5.2
 
   packages/react-pdf:
+    dependencies:
+      react:
+        specifier: ^17 || ^18
+        version: 18.2.0
     devDependencies:
       '@naverpay/rollup':
         specifier: workspace:^
