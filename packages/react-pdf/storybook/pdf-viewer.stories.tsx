@@ -10,8 +10,7 @@ const meta = {
 }
 export default meta
 
-const PDF_URL =
-    'https://fs.pstatic.net/contents/resource/loan/personal-compare/required/0/1668583261818/gi_creditLoanNF_02.pdf'
+const PDF_URL = 'https://financial.pstatic.net/static/terms-policy/npay-usage/231025.pdf'
 
 export function 기본_PdfViewer() {
     return <PDFViewer pdfUrl={PDF_URL} />
