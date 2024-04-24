@@ -52,7 +52,7 @@ export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, option
     }
 
     return (
-        <PDFProvider pdf={pdf} externalLinkTarget={options?.externalLinkTarget}>
+        <PDFProvider pdf={pdf} options={options}>
             {header}
             <Pages renderMode={renderMode} />
             {footer}
