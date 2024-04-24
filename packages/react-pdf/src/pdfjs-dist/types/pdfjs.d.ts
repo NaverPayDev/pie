@@ -330,10 +330,12 @@ interface PDFPageViewportOptions {
 }
 
 interface PDFPageViewport {
+    viewBox: any;
     width: number;
     height: number;
     scale: number;
     transforms: number[];
+    rotation: number
 
     clone(options: PDFPageViewportOptions): PDFPageViewport;
     convertToViewportPoint(x: number, y: number): number[]; // [x, y]
@@ -469,7 +471,7 @@ interface PDFPageProxy {
      **/
     destroy(): void;
 
-    commonObjs: object
+    commonObjs: any
     objs: object
 }
 
