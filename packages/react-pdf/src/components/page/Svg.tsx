@@ -1,24 +1,22 @@
 import {memo, useCallback} from 'react'
 
-import {usePdfContext} from '../../contexts/pdf'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 
+import type {PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
+
 interface PageSvgProps {
-    pageNumber: number
+    page: PDFPageProxy
 }
 
-export const PageSvg = memo(function PageSvg({pageNumber}: PageSvgProps) {
-    const {pdf} = usePdfContext()
-
+export const PageSvg = memo(function PageSvg({page}: PageSvgProps) {
     const drawSvg = useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) {
                 return
             }
 
-            const page = await pdf.getPage(pageNumber)
             const viewport = page.getViewport({scale: 1, rotation: 0})
             const operatorList = await page.getOperatorList()
 
@@ -29,7 +27,7 @@ export const PageSvg = memo(function PageSvg({pageNumber}: PageSvgProps) {
             const svg = await svgGfx.getSVG(operatorList, viewport)
             element.appendChild(svg)
         },
-        [pageNumber, pdf],
+        [page],
     )
 
     return <div ref={drawSvg} />

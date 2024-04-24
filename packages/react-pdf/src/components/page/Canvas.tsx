@@ -1,14 +1,12 @@
 import {memo, useCallback} from 'react'
 
-import {usePdfContext} from '../../contexts/pdf'
+import type {PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
 
 interface PageCanvasProps {
-    pageNumber: number
+    page: PDFPageProxy
 }
 
-export const PageCanvas = memo(function PageCanvas({pageNumber}: PageCanvasProps) {
-    const {pdf} = usePdfContext()
-
+export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
     const drawCanvas = useCallback(
         async (canvas: HTMLCanvasElement | null) => {
             if (!canvas) {
@@ -20,14 +18,13 @@ export const PageCanvas = memo(function PageCanvas({pageNumber}: PageCanvasProps
                 return
             }
 
-            const page = await pdf.getPage(pageNumber)
             const viewport = page.getViewport({scale: 1, rotation: 0})
 
             canvas.width = viewport.width
             canvas.height = viewport.height
             page.render({canvasContext, viewport})
         },
-        [pageNumber, pdf],
+        [page],
     )
 
     return <canvas ref={drawCanvas} />
