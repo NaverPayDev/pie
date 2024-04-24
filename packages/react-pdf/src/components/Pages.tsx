@@ -29,12 +29,12 @@ export const Page = memo(function Page({renderMode, pageNumber}: PagesProps & {p
     }
 
     return (
-        <>
+        <div style={{position: 'relative'}} data-page-number={pageNumber}>
             {renderMode === 'canvas' && <PageCanvas page={page} />}
             {renderMode === 'svg' && <PageSvg page={page} />}
             <TextLayer page={page} />
             <AnnotationLayer page={page} />
-        </>
+        </div>
     )
 })
 
@@ -46,7 +46,7 @@ export const Pages = memo(function Pages({renderMode, children}: PropsWithChildr
     return (
         <>
             {Array.from({length: pdf.numPages}).map((_, index) => {
-                return <Page key={index} renderMode={renderMode} pageNumber={index} />
+                return <Page key={index} renderMode={renderMode} pageNumber={index + 1} />
             })}
             {children}
         </>
