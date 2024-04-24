@@ -2,6 +2,8 @@ import React from 'react'
 
 import {PDFViewer} from '../dist/cjs'
 
+import '../dist/cjs/index.css'
+
 const meta = {
     title: 'React PDF',
     component: 기본_PdfViewer,
