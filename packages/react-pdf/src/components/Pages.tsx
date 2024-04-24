@@ -1,4 +1,4 @@
-import {PropsWithChildren, memo, useCallback, useState} from 'react'
+import {PropsWithChildren, memo, useCallback, useMemo, useState} from 'react'
 
 import {usePdfContext} from '../contexts/pdf'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
@@ -42,7 +42,7 @@ export const Page = memo(function Page({renderMode, pageNumber}: PagesProps & {p
 
 export const Pages = memo(function Pages({renderMode, lazyLoading, children}: PropsWithChildren<PagesProps>) {
     const {pdf} = usePdfContext()
-    const pageNumbers = Array.from({length: pdf.numPages}, (_, index) => index + 1)
+    const pageNumbers = useMemo(() => Array.from({length: pdf.numPages}, (_, index) => index + 1), [pdf.numPages])
     const [renderPages, setRenderPages] = useState<number[]>(pdf.numPages > 0 ? [1] : [])
 
     const handleIntersect = useCallback(() => {
