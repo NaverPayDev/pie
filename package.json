@@ -8,6 +8,7 @@
     "description": "common packages of naver financial fe",
     "version": "0.0.0",
     "scripts": {
+        "prepare": "husky install && chmod 777 .husky/*",
         "start": "turbo run start",
         "build": "turbo run build",
         "test": "turbo run test",
