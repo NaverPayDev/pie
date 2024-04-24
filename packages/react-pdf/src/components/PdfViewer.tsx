@@ -8,7 +8,6 @@ import {Pages, PagesProps} from './Pages'
 
 export type PDFViewerProps = PagesProps & {
     pdfUrl: string
-
     header?: ReactNode
     footer?: ReactNode
     tokenize?: boolean
@@ -53,7 +52,7 @@ export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, option
     }
 
     return (
-        <PDFProvider pdf={pdf}>
+        <PDFProvider pdf={pdf} externalLinkTarget={options?.externalLinkTarget}>
             {header}
             <Pages renderMode={renderMode} />
             {footer}
