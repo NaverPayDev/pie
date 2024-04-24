@@ -337,7 +337,7 @@ interface PDFPageViewport {
     transforms: number[];
     rotation: number
 
-    clone(options: PDFPageViewportOptions): PDFPageViewport;
+    clone(options: Partial<PDFPageViewportOptions>): PDFPageViewport;
     convertToViewportPoint(x: number, y: number): number[]; // [x, y]
     convertToViewportRectangle(rect: number[]): number[]; // [x1, y1, x2, y2]
     convertToPdfPoint(x: number, y: number): number[]; // [x, y]
