@@ -28,7 +28,7 @@
         "build": "pnpm run clean && pnpm run build-declarations && rollup -c"
     },
     "dependencies": {
-        "classnames": "^2.3.1"
+        "classnames": "^2.5.1"
     },
     "devDependencies": {
         "rollup": "^2.79.1",
