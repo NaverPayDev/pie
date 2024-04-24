@@ -1,0 +1,16 @@
+.text-layer {
+    position: absolute;
+    color: transparent;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.text-layer-item {
+    height: 1em;
+    font-family: sans-serif;
+    position: absolute;
+    transform-origin: left bottom;
+    white-space: pre;
+    pointer-events: all;
+}
