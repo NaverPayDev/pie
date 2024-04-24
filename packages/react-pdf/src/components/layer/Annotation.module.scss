@@ -1,0 +1,274 @@
+/* Copyright 2014 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.annotationLayer {
+    section {
+        position: absolute;
+    }
+
+    .linkAnnotation > a,
+    .buttonWidgetAnnotation.pushButton > a {
+        position: absolute;
+        font-size: 1em;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .linkAnnotation > a,
+    .buttonWidgetAnnotation.pushButton > a {
+        background: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7') 0 0 repeat;
+    }
+
+    .linkAnnotation > a:hover,
+    .buttonWidgetAnnotation.pushButton > a:hover {
+        opacity: 0.2;
+        background: #ff0;
+        box-shadow: 0px 2px 10px #ff0;
+    }
+
+    .textAnnotation img {
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .textWidgetAnnotation {
+        input,
+        textarea {
+            background-color: rgba(0, 54, 255, 0.13);
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            font-size: 9px;
+            height: 100%;
+            margin: 0;
+            padding: 0 3px;
+            vertical-align: top;
+            width: 100%;
+        }
+    }
+
+    .choiceWidgetAnnotation select {
+        background-color: rgba(0, 54, 255, 0.13);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        font-size: 9px;
+        height: 100%;
+        margin: 0;
+        padding: 0 3px;
+        vertical-align: top;
+        width: 100%;
+    }
+
+    .buttonWidgetAnnotation {
+        &.checkBox input,
+        &.radioButton input {
+            background-color: rgba(0, 54, 255, 0.13);
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            font-size: 9px;
+            height: 100%;
+            margin: 0;
+            padding: 0 3px;
+            vertical-align: top;
+            width: 100%;
+        }
+    }
+
+    .choiceWidgetAnnotation select option {
+        padding: 0;
+    }
+
+    .buttonWidgetAnnotation.radioButton input {
+        border-radius: 50%;
+    }
+
+    .textWidgetAnnotation {
+        textarea {
+            font: message-box;
+            font-size: 9px;
+            resize: none;
+        }
+
+        input[disabled],
+        textarea[disabled] {
+            background: none;
+            border: 1px solid transparent;
+            cursor: not-allowed;
+        }
+    }
+
+    .choiceWidgetAnnotation select[disabled] {
+        background: none;
+        border: 1px solid transparent;
+        cursor: not-allowed;
+    }
+
+    .buttonWidgetAnnotation {
+        &.checkBox input[disabled],
+        &.radioButton input[disabled] {
+            background: none;
+            border: 1px solid transparent;
+            cursor: not-allowed;
+        }
+    }
+
+    .textWidgetAnnotation {
+        input:hover,
+        textarea:hover {
+            border: 1px solid #000;
+        }
+    }
+
+    .choiceWidgetAnnotation select:hover {
+        border: 1px solid #000;
+    }
+
+    .buttonWidgetAnnotation {
+        &.checkBox input:hover,
+        &.radioButton input:hover {
+            border: 1px solid #000;
+        }
+    }
+
+    .textWidgetAnnotation {
+        input:focus,
+        textarea:focus {
+            background: none;
+            border: 1px solid transparent;
+        }
+    }
+
+    .choiceWidgetAnnotation select:focus {
+        background: none;
+        border: 1px solid transparent;
+    }
+
+    .buttonWidgetAnnotation {
+        &.checkBox input:checked {
+            &:before,
+            &:after {
+                background-color: #000;
+                content: '';
+                display: block;
+                position: absolute;
+            }
+        }
+
+        &.radioButton input:checked:before {
+            background-color: #000;
+            content: '';
+            display: block;
+            position: absolute;
+        }
+
+        &.checkBox input:checked {
+            &:before,
+            &:after {
+                height: 80%;
+                left: 45%;
+                width: 1px;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+
+        &.radioButton input:checked:before {
+            border-radius: 50%;
+            height: 50%;
+            left: 30%;
+            top: 20%;
+            width: 50%;
+        }
+    }
+
+    .textWidgetAnnotation input.comb {
+        font-family: monospace;
+        padding-left: 2px;
+        padding-right: 0;
+
+        &:focus {
+            /*
+         * Letter spacing is placed on the right side of each character. Hence, the
+         * letter spacing of the last character may be placed outside the visible
+         * area, causing horizontal scrolling. We avoid this by extending the width
+         * when the element has focus and revert this when it loses focus.
+         */
+            width: 115%;
+        }
+    }
+
+    .buttonWidgetAnnotation {
+        &.checkBox input,
+        &.radioButton input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            padding: 0;
+        }
+    }
+
+    .popupWrapper {
+        position: absolute;
+        width: 20em;
+    }
+
+    .popup {
+        position: absolute;
+        z-index: 200;
+        max-width: 20em;
+        background-color: #ffff99;
+        box-shadow: 0px 2px 5px #333;
+        border-radius: 2px;
+        padding: 0.6em;
+        margin-left: 5px;
+        cursor: pointer;
+        font: message-box;
+        word-wrap: break-word;
+
+        h1 {
+            font-size: 1em;
+            border-bottom: 1px solid #000000;
+            margin: 0;
+            padding-bottom: 0.2em;
+        }
+
+        p {
+            margin: 0;
+            padding-top: 0.2em;
+        }
+    }
+
+    .highlightAnnotation,
+    .underlineAnnotation,
+    .squigglyAnnotation,
+    .strikeoutAnnotation,
+    .lineAnnotation svg line,
+    .squareAnnotation svg rect,
+    .circleAnnotation svg ellipse,
+    .polylineAnnotation svg polyline,
+    .polygonAnnotation svg polygon,
+    .stampAnnotation,
+    .fileAttachmentAnnotation {
+        cursor: pointer;
+    }
+}
