@@ -8,7 +8,7 @@ interface PageCanvasProps {
 
 export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
     const drawCanvas = useCallback(
-        async (canvas: HTMLCanvasElement | null) => {
+        (canvas: HTMLCanvasElement | null) => {
             if (!canvas) {
                 return
             }
