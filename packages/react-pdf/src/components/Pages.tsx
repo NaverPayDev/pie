@@ -58,10 +58,10 @@ export const Pages = memo(function Pages({renderMode, lazyLoading, children}: Pr
 
     return (
         <>
-            {(lazyLoading ? renderPages : pageNumbers).map((pageNum) => {
+            {(lazyLoading ? renderPages : pageNumbers).map((pageNumber) => {
                 return (
-                    <div key={pageNum} ref={lazyLoading && renderPages.length === pageNum ? ref : null}>
-                        <Page renderMode={renderMode} pageNumber={pageNum} />
+                    <div key={pageNumber} ref={lazyLoading && renderPages.length === pageNumber ? ref : null}>
+                        <Page renderMode={renderMode} pageNumber={pageNumber} />
                     </div>
                 )
             })}
