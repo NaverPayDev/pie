@@ -54,7 +54,7 @@ export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, option
     return (
         <PDFProvider pdf={pdf} options={options}>
             {header}
-            <Pages renderMode={renderMode} />
+            <Pages renderMode={renderMode} lazyLoading={options?.lazyLoading || true} />
             {footer}
         </PDFProvider>
     )
