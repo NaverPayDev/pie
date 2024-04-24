@@ -3,10 +3,9 @@ import {memo, useCallback, useMemo, useState} from 'react'
 import classNames from 'classnames/bind'
 
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
-import {TextContent} from '../../pdfjs-dist/types/pdfjs'
 import styles from './Text.module.scss'
 
-import type {PDFPageProxy, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
+import type {TextContent, PDFPageProxy, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
 
 const cx = classNames.bind(styles)
 
