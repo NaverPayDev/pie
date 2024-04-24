@@ -8,7 +8,7 @@ import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 // @ts-ignore
 import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 // @ts-ignore
-import {PDFLinkService} from '../pdfjs-dist/lib/web/pdf_link_service'
+import {PDFLinkService} from '../../pdfjs-dist/lib/web/pdf_link_service'
 import styles from './Annotation.module.scss'
 
 import type {PDFAnnotations, PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
