@@ -157,7 +157,7 @@ importers:
   packages/react-pdf:
     dependencies:
       classnames:
-        specifier: ^2.3.1
+        specifier: ^2.5.1
         version: 2.5.1
       react:
         specifier: ^17 || ^18
