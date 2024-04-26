@@ -96,3 +96,7 @@ export async function getPdfDocument({
     const pdfInfo = await promise
     return pdfInfo
 }
+
+export function getPixelRatio() {
+    return isSSR() ? 1 : window.devicePixelRatio
+}
