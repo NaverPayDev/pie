@@ -9,6 +9,7 @@ import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 // @ts-ignore
 import {PDFLinkService} from '../../pdfjs-dist/lib/web/pdf_link_service'
+import {getPixelRatio} from '../../utils/pdf'
 import styles from './Annotation.module.scss'
 
 import type {PDFAnnotations, PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
@@ -48,37 +49,46 @@ export const AnnotationLayer = memo(function AnnotationLayer({page}: AnnotationL
 
     const drawAnnotation = useCallback(
         (element: HTMLDivElement | null) => {
-            if (!element) {
-                return
-            }
-            const linkService = new PDFLinkService({
-                externalLinkTarget: getExternalLinkTargetValue(options?.externalLinkTarget),
-            })
-            const viewport = page.getViewport({scale: 1}).clone({dontFlip: true})
-            const parameters = {annotations, div: element, linkService, page, renderInteractiveForms: false, viewport}
+            requestAnimationFrame(() => {
+                if (!element) {
+                    return
+                }
+                const linkService = new PDFLinkService({
+                    externalLinkTarget: getExternalLinkTargetValue(options?.externalLinkTarget),
+                })
+                const viewport = page.getViewport({scale: 1 * getPixelRatio()}).clone({dontFlip: true})
+                const parameters = {
+                    annotations,
+                    div: element,
+                    linkService,
+                    page,
+                    renderInteractiveForms: false,
+                    viewport,
+                }
 
-            try {
-                pdfjs?.AnnotationLayer?.render(parameters)
-            } catch {}
+                try {
+                    pdfjs?.AnnotationLayer?.render(parameters)
+                } catch {}
 
-            const children = element.children
+                const children = element.children
 
-            if (children.length > 0 && children?.[0]) {
-                const firstChildren = children[0] as HTMLElement
-                firstChildren.style.position = 'absolute'
+                if (children.length > 0 && children?.[0]) {
+                    const firstChildren = children[0] as HTMLElement
+                    firstChildren.style.position = 'absolute'
 
-                const aTags = firstChildren.getElementsByTagName('a') as unknown as HTMLAnchorElement[]
+                    const aTags = firstChildren.getElementsByTagName('a') as unknown as HTMLAnchorElement[]
 
-                if (aTags.length > 0) {
-                    for (const elem of aTags) {
-                        elem.style.position = 'absolute'
-                        elem.style.top = '0'
-                        elem.style.left = '0'
-                        elem.style.width = '100%'
-                        elem.style.height = '100%'
+                    if (aTags.length > 0) {
+                        for (const elem of aTags) {
+                            elem.style.position = 'absolute'
+                            elem.style.top = '0'
+                            elem.style.left = '0'
+                            elem.style.width = '100%'
+                            elem.style.height = '100%'
+                        }
                     }
                 }
-            }
+            })
         },
         [annotations, options?.externalLinkTarget, page],
     )

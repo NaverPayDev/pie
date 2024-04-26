@@ -21,27 +21,29 @@ export const TextLayerItem = memo(function TextLayerItem({
 
     const drawTextLayerItem = useCallback(
         async (element: HTMLSpanElement | null) => {
-            if (!element) {
-                return
-            }
+            requestAnimationFrame(async () => {
+                if (!element) {
+                    return
+                }
 
-            const fontData = (await new Promise((resolve) => {
-                page.commonObjs.get(fontName, resolve)
-            })) as {fallbackName: string; ascent: number} | undefined
-            const fallbackFontName = fontData?.fallbackName || 'sans-serif'
-            element.style.fontFamily = `${fontName}, ${fallbackFontName}`
+                const fontData = (await new Promise((resolve) => {
+                    page.commonObjs.get(fontName, resolve)
+                })) as {fallbackName: string; ascent: number} | undefined
+                const fallbackFontName = fontData?.fallbackName || 'sans-serif'
+                element.style.fontFamily = `${fontName}, ${fallbackFontName}`
 
-            const defaultSideways = rotation % 180 !== 0
-            const targetWidth = width
-            const actualWidth = element.getBoundingClientRect()[defaultSideways ? 'height' : 'width']
-            let elementTransform = `scaleX(${targetWidth / actualWidth})`
-            const ascent = fontData?.ascent || 0
-            if (ascent) {
-                elementTransform += ` translateY(${(1 - ascent) * 100}%)`
-            }
+                const defaultSideways = rotation % 180 !== 0
+                const targetWidth = width
+                const actualWidth = element.getBoundingClientRect()[defaultSideways ? 'height' : 'width']
+                let elementTransform = `scaleX(${targetWidth / actualWidth})`
+                const ascent = fontData?.ascent || 0
+                if (ascent) {
+                    elementTransform += ` translateY(${(1 - ascent) * 100}%)`
+                }
 
-            element.style.transform = elementTransform
-            element.style.webkitTransform = elementTransform
+                element.style.transform = elementTransform
+                element.style.webkitTransform = elementTransform
+            })
         },
         [fontName, page.commonObjs, rotation, width],
     )
@@ -86,7 +88,10 @@ export const TextLayer = memo(function TextLayer({page}: TextLayerProps) {
     }
 
     return (
-        <div className={cx('text-layer')} style={{width: `${viewport.width}px`, height: `${viewport.height}px`}}>
+        <div
+            className={cx('text-layer')}
+            style={{width: `${Math.min(viewport.width, 568)}px`, height: `${viewport.height}px`}}
+        >
             {texts.items.map((text, index) => (
                 <TextLayerItem key={index} textItem={text} page={page} />
             ))}
