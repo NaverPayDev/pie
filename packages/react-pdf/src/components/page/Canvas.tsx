@@ -21,15 +21,16 @@ export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
                     return
                 }
 
-                const viewport = page.getViewport({scale: 1 * getPixelRatio()})
+                const canvasViewport = page.getViewport({scale: 1 * getPixelRatio()})
+                const renderViewport = page.getViewport({scale: 1})
 
-                canvas.width = viewport.width
-                canvas.height = viewport.height
+                canvas.width = canvasViewport.width
+                canvas.height = canvasViewport.height
 
-                canvas.style.width = `${Math.min(Math.floor(viewport.width), 568)}px`
+                canvas.style.width = `${renderViewport.width}px`
                 canvas.style.height = 'auto'
 
-                page.render({canvasContext, viewport})
+                page.render({canvasContext, viewport: canvasViewport})
             })
         },
         [page],
