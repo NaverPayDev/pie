@@ -9,7 +9,6 @@ import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 // @ts-ignore
 import {PDFLinkService} from '../../pdfjs-dist/lib/web/pdf_link_service'
-import {getPixelRatio} from '../../utils/pdf'
 import styles from './Annotation.module.scss'
 
 import type {PDFAnnotations, PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
@@ -56,7 +55,7 @@ export const AnnotationLayer = memo(function AnnotationLayer({page}: AnnotationL
                 const linkService = new PDFLinkService({
                     externalLinkTarget: getExternalLinkTargetValue(options?.externalLinkTarget),
                 })
-                const viewport = page.getViewport({scale: 1 * getPixelRatio()}).clone({dontFlip: true})
+                const viewport = page.getViewport({scale: 1}).clone({dontFlip: true})
                 const parameters = {
                     annotations,
                     div: element,
