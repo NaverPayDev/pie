@@ -90,7 +90,10 @@ export const TextLayer = memo(function TextLayer({page}: TextLayerProps) {
     return (
         <div
             className={cx('text-layer')}
-            style={{width: `${Math.min(viewport.width, 568)}px`, height: `${viewport.height}px`}}
+            style={{
+                width: `${Math.floor(viewport.width)}px`,
+                height: `${Math.floor(viewport.height)}px`,
+            }}
         >
             {texts.items.map((text, index) => (
                 <TextLayerItem key={index} textItem={text} page={page} />
