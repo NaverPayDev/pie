@@ -1,4 +1,4 @@
-import {ReactNode, useState} from 'react'
+import {MouseEventHandler, ReactNode, useCallback, useState} from 'react'
 
 import {PDFProvider} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
@@ -23,7 +23,15 @@ export type PDFViewerProps = PagesProps & {
     }
 }
 
-export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, options}: PDFViewerProps) {
+export function PDFViewer({
+    pdfUrl,
+    renderMode = 'canvas',
+    tokenize,
+    onClickWords,
+    header,
+    footer,
+    options,
+}: PDFViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
 
     useIsomorphicLayoutEffect(() => {
@@ -47,15 +55,49 @@ export function PDFViewer({pdfUrl, renderMode = 'canvas', header, footer, option
         init()
     }, [options?.cMapCompressed, options?.cMapUrl, options?.withCredentials, pdf, pdfUrl])
 
+    const handleClickWords: MouseEventHandler<HTMLDivElement | HTMLSpanElement> = useCallback(
+        async (e) => {
+            if (!onClickWords) {
+                return
+            }
+            const element = e.target as HTMLElement
+            const clickedText = (element?.innerText || '').trim()
+            const isSpanTag = element.tagName === 'SPAN'
+            if (!clickedText || !isSpanTag) {
+                return
+            }
+            for await (const {target, callback} of onClickWords) {
+                let result = false
+                if (typeof target === 'string') {
+                    result = target === clickedText
+                }
+                if (target instanceof RegExp) {
+                    result = target.test(clickedText)
+                }
+                if (result) {
+                    await callback()
+                    return
+                }
+            }
+        },
+        [onClickWords],
+    )
+
     if (!pdf) {
         return null
     }
 
     return (
-        <PDFProvider pdf={pdf} options={options}>
-            {header}
-            <Pages renderMode={renderMode} lazyLoading={options?.lazyLoading || true} />
-            {footer}
-        </PDFProvider>
+        <div onClick={handleClickWords}>
+            <PDFProvider pdf={pdf} options={options}>
+                {header}
+                <Pages
+                    renderMode={renderMode}
+                    lazyLoading={options?.lazyLoading || true}
+                    tokenize={tokenize ?? (onClickWords || []).length > 0}
+                />
+                {footer}
+            </PDFProvider>
+        </div>
     )
 }

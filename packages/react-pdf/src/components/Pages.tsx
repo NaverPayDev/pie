@@ -12,9 +12,14 @@ import {PageSvg} from './page/Svg'
 export interface PagesProps {
     renderMode?: 'canvas' | 'svg'
     lazyLoading?: boolean
+    tokenize?: boolean
 }
 
-export const Page = memo(function Page({renderMode, pageNumber}: PagesProps & {pageNumber: number}) {
+export const Page = memo(function Page({
+    renderMode,
+    tokenize,
+    pageNumber,
+}: Omit<PagesProps, 'lazyLoading'> & {pageNumber: number}) {
     const {pdf} = usePdfContext()
     const [page, setPage] = useState<PDFPageProxy | undefined>()
 
@@ -34,13 +39,13 @@ export const Page = memo(function Page({renderMode, pageNumber}: PagesProps & {p
         <div style={{position: 'relative'}} data-page-number={pageNumber}>
             {renderMode === 'canvas' && <PageCanvas page={page} />}
             {renderMode === 'svg' && <PageSvg page={page} />}
-            <TextLayer page={page} />
+            <TextLayer page={page} tokenize={tokenize} />
             <AnnotationLayer page={page} />
         </div>
     )
 })
 
-export const Pages = memo(function Pages({renderMode, lazyLoading, children}: PropsWithChildren<PagesProps>) {
+export const Pages = memo(function Pages({renderMode, lazyLoading, tokenize, children}: PropsWithChildren<PagesProps>) {
     const {pdf} = usePdfContext()
     const pageNumbers = useMemo(() => Array.from({length: pdf.numPages}, (_, index) => index + 1), [pdf.numPages])
     const [renderPages, setRenderPages] = useState<number[]>(pdf.numPages > 0 ? [1] : [])
@@ -61,7 +66,7 @@ export const Pages = memo(function Pages({renderMode, lazyLoading, children}: Pr
             {(lazyLoading ? renderPages : pageNumbers).map((pageNumber) => {
                 return (
                     <div key={pageNumber} ref={lazyLoading && renderPages.length === pageNumber ? ref : null}>
-                        <Page renderMode={renderMode} pageNumber={pageNumber} />
+                        <Page renderMode={renderMode} pageNumber={pageNumber} tokenize={tokenize} />
                     </div>
                 )
             })}
