@@ -3,6 +3,7 @@ import {memo, useCallback, useMemo, useState} from 'react'
 import classNames from 'classnames/bind'
 
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
+import {mergeTextItems} from '../../utils/text'
 import styles from './Text.module.scss'
 
 import type {TextContent, PDFPageProxy, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
@@ -68,20 +69,20 @@ export const TextLayerItem = memo(function TextLayerItem({
 
 interface TextLayerProps {
     page: PDFPageProxy
+    tokenize?: boolean
 }
 
-export const TextLayer = memo(function TextLayer({page}: TextLayerProps) {
+export const TextLayer = memo(function TextLayer({page, tokenize}: TextLayerProps) {
     const [texts, setTexts] = useState<TextContent | undefined>()
     const viewport = page.getViewport({scale: 1})
 
     useIsomorphicLayoutEffect(() => {
         async function init() {
-            const textContent = await page.getTextContent()
-            // TODO: chunking
-            setTexts(textContent)
+            const {items, styles: textStyles} = await page.getTextContent()
+            setTexts({items: mergeTextItems(items, {tokenize}), styles: textStyles})
         }
         init()
-    }, [page])
+    }, [page, tokenize])
 
     if (!texts) {
         return null
