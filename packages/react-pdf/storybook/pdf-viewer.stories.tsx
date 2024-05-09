@@ -10,8 +10,18 @@ const meta = {
 }
 export default meta
 
-const PDF_URL = 'https://financial.pstatic.net/static/terms-policy/npay-usage/231025.pdf'
+const PDF_URL = 'https://financial.pstatic.net/static/terms-policy/npay-usage/230906.pdf'
 
 export function 기본_PdfViewer() {
-    return <PDFViewer pdfUrl={PDF_URL} options={{externalLinkTarget: '_blank'}} />
+    return (
+        <PDFViewer
+            pdfUrl={PDF_URL}
+            renderMode="canvas"
+            options={{
+                externalLinkTarget: '_blank',
+                cMapUrl: 'https://stage-financial-pstatic.fe.naver.com/pie/react-pdf/cmaps/',
+                cMapCompressed: true,
+            }}
+        />
+    )
 }

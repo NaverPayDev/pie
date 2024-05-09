@@ -27,7 +27,7 @@ export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
                 canvas.width = canvasViewport.width
                 canvas.height = canvasViewport.height
 
-                canvas.style.width = `${renderViewport.width}px`
+                canvas.style.width = `${Math.floor(renderViewport.width)}px`
                 canvas.style.height = 'auto'
 
                 page.render({canvasContext, viewport: canvasViewport})

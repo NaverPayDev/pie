@@ -1,5 +1,7 @@
 import {PropsWithChildren, memo, useCallback, useMemo, useState} from 'react'
 
+import classNames from 'classnames/bind'
+
 import {usePdfContext} from '../contexts/pdf'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
@@ -8,6 +10,9 @@ import {AnnotationLayer} from './layer/Annotation'
 import {TextLayer} from './layer/Text'
 import {PageCanvas} from './page/Canvas'
 import {PageSvg} from './page/Svg'
+import styles from './PDFViewer.module.scss'
+
+const cx = classNames.bind(styles)
 
 export interface PagesProps {
     renderMode?: 'canvas' | 'svg'
@@ -36,7 +41,7 @@ export const Page = memo(function Page({
     }
 
     return (
-        <div style={{position: 'relative'}} data-page-number={pageNumber}>
+        <div className={cx('document')} style={{position: 'relative'}} data-page-number={pageNumber}>
             {renderMode === 'canvas' && <PageCanvas page={page} />}
             {renderMode === 'svg' && <PageSvg page={page} />}
             <TextLayer page={page} tokenize={tokenize} />
