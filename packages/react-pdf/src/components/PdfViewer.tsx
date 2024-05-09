@@ -1,10 +1,15 @@
 import {MouseEventHandler, ReactNode, useCallback, useState} from 'react'
 
+import classNames from 'classnames/bind'
+
 import {PDFProvider} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
 import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
 import {Pages, PagesProps} from './Pages'
+import styles from './PDFViewer.module.scss'
+
+const cx = classNames.bind(styles)
 
 export type PDFViewerProps = PagesProps & {
     pdfUrl: string
@@ -88,8 +93,8 @@ export function PDFViewer({
     }
 
     return (
-        <div onClick={handleClickWords}>
-            <PDFProvider pdf={pdf} options={options}>
+        <PDFProvider pdf={pdf} options={options}>
+            <div className={cx('article')} onClick={handleClickWords}>
                 {header}
                 <Pages
                     renderMode={renderMode}
@@ -97,7 +102,7 @@ export function PDFViewer({
                     tokenize={tokenize ?? (onClickWords || []).length > 0}
                 />
                 {footer}
-            </PDFProvider>
-        </div>
+            </div>
+        </PDFProvider>
     )
 }
