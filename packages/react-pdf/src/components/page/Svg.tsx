@@ -1,16 +1,13 @@
 import {memo, useCallback} from 'react'
 
+import {usePdfPageContext} from '../../contexts/page'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 
-import type {PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
+export const PageSvg = memo(function PageSvg() {
+    const {page} = usePdfPageContext()
 
-interface PageSvgProps {
-    page: PDFPageProxy
-}
-
-export const PageSvg = memo(function PageSvg({page}: PageSvgProps) {
     const drawSvg = useCallback(
         async (element: HTMLDivElement | null) => {
             requestAnimationFrame(async () => {
