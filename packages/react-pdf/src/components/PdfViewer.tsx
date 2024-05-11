@@ -2,40 +2,48 @@ import {MouseEventHandler, ReactNode, useCallback, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
-import {PDFProvider} from '../contexts/pdf'
+import {PdfProvider, PdfProviderContext} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
 import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
-import {Pages, PagesProps} from './Pages'
+import {Pages} from './Pages'
 import styles from './PDFViewer.module.scss'
 
 const cx = classNames.bind(styles)
 
-export type PDFViewerProps = PagesProps & {
+type PdfRenderProps = Omit<PdfProviderContext, 'pdf'>
+
+export type PDFViewerProps = PdfRenderProps & {
+    /**
+     * pdf load 시 필요한 props
+     */
     pdfUrl: string
-    header?: ReactNode
-    footer?: ReactNode
-    tokenize?: boolean
+    cMapUrl?: string
+    cMapCompressed?: boolean
+    withCredentials?: boolean
+    /**
+     * pdf viewer custom props
+     */
     onClickWords?: {target: string | RegExp; callback: () => void | Promise<void>}[]
+    /**
+     * pdf load 및 rendering 관련 callback
+     */
     onLoadPDFRender?: () => void
     onErrorPDFRender?: (e: Error) => void
-    options?: {
-        cMapUrl?: string
-        cMapCompressed?: boolean
-        lazyLoading?: boolean
-        withCredentials?: boolean
-        externalLinkTarget?: '_self' | '_blank' | '_parent' | '_top'
-    }
+    /**
+     * pdf 외 rendering 할 컴포넌트
+     */
+    header?: ReactNode
+    footer?: ReactNode
 }
 
 export function PDFViewer({
     pdfUrl,
-    renderMode = 'canvas',
-    tokenize,
+    tokenize: injectedTokenize,
     onClickWords,
     header,
     footer,
-    options,
+    ...options
 }: PDFViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
 
@@ -93,16 +101,12 @@ export function PDFViewer({
     }
 
     return (
-        <PDFProvider pdf={pdf} options={options}>
+        <PdfProvider pdf={pdf} tokenize={injectedTokenize ?? (onClickWords || []).length > 0} {...options}>
             <div className={cx('article')} onClick={handleClickWords}>
                 {header}
-                <Pages
-                    renderMode={renderMode}
-                    lazyLoading={options?.lazyLoading || true}
-                    tokenize={tokenize ?? (onClickWords || []).length > 0}
-                />
+                <Pages />
                 {footer}
             </div>
-        </PDFProvider>
+        </PdfProvider>
     )
 }
