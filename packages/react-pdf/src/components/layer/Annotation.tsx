@@ -2,6 +2,7 @@
 import {memo, useCallback, useState} from 'react'
 
 import classNames from 'classnames/bind'
+import {usePdfPageContext} from 'src/contexts/page'
 
 import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
@@ -11,13 +12,9 @@ import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
 import {PDFLinkService} from '../../pdfjs-dist/lib/web/pdf_link_service'
 import styles from './Annotation.module.scss'
 
-import type {PDFAnnotations, PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
+import type {PDFAnnotations} from '../../pdfjs-dist/types/pdfjs'
 
 const cx = classNames.bind(styles)
-
-interface AnnotationLayerProps {
-    page: PDFPageProxy
-}
 
 function getExternalLinkTargetValue(externalLinkTarget?: '_self' | '_blank' | '_parent' | '_top') {
     switch (externalLinkTarget) {
@@ -34,8 +31,9 @@ function getExternalLinkTargetValue(externalLinkTarget?: '_self' | '_blank' | '_
     }
 }
 
-export const AnnotationLayer = memo(function AnnotationLayer({page}: AnnotationLayerProps) {
-    const {options} = usePdfContext()
+export const AnnotationLayer = memo(function AnnotationLayer() {
+    const {externalLinkTarget} = usePdfContext()
+    const {page} = usePdfPageContext()
     const [annotations, setAnnotations] = useState<PDFAnnotations | undefined>()
 
     useIsomorphicLayoutEffect(() => {
@@ -53,7 +51,7 @@ export const AnnotationLayer = memo(function AnnotationLayer({page}: AnnotationL
                     return
                 }
                 const linkService = new PDFLinkService({
-                    externalLinkTarget: getExternalLinkTargetValue(options?.externalLinkTarget),
+                    externalLinkTarget: getExternalLinkTargetValue(externalLinkTarget),
                 })
                 const viewport = page.getViewport({scale: 1}).clone({dontFlip: true})
                 const parameters = {
@@ -89,7 +87,7 @@ export const AnnotationLayer = memo(function AnnotationLayer({page}: AnnotationL
                 }
             })
         },
-        [annotations, options?.externalLinkTarget, page],
+        [annotations, externalLinkTarget, page],
     )
 
     if (!annotations) {

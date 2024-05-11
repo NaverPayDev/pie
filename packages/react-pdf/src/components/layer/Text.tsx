@@ -1,23 +1,23 @@
 import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
+import {usePdfPageContext} from 'src/contexts/page'
+import {usePdfContext} from 'src/contexts/pdf'
 
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import {mergeTextItems} from '../../utils/text'
 import styles from './Text.module.scss'
 
-import type {TextContent, PDFPageProxy, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
+import type {TextContent, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
 
 const cx = classNames.bind(styles)
 
 export const TextLayerItem = memo(function TextLayerItem({
     textItem: {str: text, transform, fontName, width},
-    page,
 }: {
     textItem: TextContentItem
-
-    page: PDFPageProxy
 }) {
+    const {page} = usePdfPageContext()
     const {rotation, viewBox} = page.getViewport({scale: 1})
 
     const drawTextLayerItem = useCallback(
@@ -67,12 +67,9 @@ export const TextLayerItem = memo(function TextLayerItem({
     )
 })
 
-interface TextLayerProps {
-    page: PDFPageProxy
-    tokenize?: boolean
-}
-
-export const TextLayer = memo(function TextLayer({page, tokenize}: TextLayerProps) {
+export const TextLayer = memo(function TextLayer() {
+    const {tokenize} = usePdfContext()
+    const {page} = usePdfPageContext()
     const [texts, setTexts] = useState<TextContent | undefined>()
     const viewport = page.getViewport({scale: 1})
 
@@ -97,7 +94,7 @@ export const TextLayer = memo(function TextLayer({page, tokenize}: TextLayerProp
             }}
         >
             {texts.items.map((text, index) => (
-                <TextLayerItem key={index} textItem={text} page={page} />
+                <TextLayerItem key={index} textItem={text} />
             ))}
         </div>
     )

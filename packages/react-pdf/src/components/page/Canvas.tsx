@@ -1,14 +1,12 @@
 import {memo, useCallback} from 'react'
 
+import {usePdfPageContext} from 'src/contexts/page'
+
 import {getPixelRatio} from '../../utils/pdf'
 
-import type {PDFPageProxy} from '../../pdfjs-dist/types/pdfjs'
+export const PageCanvas = memo(function PageCanvas() {
+    const {page} = usePdfPageContext()
 
-interface PageCanvasProps {
-    page: PDFPageProxy
-}
-
-export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
     const drawCanvas = useCallback(
         (canvas: HTMLCanvasElement | null) => {
             requestAnimationFrame(() => {
@@ -27,7 +25,7 @@ export const PageCanvas = memo(function PageCanvas({page}: PageCanvasProps) {
                 canvas.width = canvasViewport.width
                 canvas.height = canvasViewport.height
 
-                canvas.style.width = `${Math.floor(renderViewport.width)}px`
+                canvas.style.width = `${Math.min(Math.floor(renderViewport.width), 568)}px`
                 canvas.style.height = 'auto'
 
                 page.render({canvasContext, viewport: canvasViewport})
