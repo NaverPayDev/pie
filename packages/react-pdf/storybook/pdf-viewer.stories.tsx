@@ -17,11 +17,9 @@ export function 기본_PdfViewer() {
         <PDFViewer
             pdfUrl={PDF_URL}
             renderMode="canvas"
-            options={{
-                externalLinkTarget: '_blank',
-                cMapUrl: 'https://stage-financial-pstatic.fe.naver.com/pie/react-pdf/cmaps/',
-                cMapCompressed: true,
-            }}
+            externalLinkTarget="_blank"
+            cMapUrl="https://stage-financial-pstatic.fe.naver.com/pie/react-pdf/cmaps/"
+            cMapCompressed={true}
         />
     )
 }
