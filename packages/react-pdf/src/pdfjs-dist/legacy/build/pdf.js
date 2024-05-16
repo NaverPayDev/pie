@@ -15268,7 +15268,8 @@ var CanvasGraphics = function CanvasGraphicsClosure() {
         var restoreNeeded = false;
         var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
         // @yceffort: cmap으로 도 지원하지 못하는 미지원 글꼴에 대한 예외 처리
-        var character = glyph.unicode || glyph.fontChar;
+        var character = glyph.isInFont ? glyph.fontChar : glyph.unicode;
+        var character = glyph.fontChar;
         var accent = glyph.accent;
         var scaledX, scaledY, scaledAccentX, scaledAccentY;
         var width = glyph.width;
@@ -21051,7 +21052,7 @@ exports.SVGGraphics = SVGGraphics;
 
           var width = glyph.width;
           // @yceffort: cmap으로 도 지원하지 못하는 미지원 글꼴에 대한 예외 처리
-          var character = glyph.unicode || glyph.fontChar;
+          var character = glyph.isInFont ? glyph.fontChar : glyph.unicode;
           var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
           var charWidth = width * widthAdvanceScale + spacing * fontDirection;
 
