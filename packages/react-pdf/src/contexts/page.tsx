@@ -1,21 +1,38 @@
 import {PropsWithChildren, createContext, useContext, useMemo} from 'react'
 
-import type {PDFPageProxy} from '../pdfjs-dist/types/pdfjs'
+import {usePdfContext} from './pdf'
 
-export interface PdfPageContext {
+import type {PDFPageProxy, PDFPageViewport} from '../pdfjs-dist/types/pdfjs'
+
+interface PdfPageProviderProps {
     page: PDFPageProxy
+    width?: number
+    height?: number
+    rotate?: number
+}
+
+export type PdfPageContext = PdfPageProviderProps & {
+    viewport: PDFPageViewport
     scale: number
 }
 
 const Context = createContext<PdfPageContext | undefined>(undefined)
 
-export function PdfPageProvider({page, children}: PropsWithChildren<{page: PDFPageProxy}>) {
+export function PdfPageProvider({page, width, height, children}: PropsWithChildren<PdfPageProviderProps>) {
+    const {width: windowWidth} = usePdfContext()
+
     const value = useMemo(() => {
-        return {
-            page,
-            scale: 1,
-        }
-    }, [page])
+        const viewport = page.getViewport({scale: 1})
+        const scale = width
+            ? width / viewport.width
+            : height
+            ? height / viewport.height
+            : windowWidth
+            ? windowWidth / viewport.width
+            : 1
+        const viewportWithScale = page.getViewport({scale})
+        return {page, viewport: viewportWithScale, scale}
+    }, [height, page, width, windowWidth])
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
