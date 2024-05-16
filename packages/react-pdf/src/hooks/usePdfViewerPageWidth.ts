@@ -25,7 +25,6 @@ const usePdfViewerPageWidth = (refElement: RefObject<HTMLDivElement>) => {
     }, 100)
 
     useEffect(() => {
-        getClientWidth()
         window.addEventListener('resize', getClientWidth)
         return () => {
             window.removeEventListener('resize', getClientWidth)
