@@ -2,8 +2,8 @@
 import {memo, useCallback, useState} from 'react'
 
 import classNames from 'classnames/bind'
-import {usePdfPageContext} from 'src/contexts/page'
 
+import {usePdfPageContext} from '../../contexts/page'
 import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 // @ts-ignore
@@ -33,7 +33,7 @@ function getExternalLinkTargetValue(externalLinkTarget?: '_self' | '_blank' | '_
 
 export const AnnotationLayer = memo(function AnnotationLayer() {
     const {externalLinkTarget} = usePdfContext()
-    const {page} = usePdfPageContext()
+    const {page, scale} = usePdfPageContext()
     const [annotations, setAnnotations] = useState<PDFAnnotations | undefined>()
 
     useIsomorphicLayoutEffect(() => {
@@ -50,10 +50,17 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 if (!element) {
                     return
                 }
+
+                /**
+                 * rerender 전에 해당 layer를 초기화합니다.
+                 */
+                const children = element.children
+                Array.from(children).map((el) => el.remove())
+
                 const linkService = new PDFLinkService({
                     externalLinkTarget: getExternalLinkTargetValue(externalLinkTarget),
                 })
-                const viewport = page.getViewport({scale: 1}).clone({dontFlip: true})
+                const viewport = page.getViewport({scale}).clone({dontFlip: true})
                 const parameters = {
                     annotations,
                     div: element,
@@ -66,8 +73,6 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 try {
                     pdfjs?.AnnotationLayer?.render(parameters)
                 } catch {}
-
-                const children = element.children
 
                 if (children.length > 0 && children?.[0]) {
                     const firstChildren = children[0] as HTMLElement
@@ -87,7 +92,7 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 }
             })
         },
-        [annotations, externalLinkTarget, page],
+        [annotations, externalLinkTarget, page, scale],
     )
 
     if (!annotations) {

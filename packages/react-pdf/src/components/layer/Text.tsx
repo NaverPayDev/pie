@@ -1,9 +1,9 @@
 import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
-import {usePdfPageContext} from 'src/contexts/page'
-import {usePdfContext} from 'src/contexts/pdf'
 
+import {usePdfPageContext} from '../../contexts/page'
+import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import {mergeTextItems} from '../../utils/text'
 import styles from './Text.module.scss'
@@ -17,8 +17,8 @@ export const TextLayerItem = memo(function TextLayerItem({
 }: {
     textItem: TextContentItem
 }) {
-    const {page} = usePdfPageContext()
-    const {rotation, viewBox} = page.getViewport({scale: 1})
+    const {page, scale} = usePdfPageContext()
+    const {rotation, viewBox} = page.getViewport({scale})
 
     const drawTextLayerItem = useCallback(
         async (element: HTMLSpanElement | null) => {
@@ -34,7 +34,7 @@ export const TextLayerItem = memo(function TextLayerItem({
                 element.style.fontFamily = `${fontName}, ${fallbackFontName}`
 
                 const defaultSideways = rotation % 180 !== 0
-                const targetWidth = width
+                const targetWidth = width * scale
                 const actualWidth = element.getBoundingClientRect()[defaultSideways ? 'height' : 'width']
                 let elementTransform = `scaleX(${targetWidth / actualWidth})`
                 const ascent = fontData?.ascent || 0
@@ -46,19 +46,22 @@ export const TextLayerItem = memo(function TextLayerItem({
                 element.style.webkitTransform = elementTransform
             })
         },
-        [fontName, page.commonObjs, rotation, width],
+        [fontName, page.commonObjs, rotation, scale, width],
     )
 
     const style = useMemo(() => {
         const defaultSideways = rotation % 180 !== 0
         const [fontHeightPx, fontWidthPx, offsetX, offsetY, x, y] = transform
         const [xMin, yMin, _, yMax] = viewBox
+        const fontSize = defaultSideways ? fontWidthPx : fontHeightPx
+        const top = defaultSideways ? x + offsetX + yMin : yMax - (y + offsetY)
+        const left = defaultSideways ? y - xMin : x - xMin
         return {
-            fontSize: defaultSideways ? fontWidthPx : fontHeightPx,
-            top: defaultSideways ? x + offsetX + yMin : yMax - (y + offsetY),
-            left: defaultSideways ? y - xMin : x - xMin,
+            fontSize: fontSize * scale,
+            top: top * scale,
+            left: left * scale,
         }
-    }, [rotation, transform, viewBox])
+    }, [rotation, scale, transform, viewBox])
 
     return (
         <span ref={drawTextLayerItem} className={cx('text-layer-item')} style={style}>
@@ -69,9 +72,8 @@ export const TextLayerItem = memo(function TextLayerItem({
 
 export const TextLayer = memo(function TextLayer() {
     const {tokenize} = usePdfContext()
-    const {page} = usePdfPageContext()
+    const {page, viewport} = usePdfPageContext()
     const [texts, setTexts] = useState<TextContent | undefined>()
-    const viewport = page.getViewport({scale: 1})
 
     useIsomorphicLayoutEffect(() => {
         async function init() {
@@ -89,6 +91,10 @@ export const TextLayer = memo(function TextLayer() {
         <div
             className={cx('text-layer')}
             style={{
+                position: 'absolute',
+                color: 'transparent',
+                top: 0,
+                left: 0,
                 width: `${Math.floor(viewport.width)}px`,
                 height: `${Math.floor(viewport.height)}px`,
             }}
