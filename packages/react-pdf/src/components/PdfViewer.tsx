@@ -1,9 +1,10 @@
-import {MouseEventHandler, ReactNode, useCallback, useState} from 'react'
+import {MouseEventHandler, ReactNode, useCallback, useEffect, useRef, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
 import {PdfProvider, PdfProviderContext} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
+import usePdfViewerPageWidth from '../hooks/usePdfViewerPageWidth'
 import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
 import {Pages} from './Pages'
@@ -43,9 +44,12 @@ export function PDFViewer({
     onClickWords,
     header,
     footer,
+    lazyLoading = true,
     ...options
 }: PDFViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
+    const ref = useRef<HTMLDivElement>(null)
+    const {width, getClientWidth} = usePdfViewerPageWidth(ref)
 
     useIsomorphicLayoutEffect(() => {
         async function init() {
@@ -67,6 +71,13 @@ export function PDFViewer({
         }
         init()
     }, [options?.cMapCompressed, options?.cMapUrl, options?.withCredentials, pdf, pdfUrl])
+
+    useEffect(() => {
+        if (width) {
+            return
+        }
+        getClientWidth()
+    }, [width, getClientWidth])
 
     const handleClickWords: MouseEventHandler<HTMLDivElement | HTMLSpanElement> = useCallback(
         async (e) => {
@@ -96,13 +107,19 @@ export function PDFViewer({
         [onClickWords],
     )
 
-    if (!pdf) {
+    if (!pdf || !width) {
         return null
     }
 
     return (
-        <PdfProvider pdf={pdf} tokenize={injectedTokenize ?? (onClickWords || []).length > 0} {...options}>
-            <div className={cx('article')} onClick={handleClickWords}>
+        <PdfProvider
+            pdf={pdf}
+            width={width}
+            lazyLoading={lazyLoading}
+            tokenize={injectedTokenize ?? (onClickWords || []).length > 0}
+            {...options}
+        >
+            <div ref={ref} className={cx('article')} onClick={handleClickWords}>
                 {header}
                 <Pages />
                 {footer}
