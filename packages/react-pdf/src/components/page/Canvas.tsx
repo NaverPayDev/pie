@@ -1,11 +1,10 @@
 import {memo, useCallback} from 'react'
 
-import {usePdfPageContext} from 'src/contexts/page'
-
+import {usePdfPageContext} from '../../contexts/page'
 import {getPixelRatio} from '../../utils/pdf'
 
 export const PageCanvas = memo(function PageCanvas() {
-    const {page} = usePdfPageContext()
+    const {page, viewport: renderViewport, scale} = usePdfPageContext()
 
     const drawCanvas = useCallback(
         (canvas: HTMLCanvasElement | null) => {
@@ -19,19 +18,18 @@ export const PageCanvas = memo(function PageCanvas() {
                     return
                 }
 
-                const canvasViewport = page.getViewport({scale: 1 * getPixelRatio()})
-                const renderViewport = page.getViewport({scale: 1})
+                const canvasViewport = page.getViewport({scale: scale * getPixelRatio()})
 
                 canvas.width = canvasViewport.width
                 canvas.height = canvasViewport.height
 
-                canvas.style.width = `${Math.min(Math.floor(renderViewport.width), 568)}px`
-                canvas.style.height = 'auto'
+                canvas.style.width = `${Math.floor(renderViewport.width)}px`
+                canvas.style.height = `${Math.floor(renderViewport.height)}px`
 
                 page.render({canvasContext, viewport: canvasViewport})
             })
         },
-        [page],
+        [page, renderViewport.height, renderViewport.width, scale],
     )
 
     return <canvas ref={drawCanvas} dir="ltr" />
