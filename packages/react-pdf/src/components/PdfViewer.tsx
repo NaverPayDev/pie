@@ -30,7 +30,7 @@ export type PDFViewerProps = PdfRenderProps & {
      * pdf load 및 rendering 관련 callback
      */
     onLoadPDFRender?: () => void
-    onErrorPDFRender?: (e: Error) => void
+    onErrorPDFRender?: (e: unknown) => void
     /**
      * pdf 외 rendering 할 컴포넌트
      */
@@ -45,6 +45,8 @@ export function PDFViewer({
     header,
     footer,
     lazyLoading = true,
+    onLoadPDFRender,
+    onErrorPDFRender,
     ...options
 }: PDFViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
@@ -53,20 +55,25 @@ export function PDFViewer({
 
     useIsomorphicLayoutEffect(() => {
         async function init() {
-            const pdfDocument = await getPdfDocument({
-                file: pdfUrl,
-                /**
-                 * 오래된 파일의 경우 cmap을 custom하게 지원
-                 */
-                ...(options?.cMapUrl ? {cMapUrl: options.cMapUrl} : {}),
-                ...(options?.cMapCompressed ? {cMapPacked: options.cMapCompressed} : {}),
-                /**
-                 * header 설정
-                 */
-                ...(options?.withCredentials ? {withCredentials: options.withCredentials} : {}),
-            })
-            if (!pdf || pdf.fingerprint !== pdfDocument.fingerprint) {
-                setPdf(pdfDocument)
+            try {
+                const pdfDocument = await getPdfDocument({
+                    file: pdfUrl,
+                    /**
+                     * 오래된 파일의 경우 cmap을 custom하게 지원
+                     */
+                    ...(options?.cMapUrl ? {cMapUrl: options.cMapUrl} : {}),
+                    ...(options?.cMapCompressed ? {cMapPacked: options.cMapCompressed} : {}),
+                    /**
+                     * header 설정
+                     */
+                    ...(options?.withCredentials ? {withCredentials: options.withCredentials} : {}),
+                })
+                if (!pdf || pdf.fingerprint !== pdfDocument.fingerprint) {
+                    setPdf(pdfDocument)
+                }
+                onLoadPDFRender?.()
+            } catch (error) {
+                onErrorPDFRender?.(error)
             }
         }
         init()
