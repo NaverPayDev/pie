@@ -2,6 +2,8 @@
 
 ## 🚨 Warning
 
+- 스타일이 적용된 PDFViewer를 사용하기 위해서는, `PDFViewer`를 사용하는 파일 최상단에 `import '@naverpay/react-pdf/index.css'` 추가가 필요합니다.
+
 ## 기본 사용법
 
 - 단순 PDF Viewer만 필요한 경우 (즉, pdf text에 따른 handler가 필요 없는 경우) 사용됩니다.
