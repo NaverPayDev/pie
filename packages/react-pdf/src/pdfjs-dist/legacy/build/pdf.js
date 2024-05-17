@@ -11257,7 +11257,6 @@ function () {
       onUnsupportedFeature: this._onUnsupportedFeature.bind(this)
     });
     this._params = params;
-    // @see: https://oss.fin.navercorp.com/common-fe/pie/issues/1372
     this.CMapReaderFactory = new params.CMapReaderFactory({
       baseUrl: params.cMapUrl,
       isCompressed: params.cMapPacked
