@@ -6,7 +6,7 @@
         "declarationDir": "./dist",
         "allowJs": false,
         "typeRoots": ["./node_modules/@types"],
-        "types": ["react"]
+        "types": ["react", "node"]
     },
     "include": ["./src/**/*.ts*", "./typings"],
     "exclude": ["node_modules", "dist"]
