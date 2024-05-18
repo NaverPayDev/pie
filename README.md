@@ -40,4 +40,4 @@
 
 ### 버그나 이슈가 있다면?
 
-- 버그나 이슈를 발견했다면 [이슈를 등록](https://github.com/NaverPayDev/pie/issues)에 등록해주시거나, [네이버 파이낸셜 공통개발 TF](nfn0000220@navercorp.com)로 메일 부탁드립니다.
+- 버그나 이슈를 발견했다면 [이슈를 등록](https://github.com/NaverPayDev/pie/issues)에 등록해주시고 `@NaverPayDev/frontend`을 멘션해주세요. 혹은 [네이버 파이낸셜 공통개발 TF](nfn0000220@navercorp.com)로 메일 부탁드립니다.
