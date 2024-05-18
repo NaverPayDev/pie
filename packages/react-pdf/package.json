@@ -35,7 +35,8 @@
         "rollup": "^2.79.1",
         "@naverpay/tsconfig": "workspace:^",
         "@naverpay/rollup": "workspace:^",
-        "@types/react": "^18.2.75"
+        "@types/react": "^18.2.75",
+        "@types/node": "^20.12.7"
     },
     "peerDependencies": {
         "react": "^17 || ^18"
