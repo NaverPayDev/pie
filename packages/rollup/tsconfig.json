@@ -8,7 +8,9 @@
         "declarationDir": "./dist",
         "module": "CommonJS",
         "removeComments": false,
-        "target": "es2017"
+        "target": "es2017",
+        "typeRoots": ["./node_modules/@types"],
+        "types": ["node"]
     },
     "include": ["./src"],
     "exclude": ["node_modules", "dist"]
