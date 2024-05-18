@@ -19,8 +19,6 @@
         "sourceMap": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
-        "declaration": true,
-        "typeRoots": ["../../node_modules/@types"],
-        "types": ["react", "node"]
+        "declaration": true
     }
 }
