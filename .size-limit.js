@@ -7,13 +7,17 @@ const packageJsonList = glob
         cwd: path.join(process.cwd(), 'packages'),
     })
     .map((filePath) => {
-        const {name, main} = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'packages', filePath), 'utf8'))
+        const {name, main, private} = JSON.parse(
+            fs.readFileSync(path.join(process.cwd(), 'packages', filePath), 'utf8'),
+        )
         const packageName = name.split('/')[1]
         return {
             name: packageName,
+            private,
             path: `packages/${packageName}${main.slice(1)}`,
             limit: '500 ms',
         }
     })
+    .filter(({private}) => !private)
 
 module.exports = packageJsonList
