@@ -28,7 +28,7 @@ function verifyPackageJSON(packageDir: string) {
 
 const SUPPORT_MODULES: readonly ModuleFormat[] = ['cjs', 'esm']
 
-function getBabelPresets(react: boolean, ie: boolean) {
+function getBabelPresets(react: boolean, ie: boolean, reactRuntime: 'classic' | 'automatic' = 'classic') {
     const presetEnv = [
         '@babel/preset-env',
         {
@@ -42,7 +42,7 @@ function getBabelPresets(react: boolean, ie: boolean) {
         return [presetEnv, '@babel/preset-typescript']
     }
 
-    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: 'automatic'}]]
+    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: reactRuntime}]]
 }
 
 interface GenerateRollupConfigOptions {
@@ -52,6 +52,7 @@ interface GenerateRollupConfigOptions {
         import: string
         types: string
     }
+    outputPaths?: OutputOptions['paths']
     packageDir: string
     extensions?: string[]
     plugins: RollupOptions['plugins']
@@ -60,6 +61,7 @@ interface GenerateRollupConfigOptions {
     ie: boolean
     minify: boolean
     supportModules?: readonly ModuleFormat[]
+    reactRuntime?: 'classic' | 'automatic'
 }
 
 export function generateRollupConfig({
@@ -72,6 +74,8 @@ export function generateRollupConfig({
     scss = false,
     ie = false,
     minify = true,
+    outputPaths = {},
+    reactRuntime = 'automatic',
     supportModules = SUPPORT_MODULES,
 }: GenerateRollupConfigOptions): RollupOptions[] {
     const packageJSON = verifyPackageJSON(packageDir)
@@ -122,6 +126,13 @@ export function generateRollupConfig({
                     : {
                           exports: 'auto',
                       }),
+                paths: {
+                    /**
+                     * https://github.com/facebook/react/issues/20235#issuecomment-750911623
+                     * https://github.com/facebook/react/issues/20235#issuecomment-1095340542
+                     */
+                    ...outputPaths,
+                },
             },
         ]
 
@@ -154,7 +165,7 @@ export function generateRollupConfig({
                 babelHelpers: 'bundled',
                 exclude: /node_modules/,
                 extensions,
-                presets: getBabelPresets(react, ie),
+                presets: getBabelPresets(react, ie, reactRuntime),
                 plugins: ['@babel/plugin-transform-class-properties'],
             }),
             json(),
@@ -187,6 +198,7 @@ export function generateRollupConfig({
                 ...Object.keys(packageJSON?.dependencies || []),
                 ...Object.keys(packageJSON?.peerDependencies || []),
                 ...builtins,
+                ...(reactRuntime === 'automatic' ? ['react/jsx-runtime'] : []),
             ],
         }
     })
