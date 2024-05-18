@@ -1,7 +1,8 @@
 {
     "name": "@naverpay/rollup",
-    "version": "3.6.0",
+    "version": "0.0.0",
     "main": "dist/index.js",
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "require": "./dist/index.js",
@@ -9,8 +10,18 @@
         },
         "./package.json": "./package.json"
     },
+    "keywords": [
+        "naver",
+        "naverpay",
+        "naver financial",
+        "rollup"
+    ],
+    "files": [
+        "dist"
+    ],
     "scripts": {
-        "build": "tsc -p tsconfig.json"
+        "clean": "rm -rf dist",
+        "build": "pnpm run clean && tsc -p tsconfig.json"
     },
     "dependencies": {
         "@babel/cli": "^7.13.16",
@@ -34,8 +45,9 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@naverpay/browserslist-config": "1.6.1",
+        "@naverpay/browserslist-config": "^1.6.1",
         "@naverpay/tsconfig": "workspace:^",
+        "@types/node": "^20.12.7",
         "@types/babel__core": "^7.1.14",
         "rollup": "^2.79.1"
     },

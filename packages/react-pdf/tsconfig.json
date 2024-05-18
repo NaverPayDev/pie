@@ -4,7 +4,9 @@
         "baseUrl": ".",
         "emitDeclarationOnly": true,
         "declarationDir": "./dist",
-        "allowJs": false
+        "allowJs": false,
+        "typeRoots": ["./node_modules/@types"],
+        "types": ["react"]
     },
     "include": ["./src/**/*.ts*", "./typings"],
     "exclude": ["node_modules", "dist"]
