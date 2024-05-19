@@ -42,5 +42,5 @@ npm install @naverpay/react-pdf
 
 ### 기타 장점
 
-- pdfjs-dist를 내장하여,ㄴ pdfjs-dist에서 pdf 파싱을 위한 worker setting이 불필요합니다.
+- pdfjs-dist를 내장하여, pdfjs-dist에서 pdf 파싱을 위한 worker setting이 불필요합니다.
 - pdf 내부의 한글 글자 클릭 시, custom 한 action을 사용할 수 있도록 추가했습니다.
