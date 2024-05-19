@@ -1,3 +1,6 @@
+// ie11 intersection observer polyfill
+import 'intersection-observer'
+
 export * from './utils/pdf'
 export * from './components/page/Canvas'
 export * from './components/page/Svg'
