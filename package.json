@@ -1,5 +1,6 @@
 {
     "name": "pie",
+    "private": true,
     "author": "@NaverPayDev/frontend",
     "repository": {
         "type": "git",
