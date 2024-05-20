@@ -46,7 +46,6 @@ function getBabelPresets(react: boolean, ie: boolean, reactRuntime: 'classic' | 
 }
 
 interface GenerateRollupConfigOptions {
-    packageDir: string
     entrypoint: string | Record<'index' & string, string>
     outpoint?: {
         require: string
@@ -54,6 +53,7 @@ interface GenerateRollupConfigOptions {
         types: string
     }
     outputPaths?: OutputOptions['paths']
+    packageDir: string
     extensions?: string[]
     plugins: RollupOptions['plugins']
     react: boolean
@@ -64,21 +64,6 @@ interface GenerateRollupConfigOptions {
     reactRuntime?: 'classic' | 'automatic'
 }
 
-/**
- * Javascript, Typescript 환경의 라이브러리를 번들링할 수 있는 Rollup Config를 return하는 함수입니다.
- * @param packageDir (required) 번들링할 패키지의 package.json 위치
- * @param entrypoint (required) 번들링할 패키지의 파일 entrypoint
- * @param outpoint (optional) 번들된 파일이 위치할 outpoint
- * @param extensions (optional) 번들할 파일 확장자  (default : [.ts, .tsx])
- * @param plugins (optional) 추가하고 싶은 rollup plugins
- * @param react (optional) 번들링할 패키지의 react 지원 여부 (default true)
- * @param scss (optional) 번들링할 패키지의 scss 지원 여부 / {ssr:true} 라면 css 파일을 export 합니다.(default false)
- * @param ie (optional) 번들링할 패키지의 ie 지원 여부 (default false)
- * @param minify (optional) 번들링할 패키지의 terser 압축 여부 (default true)
- * @param reactRuntime (optional) 번들링할 패키지의 babel react runtime 종류 (default automatic)
- * @param supportModules (optional) 번들링된 패키지가 지원할 modules (default ['cjs', 'esm'])
- * @returns rollup config
- */
 export function generateRollupConfig({
     entrypoint,
     outpoint,
@@ -90,7 +75,7 @@ export function generateRollupConfig({
     ie = false,
     minify = true,
     outputPaths = {},
-    reactRuntime = 'automatic',
+    reactRuntime = 'classic',
     supportModules = SUPPORT_MODULES,
 }: GenerateRollupConfigOptions): RollupOptions[] {
     const packageJSON = verifyPackageJSON(packageDir)
@@ -142,11 +127,9 @@ export function generateRollupConfig({
                           exports: 'auto',
                       }),
                 paths: {
-                    /**
-                     * https://github.com/facebook/react/issues/20235#issuecomment-750911623
-                     * https://github.com/facebook/react/issues/20235#issuecomment-1095340542
-                     */
                     ...outputPaths,
+                    // https://github.com/facebook/react/issues/20235#issuecomment-750911623
+                    // https://github.com/facebook/react/issues/20235#issuecomment-1095340542
                 },
             },
         ]
@@ -181,7 +164,10 @@ export function generateRollupConfig({
                 exclude: /node_modules/,
                 extensions,
                 presets: getBabelPresets(react, ie, reactRuntime),
-                plugins: ['@babel/plugin-transform-class-properties'],
+                plugins: [
+                    ['@babel/plugin-proposal-decorators', {version: '2022-03'}],
+                    '@babel/plugin-transform-class-properties',
+                ],
             }),
             json(),
             ...(scss !== false
