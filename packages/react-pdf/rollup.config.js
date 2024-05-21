@@ -10,7 +10,8 @@ module.exports = generateRollupConfig({
     },
     minify: false,
     ie: true,
-    scss: {ssr: true},
+    react: {runtime: 'automatic'},
+    scss: {ssr: false},
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    supportModules: ['cjs', 'esm'],
+    supportModules: ['cjs'],
 })
