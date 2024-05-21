@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.1.0
+
+### Minor Changes
+
+-   27ab462: [@naverpay/react-pdf] 제대로된 ssr 지원과 esm 지원을 드랍합니다.
+
 ## 0.0.3
 
 ### Patch Changes
