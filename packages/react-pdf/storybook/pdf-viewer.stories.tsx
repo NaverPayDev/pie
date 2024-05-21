@@ -1,8 +1,6 @@
 import React from 'react'
 
-import {PDFViewer} from '../dist/cjs'
-
-import '../dist/cjs/index.css'
+import {PDFViewer} from '../dist'
 
 const meta = {
     title: 'React PDF',
@@ -13,13 +11,5 @@ export default meta
 const PDF_URL = 'https://financial.pstatic.net/static/terms-policy/npay-usage/230906.pdf'
 
 export function 기본_PdfViewer() {
-    return (
-        <PDFViewer
-            pdfUrl={PDF_URL}
-            renderMode="canvas"
-            externalLinkTarget="_blank"
-            cMapUrl="https://stage-financial-pstatic.fe.naver.com/pie/react-pdf/cmaps/"
-            cMapCompressed={true}
-        />
-    )
+    return <PDFViewer pdfUrl={PDF_URL} renderMode="canvas" externalLinkTarget="_blank" />
 }
