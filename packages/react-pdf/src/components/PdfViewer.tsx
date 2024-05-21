@@ -44,6 +44,7 @@ export function PDFViewer({
     onClickWords,
     header,
     footer,
+    renderMode = 'canvas',
     lazyLoading = true,
     onLoadPDFRender,
     onErrorPDFRender,
@@ -122,6 +123,7 @@ export function PDFViewer({
         <PdfProvider
             pdf={pdf}
             width={width}
+            renderMode={renderMode}
             lazyLoading={lazyLoading}
             tokenize={injectedTokenize ?? (onClickWords || []).length > 0}
             {...options}
