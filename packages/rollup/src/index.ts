@@ -28,7 +28,7 @@ function verifyPackageJSON(packageDir: string) {
 
 const SUPPORT_MODULES: readonly ModuleFormat[] = ['cjs', 'esm']
 
-function getBabelPresets(react: boolean, ie: boolean, reactRuntime: 'classic' | 'automatic' = 'classic') {
+function getBabelPresets({react, ie}: Pick<GenerateRollupConfigOptions, 'react' | 'ie'>) {
     const presetEnv = [
         '@babel/preset-env',
         {
@@ -42,7 +42,7 @@ function getBabelPresets(react: boolean, ie: boolean, reactRuntime: 'classic' | 
         return [presetEnv, '@babel/preset-typescript']
     }
 
-    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: reactRuntime}]]
+    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: react.runtime}]]
 }
 
 interface GenerateRollupConfigOptions {
@@ -56,12 +56,11 @@ interface GenerateRollupConfigOptions {
     packageDir: string
     extensions?: string[]
     plugins: RollupOptions['plugins']
-    react: boolean
+    react: false | {runtime: 'classic' | 'automatic'}
     scss: false | {ssr: boolean}
     ie: boolean
     minify: boolean
     supportModules?: readonly ModuleFormat[]
-    reactRuntime?: 'classic' | 'automatic'
 }
 
 export function generateRollupConfig({
@@ -70,12 +69,11 @@ export function generateRollupConfig({
     packageDir,
     extensions = ['.ts', '.tsx'],
     plugins: extraPlugins = [],
-    react = true,
+    react = false,
     scss = false,
     ie = false,
     minify = true,
     outputPaths = {},
-    reactRuntime = 'classic',
     supportModules = SUPPORT_MODULES,
 }: GenerateRollupConfigOptions): RollupOptions[] {
     const packageJSON = verifyPackageJSON(packageDir)
@@ -163,7 +161,7 @@ export function generateRollupConfig({
                 babelHelpers: 'bundled',
                 exclude: /node_modules/,
                 extensions,
-                presets: getBabelPresets(react, ie, reactRuntime),
+                presets: getBabelPresets({react, ie}),
                 plugins: [
                     ['@babel/plugin-proposal-decorators', {version: '2022-03'}],
                     '@babel/plugin-transform-class-properties',
@@ -199,7 +197,7 @@ export function generateRollupConfig({
                 ...Object.keys(packageJSON?.dependencies || []),
                 ...Object.keys(packageJSON?.peerDependencies || []),
                 ...builtins,
-                ...(reactRuntime === 'automatic' ? ['react/jsx-runtime'] : []),
+                ...(react && react.runtime === 'automatic' ? ['react/jsx-runtime'] : []),
             ],
         }
     })
