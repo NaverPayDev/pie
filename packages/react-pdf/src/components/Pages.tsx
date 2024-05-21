@@ -33,12 +33,10 @@ export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
 
     return (
         <PdfPageProvider page={page}>
-            <div className={cx('document')} style={{position: 'relative'}} data-page-number={pageNumber}>
-                {renderMode === 'canvas' && <PageCanvas />}
-                {renderMode === 'svg' && <PageSvg />}
-                <TextLayer />
-                <AnnotationLayer />
-            </div>
+            {renderMode === 'canvas' && <PageCanvas />}
+            {renderMode === 'svg' && <PageSvg />}
+            <TextLayer />
+            <AnnotationLayer />
         </PdfPageProvider>
     )
 })
@@ -63,7 +61,13 @@ export const Pages = memo(function Pages({children}: {children?: ReactNode}) {
         <>
             {(lazyLoading ? renderPages : pageNumbers).map((pageNumber) => {
                 return (
-                    <div key={pageNumber} ref={lazyLoading && renderPages.length === pageNumber ? ref : null}>
+                    <div
+                        key={pageNumber}
+                        ref={lazyLoading && renderPages.length === pageNumber ? ref : null}
+                        className={cx('document')}
+                        style={{position: 'relative'}}
+                        data-page-number={pageNumber}
+                    >
                         <Page pageNumber={pageNumber} />
                     </div>
                 )
