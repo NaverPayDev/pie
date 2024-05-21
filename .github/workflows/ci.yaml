@@ -25,4 +25,5 @@ jobs:
               with:
                   version: 8
                   run_install: true
+            - run: pnpm run build
             - run: pnpm run test
