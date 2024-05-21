@@ -1,5 +1,11 @@
 # @naverpay/rollup
 
+## 0.1.0
+
+### Minor Changes
+
+-   4869cf0: [@naverpay/rollup] 중복되는 react 옵션을 하나로 합치도록 수정합니다.
+
 ## 0.0.2
 
 ### Patch Changes
