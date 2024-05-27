@@ -25,7 +25,7 @@ export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
             setPage(newPage)
         }
         init()
-    }, [])
+    }, [pdf])
 
     if (!page) {
         return null
