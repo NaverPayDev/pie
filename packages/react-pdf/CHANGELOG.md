@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.2.0
+
+### Minor Changes
+
+-   3929687: [react-pdf] pdf viewer 컴포넌트명 변경 및 오류를 수정합니다.
+
 ## 0.1.0
 
 ### Minor Changes
