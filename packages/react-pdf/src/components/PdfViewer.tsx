@@ -1,4 +1,4 @@
-import {MouseEventHandler, ReactNode, useCallback, useEffect, useRef, useState} from 'react'
+import {MouseEventHandler, ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
@@ -8,13 +8,13 @@ import usePdfViewerPageWidth from '../hooks/usePdfViewerPageWidth'
 import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
 import {Pages} from './Pages'
-import styles from './PDFViewer.module.scss'
+import styles from './PdfViewer.module.scss'
 
 const cx = classNames.bind(styles)
 
 type PdfRenderProps = Omit<PdfProviderContext, 'pdf'>
 
-export type PDFViewerProps = PdfRenderProps & {
+export type PdfViewerProps = PdfRenderProps & {
     /**
      * pdf load 시 필요한 props
      */
@@ -38,7 +38,7 @@ export type PDFViewerProps = PdfRenderProps & {
     footer?: ReactNode
 }
 
-export function PDFViewer({
+export function PdfViewer({
     pdfUrl,
     tokenize: injectedTokenize,
     onClickWords,
@@ -46,29 +46,35 @@ export function PDFViewer({
     footer,
     renderMode = 'canvas',
     lazyLoading = true,
+    externalLinkTarget = '_blank',
     onLoadPDFRender,
     onErrorPDFRender,
     ...options
-}: PDFViewerProps) {
+}: PdfViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
     const ref = useRef<HTMLDivElement>(null)
     const {width, getClientWidth} = usePdfViewerPageWidth(ref)
 
+    const loadPdfConfig = useMemo(
+        () => ({
+            file: pdfUrl,
+            /**
+             * 오래된 파일의 경우 cmap을 custom하게 지원
+             */
+            ...(options?.cMapUrl ? {cMapUrl: options.cMapUrl} : {}),
+            ...(options?.cMapCompressed ? {cMapPacked: options.cMapCompressed} : {}),
+            /**
+             * header 설정
+             */
+            ...(options?.withCredentials ? {withCredentials: options.withCredentials} : {}),
+        }),
+        [pdfUrl], // eslint-disable-line react-hooks/exhaustive-deps
+    )
+
     useIsomorphicLayoutEffect(() => {
         async function init() {
             try {
-                const pdfDocument = await getPdfDocument({
-                    file: pdfUrl,
-                    /**
-                     * 오래된 파일의 경우 cmap을 custom하게 지원
-                     */
-                    ...(options?.cMapUrl ? {cMapUrl: options.cMapUrl} : {}),
-                    ...(options?.cMapCompressed ? {cMapPacked: options.cMapCompressed} : {}),
-                    /**
-                     * header 설정
-                     */
-                    ...(options?.withCredentials ? {withCredentials: options.withCredentials} : {}),
-                })
+                const pdfDocument = await getPdfDocument(loadPdfConfig)
                 if (!pdf || pdf.fingerprint !== pdfDocument.fingerprint) {
                     setPdf(pdfDocument)
                 }
@@ -78,7 +84,7 @@ export function PDFViewer({
             }
         }
         init()
-    }, [options?.cMapCompressed, options?.cMapUrl, options?.withCredentials, pdf, pdfUrl])
+    }, [loadPdfConfig])
 
     useEffect(() => {
         if (width) {
@@ -125,6 +131,7 @@ export function PDFViewer({
             width={width}
             renderMode={renderMode}
             lazyLoading={lazyLoading}
+            externalLinkTarget={externalLinkTarget}
             tokenize={injectedTokenize ?? (onClickWords || []).length > 0}
             {...options}
         >
