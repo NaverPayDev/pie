@@ -9,9 +9,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: pnpm/action-setup@v3
+            - name: Use Node.js
+              uses: actions/setup-node@v4
               with:
-                  version: 9
+                  node-version: '20.x'
+            - name: setup pnpm and install dependencies
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 9.1.1
                   run_install: true
             - run: pnpm run prettier
             - run: pnpm run lint
@@ -21,9 +26,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: pnpm/action-setup@v3
+            - name: Use Node.js
+              uses: actions/setup-node@v4
               with:
-                  version: 9
+                  node-version: '20.x'
+            - name: setup pnpm and install dependencies
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 9.1.1
                   run_install: true
             - run: pnpm run build
             - run: pnpm run test
