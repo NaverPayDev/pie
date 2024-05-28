@@ -33,5 +33,9 @@
     },
     "peerDependencies": {
         "react": "^17 || ^18"
+    },
+    "size-limit": {
+        "import": "{ PdfViewer }",
+        "limit": "300 kB"
     }
 }
