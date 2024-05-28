@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.2.1
+
+### Patch Changes
+
+-   d71c52e: [react-pdf] 파일 이름 변경에 따른, 잘못된 scss import 를 수정합니다.
+
 ## 0.2.0
 
 ### Minor Changes
