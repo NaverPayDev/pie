@@ -8,7 +8,6 @@ module.exports = generateRollupConfig({
         pdf: './src/pdfjs-dist/legacy/build/pdf.js',
         'pdf.worker': './src/pdfjs-dist/legacy/build/pdf.worker.js',
     },
-    minify: false,
     ie: true,
     react: {runtime: 'automatic'},
     scss: {ssr: false},
