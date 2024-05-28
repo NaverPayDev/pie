@@ -14,8 +14,8 @@ npm install @naverpay/react-pdf
 
 ## Description
 
-- [PDFViewer 설명 보기](./PDFViewer.md)
-- [getPdfDocument 설명 보기](./getPdfDocument.md)
+- [PdfViewer 설명 보기](https://github.com/NaverPayDev/pie/blob/main/packages/react-pdf/PdfViewer.md)
+- [getPdfDocument 설명 보기](https://github.com/NaverPayDev/pie/blob/main/packages/react-pdf/getPdfDocument.md)
 
 ## @naverpay/react-pdf 의 장점
 
