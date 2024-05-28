@@ -11,7 +11,7 @@ import {AnnotationLayer} from './layer/Annotation'
 import {TextLayer} from './layer/Text'
 import {PageCanvas} from './page/Canvas'
 import {PageSvg} from './page/Svg'
-import styles from './PDFViewer.module.scss'
+import styles from './PdfViewer.module.scss'
 
 const cx = classNames.bind(styles)
 
