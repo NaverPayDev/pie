@@ -1,4 +1,4 @@
-import {ReactNode, memo, useCallback, useMemo, useState} from 'react'
+import {ReactNode, memo, useCallback, useEffect, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
@@ -43,8 +43,21 @@ export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
 
 export const Pages = memo(function Pages({children}: {children?: ReactNode}) {
     const {pdf, lazyLoading} = usePdfContext()
-    const pageNumbers = useMemo(() => Array.from({length: pdf.numPages}, (_, index) => index + 1), [pdf.numPages])
-    const [renderPages, setRenderPages] = useState<number[]>(pdf.numPages > 0 ? [1] : [])
+    const [pageNumbers, setPageNumbers] = useState<number[]>([])
+    const [renderPages, setRenderPages] = useState<number[]>([])
+
+    useEffect(() => {
+        setPageNumbers(Array.from({length: pdf.numPages}, (_, index) => index + 1))
+
+        if (pdf.numPages > 0) {
+            setRenderPages([1])
+        }
+
+        return () => {
+            setPageNumbers([])
+            setRenderPages([])
+        }
+    }, [pdf.numPages])
 
     const handleIntersect = useCallback(() => {
         setRenderPages((prev) => {
