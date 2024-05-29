@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.3.0
+
+### Minor Changes
+
+-   14999f5: [react pdf] pdf props 변경에 따라, 기존 pdf가 남아있지 않도록 수정합니다.
+
 ## 0.2.1
 
 ### Patch Changes
