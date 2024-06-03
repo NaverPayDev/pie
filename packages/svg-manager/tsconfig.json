@@ -2,8 +2,9 @@
     "extends": "@naverpay/tsconfig/base.json",
     "compilerOptions": {
         "baseUrl": ".",
-        "outDir": "./dist",
-        "rootDir": "./src"
+        "outDir": "./dist/cjs",
+        "rootDir": "./src",
+        "emitDeclarationOnly": true
     },
     "include": ["./src", "./typings"],
     "exclude": ["node_modules", "dist"]

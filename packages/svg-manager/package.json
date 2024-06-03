@@ -20,7 +20,7 @@
     "author": "@NaverPayDev/frontend",
     "scripts": {
         "clean": "rm -rf dist",
-        "build-declarations": "tsc --declaration --emitDeclarationOnly --declarationDir dist/cjs",
+        "build-declarations": "tsc",
         "build": "npm run clean && npm run build-declarations && rollup -c"
     },
     "files": [
