@@ -23,6 +23,9 @@ importers:
       '@size-limit/preset-big-lib':
         specifier: ^11.0.2
         version: 11.0.2(size-limit@11.0.2)
+      core-js:
+        specifier: ^3.29.0
+        version: 3.37.0
       glob:
         specifier: ^9.3.4
         version: 9.3.5
@@ -172,9 +175,6 @@ importers:
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.75
-      core-js:
-        specifier: ^3.29.0
-        version: 3.37.0
       rollup:
         specifier: ^2.79.1
         version: 2.79.1
