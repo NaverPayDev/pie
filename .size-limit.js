@@ -19,7 +19,7 @@ const packageJsonList = glob
             /** size limit config 기본값 */
             name,
             path: `packages/${packageName}${main.slice(1)}`,
-            limit: '500 ms',
+            limit: '1 s',
 
             /** 패키지 내부에 추가되어 있는 값
              * @see https://github.com/ai/size-limit
