@@ -9,6 +9,7 @@ import terser from '@rollup/plugin-terser'
 import builtins from 'builtin-modules'
 import postcss from 'rollup-plugin-postcss'
 import preserveDirectives from 'rollup-plugin-preserve-directives'
+import {typescriptPaths} from 'rollup-plugin-typescript-paths'
 
 import type {RollupOptions, OutputOptions, ModuleFormat} from 'rollup'
 
@@ -43,6 +44,10 @@ function getBabelPresets({react, ie}: Pick<GenerateRollupConfigOptions, 'react' 
     }
 
     return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: react.runtime}]]
+}
+
+const normalizeOutput = (exportPath: string | {default: string}) => {
+    return typeof exportPath === 'string' ? exportPath : exportPath?.default
 }
 
 interface GenerateRollupConfigOptions {
@@ -100,6 +105,17 @@ export function generateRollupConfig({
                   {},
               )
 
+    let applyTsConfigAlias = false
+
+    const hasTypescriptFile = extensions.some((extension) => extension.startsWith('.ts'))
+    if (hasTypescriptFile) {
+        const tsConfigFile = require(path.join(packageDir, 'tsconfig.json'))
+        if (!tsConfigFile) {
+            throw new Error('typescript를 사용하고 있는 프로젝트라면, tsconfig.json을 추가해주세요.')
+        }
+        applyTsConfigAlias = Object.values(tsConfigFile.compilerOptions?.paths || {}).length > 0
+    }
+
     return supportModules.map((module) => {
         const isCommonJS = module === 'cjs'
         const isESM = module === 'esm'
@@ -109,7 +125,15 @@ export function generateRollupConfig({
         }
 
         const buildOutput =
-            typeof outputPath === 'object' ? (isCommonJS ? outputPath.require : outputPath.import) : outputPath
+            typeof outputPath === 'object'
+                ? normalizeOutput(isCommonJS ? outputPath.require : outputPath.import)
+                : outputPath
+
+        if (!buildOutput) {
+            throw new Error(
+                `${packageJSON.name}: [ERR_INVALID_OUTPUT] ${buildOutput}은 유효한 output 경로가 아닙니다. package.json의 "exports" 혹은 "main" 필드를 확인하세요.`,
+            )
+        }
 
         const output: OutputOptions[] = [
             {
@@ -120,9 +144,11 @@ export function generateRollupConfig({
                           entryFileNames: `[name]${path.extname(buildOutput)}`,
                           preserveModulesRoot: path.dirname(input.index),
                           preserveModules: true,
+                          interop: 'esModule',
                       }
                     : {
                           exports: 'auto',
+                          interop: 'auto',
                       }),
                 paths: {
                     ...outputPaths,
@@ -153,6 +179,9 @@ export function generateRollupConfig({
         })
 
         const plugins = [
+            ...(applyTsConfigAlias
+                ? [typescriptPaths({preserveExtensions: true, tsConfigPath: path.join(packageDir, 'tsconfig.json')})]
+                : []),
             resolve({
                 extensions,
             }),
