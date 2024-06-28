@@ -1,12 +1,12 @@
-import {readFileSync} from 'fs'
+import {readdirSync} from 'fs'
 import path from 'path'
 
 import {globSync} from 'glob'
+import semver from 'semver'
 
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs'
 
 const docsPath = path.join(process.cwd(), 'docs')
-const pkgRootPath = path.join(process.cwd(), '..', '..', 'packages')
 
 const readmdMdPaths = globSync('**/README.md', {
     cwd: docsPath,
@@ -16,27 +16,27 @@ const readmdMdPaths = globSync('**/README.md', {
 const docsSidebar: SidebarsConfig = {}
 
 readmdMdPaths.forEach((readmdMdPath) => {
-    const packageName = readmdMdPath.split('/')[0]
-    const packageJsonPath = `${pkgRootPath}/${packageName}/package.json`
-    const {name} = JSON.parse(readFileSync(packageJsonPath, 'utf8'))
+    const [packageScope, packageName] = readmdMdPath.split('/')
 
-    const mdPaths: string[] = globSync('**/*.md', {
-        cwd: path.join(docsPath, packageName),
-        ignore: ['**/node_modules/**'],
-    })
-        .sort((a, b) => {
-            if (a.includes('README.md')) {
-                return -1
-            }
-            if (b.includes('README.md')) {
-                return 1
-            }
-            return a.localeCompare(b)
+    const versions = readdirSync(path.join(docsPath, packageScope, packageName), {withFileTypes: true})
+        .filter((dirent) => {
+            return (
+                dirent.isDirectory() &&
+                (dirent.name.split('/')[0] === 'main' || semver.valid(dirent.name.split('/')[0]))
+            )
         })
-        .filter((md) => !md.includes('CHANGELOG.md'))
-        .map((mdPath) => `${packageName}/${mdPath}`.replace(/\.md$/, ''))
+        .map((dirent) => dirent.name)
+        .sort((a, b) => ([a, b].includes('main') ? -1 : semver.gt(a, b) ? -1 : 1))
 
-    docsSidebar[name] = [...mdPaths]
+    const versionCategoryItems = versions.map((version) => {
+        return {
+            [version]: globSync(`**/*.md`, {
+                cwd: path.join(docsPath, packageScope, packageName, version),
+            }).map((fileName) => `${packageScope}/${packageName}/${version}/${fileName.replace(/\.md$/, '')}`),
+        }
+    })
+
+    docsSidebar[`${packageScope}/${packageName}`] = [...versionCategoryItems]
 })
 
 const sidebars: SidebarsConfig = {
