@@ -3,7 +3,7 @@ name: Deploy Docs
 on:
     push:
         branches:
-            - main
+            - test-docusaurus
     workflow_dispatch:
 
 jobs:
@@ -23,11 +23,10 @@ jobs:
               with:
                   node-version: '20.x'
 
-            - name: setup pnpm and install dependencies
-              uses: pnpm/action-setup@v3
-              with:
-                  version: 9.1.1
-                  run_install: true
+            - name: Enable Corepack
+              run: |
+                  corepack enable
+                  pnpm install
 
             - name: Build Docs
               run: |
@@ -39,4 +38,4 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./apps/docs/dist
                   destination_dir: docs
-                  publish_branch: gh-pages
+                  publish_branch: test-gh-pages
