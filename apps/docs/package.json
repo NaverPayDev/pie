@@ -5,16 +5,16 @@
     "scripts": {
         "clean": "rm -rf dist && docusaurus clear",
         "docusaurus": "docusaurus",
-        "start": "concurrently \"pnpm run prepare-docs:watch\" \"docusaurus start\"",
-        "build:docs": "pnpm run prepare-docs && docusaurus build --out-dir ./dist",
+        "start": "NODE_ENV=development pnpm run prepare-docs && concurrently \"pnpm run prepare-docs:watch\" \"docusaurus start\"",
+        "build:docs": "NODE_ENV=production pnpm run prepare-docs && docusaurus build --out-dir ./dist",
         "swizzle": "docusaurus swizzle",
         "deploy": "docusaurus deploy",
         "serve": "docusaurus serve",
         "write-translations": "docusaurus write-translations",
         "write-heading-ids": "docusaurus write-heading-ids",
         "typecheck": "tsc",
-        "prepare-docs": "pnpm ts-node ./scripts/index.mjs",
-        "prepare-docs:watch": "nodemon --exec 'pnpm run prepare-docs'"
+        "prepare-docs": "tsc --project tsconfig.scripts.json && node ./scripts/dist/index.js",
+        "prepare-docs:watch": "NODE_ENV=development nodemon --exec 'pnpm run prepare-docs'"
     },
     "dependencies": {
         "@docusaurus/core": "3.0.1",
@@ -25,6 +25,7 @@
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
         "semver": "^7.6.0",
+        "shelljs": "^0.8.5",
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
@@ -33,6 +34,9 @@
         "@docusaurus/types": "3.0.1",
         "@easyops-cn/docusaurus-search-local": "^0.40.1",
         "@naverpay/browserslist-config": "1.6.1",
+        "@naverpay/tsconfig": "workspace:^",
+        "@types/semver": "^7.5.8",
+        "@types/shelljs": "^0.8.15",
         "concurrently": "^8.2.2",
         "nodemon": "^3.0.3"
     },

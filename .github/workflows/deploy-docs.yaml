@@ -1,0 +1,41 @@
+name: Deploy Docs
+
+on:
+    push:
+        branches:
+            - test-docusaurus
+    workflow_dispatch:
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v3
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
+
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20.x'
+
+            - name: Enable Corepack
+              run: |
+                  corepack enable
+                  pnpm install
+
+            - name: Build Docs
+              run: |
+                  pnpm run build:docs --filter docs
+
+            - name: Deploy Docs
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./apps/docs/dist
+                  destination_dir: docs
+                  publish_branch: test-gh-pages
