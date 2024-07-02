@@ -1,0 +1,14 @@
+{
+    "extends": "@naverpay/tsconfig/base.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "outDir": "./scripts/dist",
+        "rootDir": "./scripts",
+        "sourceMap": false,
+        "declaration": false
+    },
+    "include": ["./scripts"],
+    "exclude": ["node_modules", "./scripts/dist"]
+}

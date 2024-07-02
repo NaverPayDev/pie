@@ -19,6 +19,8 @@ npm install @naverpay/react-pdf
 
 ## @naverpay/react-pdf 의 장점
 
+> 자세한 개선사항은 [**여기**](https://github.com/NaverPayDev/pie/blob/main/packages/react-pdf/개선사항.md) 에서 확인할 수 있습니다.
+
 ### 성능 향상
 
 1. 한글을 고려한 렌더링 방식
