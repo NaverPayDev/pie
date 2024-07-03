@@ -39,3 +39,15 @@ jobs:
                   publish_dir: ./apps/docs/dist
                   destination_dir: docs
                   publish_branch: gh-pages
+
+            - name: Build Storybook
+              run: |
+                  pnpm run build:docs --filter ui-docs
+
+            - name: Deploy Storybook
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./apps/ui-docs/dist
+                  destination_dir: ui-docs
+                  publish_branch: gh-pages
