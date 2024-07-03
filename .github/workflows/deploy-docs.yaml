@@ -38,4 +38,4 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./apps/docs/dist
                   destination_dir: docs
-                  publish_branch: test-gh-pages
+                  publish_branch: gh-pages
