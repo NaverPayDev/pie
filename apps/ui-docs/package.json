@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist",
         "start": "storybook dev -p 6006",
-        "build:docs": "storybook build -o ./dist"
+        "build:docs": "storybook build -o ./dist --disable-telemetry"
     },
     "devDependencies": {
         "core-js": "^3.29.0",
@@ -25,6 +25,7 @@
         "storybook": "^7.6.10",
         "storybook-addon-state": "^1.0.3",
         "style-loader": "^2.0.0",
-        "tsconfig-paths-webpack-plugin": "^3.5.1"
+        "tsconfig-paths-webpack-plugin": "^3.5.1",
+        "@naverpay/react-pdf": "workspace:^"
     }
 }
