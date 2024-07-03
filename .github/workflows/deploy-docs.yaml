@@ -3,7 +3,7 @@ name: Deploy Docs
 on:
     push:
         branches:
-            - test-docusaurus
+            - main
     workflow_dispatch:
 
 jobs:
