@@ -1,5 +1,11 @@
 # @naverpay/rollup
 
+## 0.1.1
+
+### Patch Changes
+
+-   54c9306: import, require 객체 대응
+
 ## 0.1.0
 
 ### Minor Changes
