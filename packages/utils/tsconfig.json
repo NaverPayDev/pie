@@ -1,0 +1,11 @@
+{
+    "extends": "@naverpay/tsconfig/base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declarationDir": "./dist",
+        "typeRoots": ["./node_modules/@types"],
+        "types": ["jest", "node"]
+    },
+    "include": ["./src", "./typings", "./__tests__"],
+    "exclude": ["node_modules", "dist"]
+}
