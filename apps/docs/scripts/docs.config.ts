@@ -19,4 +19,9 @@ export const INTERNAL_CONFIG: {name: string; minVersion: string; description?: s
         description: '',
         minVersion: '0.0.1',
     },
+    {
+        name: '@naverpay/utils',
+        description: '자바스크립트 유틸리티 라이브러리입니다.',
+        minVersion: '0.1.0',
+    },
 ]
