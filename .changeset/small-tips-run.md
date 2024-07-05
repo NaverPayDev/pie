@@ -1,0 +1,5 @@
+---
+'@naverpay/utils': minor
+---
+
+🎉
