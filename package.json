@@ -22,7 +22,8 @@
         "clean": "turbo run clean && rm -rf ./node_modules && pnpm i",
         "release:canary": "pnpm run build && changeset publish --no-git-tag",
         "release": "pnpm run build && changeset publish",
-        "build:docs": "turbo build:docs"
+        "build:docs": "turbo build:docs",
+        "storybook": "turbo start --filter ui-docs"
     },
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx}": [
