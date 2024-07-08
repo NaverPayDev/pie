@@ -108,8 +108,14 @@ export function generateRollupConfig({
             throw new Error('module은 cjs 또는 esm만 지원합니다.')
         }
 
+        const normalizeOutput = (exportPath: string | {default: string}) => {
+            return typeof exportPath === 'string' ? exportPath : exportPath?.default
+        }
+
         const buildOutput =
-            typeof outputPath === 'object' ? (isCommonJS ? outputPath.require : outputPath.import) : outputPath
+            typeof outputPath === 'object'
+                ? normalizeOutput(isCommonJS ? outputPath.require : outputPath.import)
+                : outputPath
 
         const output: OutputOptions[] = [
             {
