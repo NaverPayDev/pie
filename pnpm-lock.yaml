@@ -111,6 +111,9 @@ importers:
 
   apps/ui-docs:
     devDependencies:
+      '@naverpay/react-pdf':
+        specifier: workspace:^
+        version: link:../../packages/react-pdf
       '@storybook/addon-essentials':
         specifier: ^7.6.10
         version: 7.6.17(@types/react@18.2.75)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
