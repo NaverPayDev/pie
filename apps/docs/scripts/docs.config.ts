@@ -24,4 +24,9 @@ export const INTERNAL_CONFIG: {name: string; minVersion: string; description?: s
         description: '자바스크립트 유틸리티 라이브러리입니다.',
         minVersion: '0.1.0',
     },
+    {
+        name: '@naverpay/es-http-status-codes',
+        description: 'http-status-codes를 ESModule로 만들었습니다.',
+        minVersion: '0.0.1',
+    },
 ]
