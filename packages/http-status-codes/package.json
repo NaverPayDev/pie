@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/http-status-codes",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "A lightweight, tree-shakable utility for HTTP status codes and reason phrases in TypeScript/JavaScript. Auto-generated and ESM-compatible.",
     "keywords": [
         "http",
