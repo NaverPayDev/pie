@@ -1,5 +1,5 @@
 ---
-"@naverpay/http-status-codes": patch
+"@naverpay/es-http-status-codes": patch
 ---
 
-:rocket: init @naverpay/http-status-codes
+:rocket: init @naverpay/es-http-status-codes
