@@ -54,10 +54,5 @@
     },
     "peerDependencies": {
         "rollup": "^2"
-    },
-    "size-limit": {
-        "import": "{ generateRollupConfig }",
-        "limit": "200 ms",
-        "webpack": false
     }
 }
