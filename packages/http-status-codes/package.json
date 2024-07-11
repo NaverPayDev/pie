@@ -21,9 +21,14 @@
     "homepage": "https://github.com/NaverPayDev/pie/tree/main/packages/http-status-codes",
     "exports": {
         ".": {
-            "require": "./dist/cjs/index.js",
-            "import": "./dist/esm/index.mjs",
-            "types": "./dist/cjs/index.d.ts"
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
         },
         "./package.json": "./package.json"
     },
