@@ -172,7 +172,7 @@ importers:
         specifier: ^3.5.1
         version: 3.5.2
 
-  packages/http-status-codes:
+  packages/es-http-status-codes:
     devDependencies:
       '@naverpay/rollup':
         specifier: workspace:^
