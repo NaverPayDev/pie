@@ -53,5 +53,9 @@
         "tsup": "^8.1.0"
     },
     "author": "@NaverPayDev/frontend",
-    "license": "MIT"
+    "license": "MIT",
+    "size-limit": {
+        "import": "{ PdfViewer }",
+        "limit": "5 kB"
+    }
 }
