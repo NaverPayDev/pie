@@ -1,0 +1,51 @@
+{
+    "name": "@naverpay/http-status-codes",
+    "version": "0.0.1",
+    "description": "A lightweight, tree-shakable utility for HTTP status codes and reason phrases in TypeScript/JavaScript. Auto-generated and ESM-compatible.",
+    "keywords": [
+        "http",
+        "status",
+        "codes",
+        "reason",
+        "phrases",
+        "utility",
+        "typescript",
+        "javascript",
+        "esm",
+        "tree-shakable",
+        "auto-generated",
+        "lightweight"
+    ],
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/module/index.js",
+    "exports": {
+        ".": {
+            "require": "./dist/cjs/index.js",
+            "import": "./dist/esm/index.mjs",
+            "types": "./dist/cjs/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rm -rf dist",
+        "generate": "node ./script/index.js",
+        "test": "jest",
+        "build": "pnpm clean && pnpm build-declarations && rollup -c",
+        "build-declarations:cjs": "tsup src/index.ts --format cjs --dts-only --out-dir ./dist/cjs --minify",
+        "build-declarations:esm": "tsup src/index.ts --format esm --dts-only --out-dir ./dist/esm --minify",
+        "build-declarations": "pnpm build-declarations:cjs && pnpm build-declarations:esm"
+    },
+    "devDependencies": {
+        "@naverpay/rollup": "workspace:^",
+        "@naverpay/tsconfig": "workspace:^",
+        "@types/jest": "^29.5.12",
+        "rollup": "^2.79.1",
+        "ts-jest": "^29.2.2",
+        "tsup": "^8.1.0"
+    },
+    "author": "@NaverPayDev/frontend",
+    "license": "MIT"
+}
