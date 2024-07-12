@@ -56,7 +56,6 @@
     "author": "@NaverPayDev/frontend",
     "license": "MIT",
     "size-limit": {
-        "import": "{ PdfViewer }",
         "limit": "5 kB"
     }
 }
