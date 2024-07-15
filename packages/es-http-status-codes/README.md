@@ -1,4 +1,4 @@
-# @naverpay/http-status-codes
+# @naverpay/es-http-status-codes
 
 A lightweight, efficient, and tree-shakable utility for working with HTTP status codes in TypeScript/JavaScript projects. Inspired by the popular [http-status-codes](https://github.com/prettymuchbryce/http-status-codes) package, this utility offers optimized features for modern development practices.
 
@@ -13,13 +13,13 @@ A lightweight, efficient, and tree-shakable utility for working with HTTP status
 ## Installation
 
 ```bash
-npm install @naverpay/http-status-codes
+npm install @naverpay/es-http-status-codes
 ```
 
 ## Usage
 
 ```ts
-import { HttpStatusCodes, ReasonPhrases } from '@naverpay/http-status-codes';
+import { HttpStatusCodes, ReasonPhrases } from '@naverpay/es-http-status-codes';
 
 console.log(HttpStatusCodes.OK); // 200
 console.log(ReasonPhrases[HttpStatusCodes.OK]); // "OK"
