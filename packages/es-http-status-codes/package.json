@@ -19,7 +19,7 @@
     ],
     "main": "./dist/cjs/index.js",
     "module": "./dist/module/index.js",
-    "homepage": "https://github.com/NaverPayDev/pie/tree/main/packages/http-status-codes",
+    "homepage": "https://github.com/NaverPayDev/pie/tree/main/packages/es-http-status-codes",
     "exports": {
         ".": {
             "import": {
