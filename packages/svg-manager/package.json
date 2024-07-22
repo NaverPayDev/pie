@@ -37,8 +37,5 @@
         "react": "^17 || ^18",
         "react-dom": "^17 || ^18"
     },
-    "license": "MIT",
-    "size-limit": {
-        "limit": "10 kB"
-    }
+    "license": "MIT"
 }

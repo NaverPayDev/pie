@@ -54,8 +54,5 @@
         "tsup": "^8.1.0"
     },
     "author": "@NaverPayDev/frontend",
-    "license": "MIT",
-    "size-limit": {
-        "limit": "5 kB"
-    }
+    "license": "MIT"
 }
