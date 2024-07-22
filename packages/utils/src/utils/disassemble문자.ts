@@ -7,8 +7,8 @@ import 한글_여부 from './한글_여부'
  * '가' 문자로 부터 차이를 구한 뒤, 그 차이를 28로 나눈 나머지가 0 이라면 받침이 없는 글자입니다.
  * @returns {first:string, middle:string, last:string} | undefined (한글이 아닌경우)
  */
-const disassemble문자 = (letter: string) => {
-    if (!한글_여부(letter)) {
+const disassemble문자 = (letter: string | undefined) => {
+    if (letter === undefined || !한글_여부(letter)) {
         return undefined
     }
     const charCode = letter.charCodeAt(0)
