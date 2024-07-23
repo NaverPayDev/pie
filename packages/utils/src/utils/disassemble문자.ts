@@ -8,7 +8,7 @@ import 한글_여부 from './한글_여부'
  * @returns {first:string, middle:string, last:string} | undefined (한글이 아닌경우)
  */
 const disassemble문자 = (letter: string) => {
-    if (!한글_여부(letter)) {
+    if (!letter || !한글_여부(letter)) {
         return undefined
     }
     const charCode = letter.charCodeAt(0)
