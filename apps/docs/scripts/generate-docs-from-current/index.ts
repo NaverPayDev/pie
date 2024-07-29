@@ -33,7 +33,7 @@ export async function generateDocsFromCurrent() {
         })
 
         mdPaths.forEach((mdPath) => {
-            copyFile(mdPath, mdPath.replace(path.join(PKGS_DIR, pkgDirName), path.join(pkgDocsPath, 'main')))
+            copyFile(mdPath, mdPath.replace(path.join(PKGS_DIR, pkgDirName), pkgDocsPath))
         })
     })
 }
