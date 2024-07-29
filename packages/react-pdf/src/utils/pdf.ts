@@ -92,7 +92,7 @@ export async function getPdfDocument({
         source = {...source, cMapPacked}
     }
 
-    const {promise} = pdfjs.getDocument({...source}) as PDFLoadingTask<PDFDocumentProxy>
+    const {promise} = pdfjs.getDocument({...source, isEvalSupported: false}) as PDFLoadingTask<PDFDocumentProxy>
     const pdfInfo = await promise
     return pdfInfo
 }
