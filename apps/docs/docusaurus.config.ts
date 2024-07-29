@@ -6,7 +6,7 @@ import type {Config} from '@docusaurus/types'
 const config: Config = {
     title: 'pie',
     tagline: '네이버 페이에서 만드는 TypeScript, JavaScript 패키지',
-    favicon: 'img/favicon.ico',
+    favicon: 'https://financial.pstatic.net/static/public/favicon-1.0.0.ico',
 
     // Set the production url of your site here
     url: 'https://naverpaydev.github.io/',
@@ -56,6 +56,10 @@ const config: Config = {
     themeConfig: {
         navbar: {
             title: 'pie',
+            logo: {
+                alt: 'pie',
+                src: 'https://financial.pstatic.net/static/public/favicon-1.0.0.png',
+            },
             items: [
                 {
                     type: 'docSidebar',
