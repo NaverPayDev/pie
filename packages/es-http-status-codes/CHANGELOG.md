@@ -1,5 +1,11 @@
 # @naverpay/es-http-status-codes
 
+## 0.0.3
+
+### Patch Changes
+
+-   5cf71f4: [es-https-status-code] update `homepage` field in `package.json`
+
 ## 0.0.2
 
 ### Patch Changes

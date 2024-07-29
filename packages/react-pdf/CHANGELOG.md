@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.3.1
+
+### Patch Changes
+
+-   c36ed14: [react-pdf] pdf에 삽입된 스크립트를 실행하는 isEvalSupported 파라미터를 false로 변경합니다.
+
 ## 0.3.0
 
 ### Minor Changes
