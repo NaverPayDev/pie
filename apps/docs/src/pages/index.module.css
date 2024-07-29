@@ -3,21 +3,31 @@
  * and scoped locally.
  */
 
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+.mainWrapper {
+    padding: 1rem;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.headerWrapper {
+    height: 100%;
+    min-height: 180px;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border-radius: 12px;
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.headerCard {
+    height: 60px;
+    width: auto;
+    object-fit: cover;
+}
+
+.headerText {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
