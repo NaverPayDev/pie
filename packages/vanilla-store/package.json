@@ -32,16 +32,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://oss.fin.navercorp.com/common-fe/pie.git"
+        "url": "https://github.com/NaverPayDev/pie.git"
     },
     "keywords": [
         "state manager",
         "naver",
         "naver-financial"
     ],
-    "publishConfig": {
-        "registry": "https://repo.fin.navercorp.com/repository/npm-hosted/"
-    },
     "devDependencies": {
         "@jest/globals": "^29.5.0",
         "@naverpay/rollup": "workspace:^",
