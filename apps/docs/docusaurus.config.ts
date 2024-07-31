@@ -58,7 +58,7 @@ const config: Config = {
             title: 'pie',
             logo: {
                 alt: 'pie',
-                src: 'https://financial.pstatic.net/static/public/favicon-1.0.0.png',
+                src: 'img/favicon-1.0.0.png',
             },
             items: [
                 {
