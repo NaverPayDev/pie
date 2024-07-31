@@ -1,5 +1,5 @@
 ---
-"@naverpay/vanilla-store": major
+"@naverpay/vanilla-store": patch
 ---
 
-[WIP] vanilla store 이관
+vanilla store 이관
