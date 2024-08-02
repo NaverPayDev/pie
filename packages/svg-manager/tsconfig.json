@@ -4,7 +4,8 @@
         "baseUrl": ".",
         "outDir": "./dist/cjs",
         "rootDir": "./src",
-        "emitDeclarationOnly": true
+        "emitDeclarationOnly": true,
+        "noUnusedLocals": false
     },
     "include": ["./src", "./typings"],
     "exclude": ["node_modules", "dist"]
