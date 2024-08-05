@@ -1,5 +1,11 @@
 # @naverpay/rollup
 
+## 0.1.2
+
+### Patch Changes
+
+-   f6f36ff: [rollup] @naverpay/browserslist-config deps 이동
+
 ## 0.1.1
 
 ### Patch Changes
