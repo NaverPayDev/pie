@@ -1,4 +1,4 @@
-import {PropsWithChildren, ReactElement, cloneElement} from 'react'
+import React, {PropsWithChildren, ReactElement, cloneElement} from 'react'
 
 import {generateRandomString, toSingleton} from './utils'
 import deepMap from './utils/deepMap'

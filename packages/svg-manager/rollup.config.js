@@ -4,5 +4,5 @@ module.exports = generateRollupConfig({
     packageDir: __dirname,
     entrypoint: './src/index.ts',
     minify: false,
-    react: {runtime: 'automatic'},
+    react: {runtime: 'classic'},
 })
