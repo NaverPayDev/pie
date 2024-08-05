@@ -32,6 +32,7 @@
         "@babel/preset-env": "^7.13.15",
         "@babel/preset-react": "^7.13.13",
         "@babel/preset-typescript": "^7.13.0",
+        "@naverpay/browserslist-config": "1.6.1",
         "@rollup/plugin-babel": "^5.3.1",
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-json": "^4.1.0",
@@ -46,10 +47,9 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@naverpay/browserslist-config": "^1.6.1",
         "@naverpay/tsconfig": "workspace:^",
-        "@types/node": "^20.12.7",
         "@types/babel__core": "^7.1.14",
+        "@types/node": "^20.12.7",
         "rollup": "^2.79.1"
     },
     "peerDependencies": {

@@ -1,0 +1,12 @@
+{
+    "extends": "@naverpay/tsconfig/base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declarationDir": "./dist/cjs",
+        "experimentalDecorators": true,
+        "typeRoots": ["./node_modules/@types"],
+        "types": ["jest", "react"]
+    },
+    "include": ["./src", "./typings"],
+    "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

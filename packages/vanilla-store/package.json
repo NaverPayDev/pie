@@ -1,7 +1,6 @@
 {
-    "name": "@naverpay/utils",
-    "description": "javascript utility library",
-    "version": "0.1.1",
+    "name": "@naverpay/vanilla-store",
+    "version": "0.0.1",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "exports": {
@@ -19,31 +18,42 @@
     },
     "sideEffects": false,
     "scripts": {
+        "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
+        "lint:fix": "pnpm lint --fix",
+        "prettier": "prettier --check '**/*.{ts,tsx,js,jsx,json,md}'",
+        "prettier:fix": "prettier --write '**/*.{ts,tsx,js,jsx,json,md}'",
         "clean": "rm -rf dist",
-        "build": "npm run clean && npm run build-declarations && rollup -c",
+        "build": "pnpm clean && pnpm build-declarations && rollup -c",
         "build-declarations:cjs": "tsup src/index.ts --format cjs --dts-only --out-dir ./dist/cjs --minify",
         "build-declarations:esm": "tsup src/index.ts --format esm --dts-only --out-dir ./dist/esm --minify",
-        "build-declarations": "npm run build-declarations:cjs && npm run build-declarations:esm",
-        "test": "jest"
+        "build-declarations": "pnpm build-declarations:cjs && pnpm build-declarations:esm",
+        "test": "jest",
+        "publint": "attw --pack && publint"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/NaverPayDev/pie.git"
     },
     "keywords": [
-        "javascript",
-        "utils",
+        "state manager",
         "naver",
-        "naverpay"
+        "naver-financial"
     ],
     "devDependencies": {
+        "@jest/globals": "^29.5.0",
         "@naverpay/rollup": "workspace:^",
         "@naverpay/tsconfig": "workspace:^",
+        "@testing-library/react": "^15.0.7",
         "@types/jest": "^29.5.12",
-        "@types/node": "^20.12.12",
-        "jest-environment-jsdom": "^29.7.0",
+        "@types/react": "^18.2.0",
+        "jest": "^29.5.0",
+        "jest-environment-jsdom": "^29.5.0",
+        "react": "^18.3.1",
         "rollup": "^2.79.1",
-        "ts-jest": "^29.1.2"
+        "ts-jest": "^29.0.0"
+    },
+    "peerDependencies": {
+        "react": "^18.0.0"
     },
     "files": [
         "dist"

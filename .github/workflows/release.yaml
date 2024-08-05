@@ -34,5 +34,5 @@ jobs:
                   commit: '📦 bump changed packages version'
                   publish: pnpm release
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
