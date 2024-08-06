@@ -14,6 +14,9 @@ jobs:
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v3
+              with:
+                  token: ${{ secrets.ACTION_TOKEN }}
+                  fetch-depth: 0
 
             - name: Use Node.js
               uses: actions/setup-node@v4
@@ -34,5 +37,4 @@ jobs:
                   commit: '📦 bump changed packages version'
                   publish: pnpm release
               env:
-                  GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
