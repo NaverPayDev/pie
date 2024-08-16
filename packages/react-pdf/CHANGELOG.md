@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.3.2
+
+### Patch Changes
+
+-   8a8e197: [react-pdf] pdf viewer에 inline style을 주입할 수 있도록 props를 추가합니다
+
 ## 0.3.1
 
 ### Patch Changes
