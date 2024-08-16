@@ -1,4 +1,4 @@
-import {MouseEventHandler, ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {CSSProperties, MouseEventHandler, ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
@@ -36,6 +36,10 @@ export type PdfViewerProps = PdfRenderProps & {
      */
     header?: ReactNode
     footer?: ReactNode
+    /**
+     * pdf viewer 최상단 div style
+     */
+    style?: CSSProperties
 }
 
 export function PdfViewer({
@@ -49,6 +53,7 @@ export function PdfViewer({
     externalLinkTarget = '_blank',
     onLoadPDFRender,
     onErrorPDFRender,
+    style = {},
     ...options
 }: PdfViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
@@ -135,7 +140,7 @@ export function PdfViewer({
             tokenize={injectedTokenize ?? (onClickWords || []).length > 0}
             {...options}
         >
-            <div ref={ref} className={cx('article')} onClick={handleClickWords}>
+            <div ref={ref} style={style} className={cx('article')} onClick={handleClickWords}>
                 {header}
                 <Pages />
                 {footer}
