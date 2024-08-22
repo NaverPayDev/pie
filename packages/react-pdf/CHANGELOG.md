@@ -1,5 +1,11 @@
 # @naverpay/react-pdf
 
+## 0.3.3
+
+### Patch Changes
+
+-   4c31ef1: :bug: 누락된 withCredentials 옵션을 넘겨줍니다
+
 ## 0.3.2
 
 ### Patch Changes
