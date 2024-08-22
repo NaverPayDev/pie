@@ -45,12 +45,14 @@ interface GetPdfDocumentParams {
     file: string | ArrayBuffer | Blob | File
     cMapUrl?: string | null
     cMapPacked?: boolean
+    withCredentials?: boolean
 }
 
 export async function getPdfDocument({
     file,
     cMapUrl = null,
     cMapPacked = false,
+    withCredentials = false,
 }: GetPdfDocumentParams): Promise<PDFDocumentProxy> {
     if (isSSR()) {
         throw new Error('client side에서 실행시켜 주세요.')
@@ -92,7 +94,11 @@ export async function getPdfDocument({
         source = {...source, cMapPacked}
     }
 
-    const {promise} = pdfjs.getDocument({...source, isEvalSupported: false}) as PDFLoadingTask<PDFDocumentProxy>
+    const {promise} = pdfjs.getDocument({
+        ...source,
+        isEvalSupported: false,
+        withCredentials,
+    }) as PDFLoadingTask<PDFDocumentProxy>
     const pdfInfo = await promise
     return pdfInfo
 }
