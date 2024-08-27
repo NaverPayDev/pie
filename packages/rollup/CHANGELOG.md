@@ -1,5 +1,11 @@
 # @naverpay/rollup
 
+## 0.1.3
+
+### Patch Changes
+
+-   f094427: preserve-directives 플러그인이 ESM 빌드 시에만 주입되도록 변경
+
 ## 0.1.2
 
 ### Patch Changes
