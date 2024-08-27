@@ -192,7 +192,7 @@ export function generateRollupConfig({
                 : []),
             ...(minify ? [terser()] : []),
             ...extraPlugins,
-            preserveDirectives(),
+            ...(isESM ? [preserveDirectives()] : []),
         ]
 
         return {
