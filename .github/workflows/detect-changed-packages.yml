@@ -36,7 +36,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: 'detect changed packages'
-              uses: NaverPayDev/changeset-actions/actions/detect-add@main
+              uses: NaverPayDev/changeset-actions/detect-add@main
               with:
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   packages_dir: packages,share
