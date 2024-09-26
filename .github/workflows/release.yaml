@@ -29,19 +29,18 @@ jobs:
                   version: 9.1.1
                   run_install: true
 
-            - name: set bot github user
-              run: |
-                  git config user.name "npayfebot"
-                  git config user.email "npay.fe.bot@navercorp.com"
-
-            - name: Create Release Pull Request or Publish to npm
+            - name: Create Release Pull Request
               id: changesets
-              uses: changesets/action@v1
+              uses: NaverPayDev/changeset-actions/publish@main
               with:
-                  title: '🚀 version changed packages'
-                  commit: '📦 bump changed packages version'
-                  publish: pnpm release
-                  setupGitUser: false
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  git_username: npayfebot
+                  git_email: npay.fe.bot@navercorp.com
+                  publish_script: pnpm release
+                  pr_title: '🚀 version changed packages'
+                  commit_message: '📦 bump changed packages version'
+                  create_github_release_tag: true
+                  formatting_script: pnpm run markdownlint:fix
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
