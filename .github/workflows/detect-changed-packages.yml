@@ -1,0 +1,45 @@
+name: detect changed packages
+
+on:
+    pull_request:
+        branches: ['**']
+        types: [opened, reopened, labeled, unlabeled, synchronize]
+
+concurrency:
+    group: detect-${{ github.event.pull_request.number }}
+    cancel-in-progress: true
+    
+jobs:
+    detect:
+        runs-on: ubuntu-latest
+        env:
+            GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v3
+              with:
+                  token: ${{ secrets.ACTION_TOKEN }}
+                  fetch-depth: 0
+
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20.x'
+
+            - name: setup pnpm and install dependencies
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 9.1.1
+                  run_install: true
+
+            - name: install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 'detect changed packages'
+              uses: NaverPayDev/changeset-actions/actions/detect-add@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  packages_dir: packages,share
+                  skip_label: skip-detect-change
+                  skip_branches: main
+                  formatting_script: pnpm run markdownlint:fix
