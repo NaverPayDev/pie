@@ -41,6 +41,6 @@ jobs:
                   commit_message: '📦 bump changed packages version'
                   create_github_release_tag: true
                   formatting_script: pnpm run markdownlint:fix
+                  npm_token: ${{ secrets.NPM_TOKEN }}
               env:
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
