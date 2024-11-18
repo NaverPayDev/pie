@@ -1,5 +1,6 @@
-import {LocalStoragePersist, SessionStoragePersist} from './persist'
+import {applyPersist} from './applyOptions'
 import {Persistent} from './persist/type'
+import {Options} from './type'
 
 export interface VanillaStore<State> {
     get: () => State
@@ -13,14 +14,8 @@ export interface Subscription<Value> {
     subscribe: (callback: () => void) => () => void
 }
 
-type PersistType = 'localStorage' | 'sessionStorage'
-interface Options<State> {
-    persist?: {type: PersistType; key: string; typeAssertion: (value: unknown) => value is State}
-}
-
 export const createVanillaStore = <State>(initialState: State, options?: Options<State>): VanillaStore<State> => {
     let state = initialState
-    let persistStore: Persistent<State> | null = null
 
     const callbacks = new Set<() => void>()
 
@@ -37,26 +32,16 @@ export const createVanillaStore = <State>(initialState: State, options?: Options
         return state
     }
 
-    if (options?.persist) {
-        const key = options.persist.key
-        if (options.persist.type === 'localStorage') {
-            persistStore = new LocalStoragePersist(key, initialState, options.persist.typeAssertion)
-            callbacks.add(() => {
-                if (persistStore) {
-                    persistStore.value = get()
-                }
-            })
-        }
+    let persistStore: Persistent<State> | null = null
 
-        if (options.persist.type === 'sessionStorage') {
-            persistStore = new SessionStoragePersist(key, initialState, options.persist.typeAssertion)
-            callbacks.add(() => {
-                if (persistStore) {
-                    persistStore.value = get()
-                }
-            })
-        }
-    }
+    const addCallbacks = () =>
+        callbacks.add(() => {
+            if (persistStore) {
+                persistStore.value = get()
+            }
+        })
+
+    persistStore = applyPersist(options, addCallbacks, initialState)
 
     const subscribe = (callback: () => void) => {
         callbacks.add(callback)
