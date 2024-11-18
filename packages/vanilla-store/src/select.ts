@@ -11,14 +11,7 @@ export const createVanillaSelect = <State, StoreState>(
 ): VanillaSelect<State> => {
     const callbacks = new Set<() => void>()
 
-    let state: State
-
-    let hasMemo: boolean = false
-
-    if (!hasMemo) {
-        hasMemo = true
-        state = selectFn(store.get())
-    }
+    let state: State = selectFn(store.get())
 
     const get = () => {
         const next = selectFn(store.get())
