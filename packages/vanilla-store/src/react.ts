@@ -2,23 +2,27 @@ import {useRef, useSyncExternalStore} from 'react'
 
 import {useSyncPersistStore} from './persist/hooks'
 import shallowEqual from './shallowEqual'
-import {VanillaStore} from './store'
+import {SetAction, VanillaSelect, VanillaStore} from './type'
 
-export const useStore = <State>(store: VanillaStore<State>, initialValue?: State) => {
+export function useStore<State>(store: VanillaSelect<State>, initialValue?: State): [State, never]
+export function useStore<State>(store: VanillaStore<State>, initialValue?: State): [State, SetAction<State>]
+export function useStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
     useSyncPersistStore(store, value)
 
     return [value, store.set] as const
 }
 
-export const useGetStore = <State>(store: VanillaStore<State>, initialValue?: State) => {
+export const useGetStore = <State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) => {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
     useSyncPersistStore(store, value)
 
     return value
 }
 
-export const useSetStore = <State>(store: VanillaStore<State>, initialValue?: State) => {
+export function useSetStore<State>(store: VanillaSelect<State>, initialValue?: State): never
+export function useSetStore<State>(store: VanillaStore<State>, initialValue?: State): SetAction<State>
+export function useSetStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
     useSyncPersistStore(store, value)
 
@@ -45,11 +49,21 @@ export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
     return stateRef.current
 }
 
-export const useStoreSelector = <State, Value>(
+export function useStoreSelector<State, Value>(
+    store: VanillaSelect<State>,
+    selector: (state: State) => Value,
+    options?: {initialStoreValue?: State; isEqual?: (a: Value, b: Value) => boolean},
+): [Value, never]
+export function useStoreSelector<State, Value>(
     store: VanillaStore<State>,
     selector: (state: State) => Value,
     options?: {initialStoreValue?: State; isEqual?: (a: Value, b: Value) => boolean},
-) => {
+): [Value, SetAction<State>]
+export function useStoreSelector<State, Value>(
+    store: VanillaStore<State> | VanillaSelect<State>,
+    selector: (state: State) => Value,
+    options?: {initialStoreValue?: State; isEqual?: (a: Value, b: Value) => boolean},
+) {
     const {initialStoreValue, isEqual} = options || {}
     const value = useSyncExternalStoreWithSelector(
         store.subscribe,
@@ -58,5 +72,5 @@ export const useStoreSelector = <State, Value>(
         selector,
         isEqual,
     )
-    return [value, store.set] as const
+    return [value, store.set]
 }
