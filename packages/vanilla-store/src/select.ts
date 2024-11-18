@@ -1,15 +1,35 @@
 import {applyPersist} from './applyOptions'
 import {Persistent} from './persist/type'
+import shallowEqual from './shallowEqual'
 import {Options, VanillaSelect, VanillaStore} from './type'
 
 export const createVanillaSelect = <State, StoreState>(
     store: VanillaStore<StoreState>,
     selectFn: (state: StoreState) => State,
+    equalityFn: (a: State, b: State) => boolean = shallowEqual,
     options?: Options<State>,
 ): VanillaSelect<State> => {
     const callbacks = new Set<() => void>()
 
-    const get = () => selectFn(store.get())
+    let state: State
+
+    let hasMemo: boolean = false
+
+    if (!hasMemo) {
+        hasMemo = true
+        state = selectFn(store.get())
+    }
+
+    const get = () => {
+        const next = selectFn(store.get())
+
+        if (!equalityFn(next, state)) {
+            state = next
+            return next
+        }
+
+        return state
+    }
 
     let persistStore: Persistent<State> | null = null
 
