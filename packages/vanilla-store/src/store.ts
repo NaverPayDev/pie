@@ -1,13 +1,6 @@
 import {applyPersist} from './applyOptions'
 import {Persistent} from './persist/type'
-import {Options} from './type'
-
-export interface VanillaStore<State> {
-    get: () => State
-    set: (action: State | ((prev: State) => State)) => State
-    subscribe: (callback: () => void) => () => void
-    persistStore: Persistent<State> | null
-}
+import {Options, VanillaStore} from './type'
 
 export interface Subscription<Value> {
     getCurrentValue: () => Value
