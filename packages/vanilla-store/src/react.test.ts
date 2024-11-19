@@ -4,6 +4,7 @@ import {useCallback, useEffect, useRef} from 'react'
 import {renderHook, act} from '@testing-library/react'
 
 import {useGetStore, useSetStore, useStore, useStoreSelector} from './react'
+import {createVanillaSelect} from './select'
 import {createVanillaStore} from './store'
 
 interface SampleObject {
@@ -50,14 +51,14 @@ const store = createVanillaStore(sampleObject, {
     persist: {type: 'sessionStorage', key: sessionStorageKey, typeAssertion: isStoreValue},
 })
 
-describe('Store with react', () => {
-    afterEach(() => {
-        // 스토어 초기화
-        act(() => {
-            store.set(sampleObject)
-        })
+afterEach(() => {
+    // 스토어 초기화
+    act(() => {
+        store.set(sampleObject)
     })
+})
 
+describe('Store with react', () => {
     test('1. useStore 가 store.set으로 변경된 값을 가져온다.', () => {
         const newValue = {count: 1, name: 'world'}
 
@@ -225,5 +226,52 @@ describe('Store with react', () => {
         rerender()
 
         expect(renderCount.current).toBe(1)
+    })
+})
+
+const countSelect = createVanillaSelect(store, ({count}) => count)
+const nameSelect = createVanillaSelect(
+    store,
+    ({name}) => name.split(''),
+    (a, b) => a.length === b.length && a.every((elem, idx) => elem === b[idx]),
+)
+
+describe('Select with react', () => {
+    test('1. useGetStore가 select를 가져온다.', () => {
+        const {
+            result: {current},
+        } = renderHook(() => useGetStore(countSelect))
+
+        const state = current
+
+        expect(state).toBe(0)
+    })
+
+    test('2. store가 업데이트된 후 useGetStore가 select를 가져온다.', () => {
+        const newValue = {count: 1, name: 'world'}
+
+        store.set(newValue)
+
+        const {
+            result: {current},
+        } = renderHook(() => useGetStore(countSelect))
+
+        const state = current
+
+        expect(state).toBe(1)
+    })
+
+    test('3. 참조 안정성이 보장된다.', () => {
+        const {result} = renderHook(() => useGetStore(nameSelect))
+
+        const initialState = result.current
+
+        act(() => {
+            // store에 어떠한 상태 변경도 발생시키지 않음
+        })
+
+        const nextState = result.current
+
+        expect(nextState).toBe(initialState)
     })
 })

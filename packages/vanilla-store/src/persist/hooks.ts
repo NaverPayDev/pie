@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
 
-import {VanillaStore} from '../store'
+import {VanillaStore, VanillaSelect} from '../type'
 
-export function useSyncPersistStore<State>(store: VanillaStore<State>, value: State) {
+export function useSyncPersistStore<State>(store: VanillaStore<State> | VanillaSelect<State>, value: State) {
     useEffect(() => {
         if (store.persistStore?.value !== value) {
             if (store.persistStore?.value) {

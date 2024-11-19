@@ -3,10 +3,8 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declarationDir": "./dist/cjs",
-        "experimentalDecorators": true,
-        "typeRoots": ["./node_modules/@types"],
-        "types": ["jest", "react"]
+        "experimentalDecorators": true
     },
-    "include": ["./src", "./typings"],
+    "include": ["./src"],
     "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
