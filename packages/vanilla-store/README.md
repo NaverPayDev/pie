@@ -1,5 +1,9 @@
 # @naverpay/vanilla-store
 
+![NPM Version](https://img.shields.io/npm/v/%40naverpay%2Fvanilla-store)
+![NPM bundle size](https://img.shields.io/bundlephobia/min/%40naverpay%2Fvanilla-store)
+![NPM Downloads](https://img.shields.io/npm/dw/%40naverpay%2Fvanilla-store)
+
 `@naverpay/vanilla-store` is a zero-dependency and extremely lightweight React state management solution.
 
 ## key features
