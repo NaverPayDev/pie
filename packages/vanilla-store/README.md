@@ -24,8 +24,8 @@
 ## Comparison
 
 - [recoil](https://bundlephobia.com/package/recoil@0.7.7): 79.4kb
-- [jotai](https://bundlephobia.com/package/jotai@2.8.0): 8.3kb
-- `@naverpay/vanilla-store`: 6.6kb with polyfill!
+- [jotai](https://bundlephobia.com/package/jotai@2.8.0): 8.7kb
+- `@naverpay/vanilla-store`: [3.8kb](https://bundlephobia.com/package/@naverpay/vanilla-store@0.1.0) with polyfill!
 
 ## Features
 
