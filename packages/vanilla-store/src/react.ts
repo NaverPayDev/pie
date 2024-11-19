@@ -4,18 +4,22 @@ import {useSyncPersistStore} from './persist/hooks'
 import shallowEqual from './shallowEqual'
 import {SetAction, VanillaSelect, VanillaStore} from './type'
 
+function useSyncStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
+    const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
+    useSyncPersistStore(store, value)
+    return value
+}
+
 export function useStore<State>(store: VanillaSelect<State>, initialValue?: State): [State, never]
 export function useStore<State>(store: VanillaStore<State>, initialValue?: State): [State, SetAction<State>]
 export function useStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
-    const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
-    useSyncPersistStore(store, value)
+    const value = useSyncStore(store, initialValue)
 
     return [value, store.set] as const
 }
 
 export const useGetStore = <State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) => {
-    const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
-    useSyncPersistStore(store, value)
+    const value = useSyncStore(store, initialValue)
 
     return value
 }
@@ -23,8 +27,7 @@ export const useGetStore = <State>(store: VanillaStore<State> | VanillaSelect<St
 export function useSetStore<State>(store: VanillaSelect<State>, initialValue?: State): never
 export function useSetStore<State>(store: VanillaStore<State>, initialValue?: State): SetAction<State>
 export function useSetStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
-    const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
-    useSyncPersistStore(store, value)
+    useSyncStore(store, initialValue)
 
     return store.set
 }
