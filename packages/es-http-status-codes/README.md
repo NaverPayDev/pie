@@ -16,6 +16,8 @@ A lightweight, efficient, and tree-shakable utility for working with HTTP status
 
 ### `http-status-codes`
 
+> 😢 3116 bytes Not properly tree-shaken.
+
 ```js
 import { StatusCodes } from "http-status-codes";
 import { useEffect } from "react";
@@ -69,9 +71,9 @@ export default function Home() {
 ]);
 ```
 
-> 3116 bytes
-
 ### `@naverpay/es-http-status-codes`
+
+> 🎉 494 bytes, Properly tree-shaken!
 
 ```js
 import { HttpStatusCodes as StatusCodes } from "@naverpay/es-http-status-codes";
@@ -126,8 +128,6 @@ export default function Home() {
     }
 ]);
 ```
-
-> 494 bytes
 
 ## Installation
 
