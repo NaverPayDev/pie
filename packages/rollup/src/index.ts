@@ -45,6 +45,7 @@ function getBabelPresets({react, ie}: Pick<GenerateRollupConfigOptions, 'react' 
     return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: react.runtime}]]
 }
 
+//
 interface GenerateRollupConfigOptions {
     entrypoint: string | Record<'index' & string, string>
     outpoint?: {

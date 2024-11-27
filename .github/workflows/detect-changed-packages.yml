@@ -31,10 +31,11 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: 'detect changed packages'
-              uses: NaverPayDev/changeset-actions/detect-add@main
+              uses: NaverPayDev/changeset-actions/detect-add@feature/9_en
               with:
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   packages_dir: packages,share
                   skip_label: skip-detect-change
                   skip_branches: main
                   formatting_script: pnpm run markdownlint:fix
+                  language: kr

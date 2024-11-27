@@ -25,3 +25,5 @@ import {generateRollupConfig} from '@naverpay/rollup'
 이 패키지와 관련된 추가 정보는 아래 링크를 통해 확인할 수 있습니다:
 
 - <https://rollupjs.org/introduction/>
+
+### changeset detect actions test
