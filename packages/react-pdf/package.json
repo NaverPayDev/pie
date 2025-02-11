@@ -15,20 +15,18 @@
     ],
     "scripts": {
         "clean": "rm -rf dist",
-        "build-declarations": "tsc --declarationDir dist",
-        "build": "pnpm run clean && pnpm run build-declarations && rollup -c",
+        "build": "pnpm run clean && vite build",
         "start": "rollup -c --watch"
     },
     "dependencies": {
-        "intersection-observer": "^0.12.2",
-        "classnames": "^2.5.1"
+        "classnames": "^2.5.1",
+        "intersection-observer": "^0.12.2"
     },
     "devDependencies": {
-        "rollup": "^2.79.1",
         "@naverpay/tsconfig": "workspace:^",
-        "@naverpay/rollup": "workspace:^",
+        "@types/node": "^20.12.7",
         "@types/react": "^18.2.75",
-        "@types/node": "^20.12.7"
+        "@vitejs/plugin-legacy": "^6.0.0"
     },
     "peerDependencies": {
         "react": "^17 || ^18"
