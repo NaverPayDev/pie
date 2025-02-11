@@ -40,15 +40,17 @@
         "@changesets/cli": "^2.26.2",
         "@naverpay/eslint-config": "^0.2.0",
         "@naverpay/markdown-lint": "^0.0.2",
+        "@naverpay/pite": "1.0.0",
         "@naverpay/prettier-config": "^0.0.2",
         "core-js": "^3.29.0",
         "glob": "^9.3.4",
         "husky": "^8.0.3",
         "jest": "^29.7.0",
         "lint-staged": "^15.0.1",
-        "tsup": "^8.1.0",
+        "tsup": "^8.3.5",
         "turbo": "^1.10.16",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "vite": "^6.0.11"
     },
     "packageManager": "pnpm@9.13.2",
     "engines": {
