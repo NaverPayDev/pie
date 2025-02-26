@@ -20,6 +20,7 @@ export type PdfViewerProps = PdfRenderProps & {
      * pdf load 시 필요한 props
      */
     pdfUrl: string
+    pdfWorkerSource?: string
     cMapUrl?: string
     cMapCompressed?: boolean
     withCredentials?: boolean
@@ -45,6 +46,7 @@ export type PdfViewerProps = PdfRenderProps & {
 
 export function PdfViewer({
     pdfUrl,
+    pdfWorkerSource,
     tokenize: injectedTokenize,
     onClickWords,
     header,
