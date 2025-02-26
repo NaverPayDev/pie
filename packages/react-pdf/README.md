@@ -1,10 +1,6 @@
 # @naverpay/react-pdf
 
-- 리액트 컴포넌트 기반으로 만들어진 pdf 뷰어 입니다. 별다른 설정 없이, IE 11 환경을 지원합니다.
-
-- pdfjs-dist 하위 파일은 [mozilla에서 제공하는 PDF parse](https://github.com/mozilla/pdf.js) 를 번들한 결과입니다.
-
-  - ie 지원과 기기 내부 overriding 되어 강제로 변환된 폰트도 지원할 수 있도록 커스텀 되어 있습니다.
+- 리액트 컴포넌트 기반으로 만들어진 pdf 뷰어 입니다. 별다른 설정 없이, PDF Viewer를 사용할 수 있습니다.
 
 ## Installation
 
@@ -34,15 +30,10 @@ npm install @naverpay/react-pdf
 3. lazy loading
      - 페이지 수가 많은 pdf를 불러오고 rendering을 하게 되면, 부하가 많이 생기는데, 이를 lazy-loading을 기본적으로 적용하여 최적화했습니다.
 
-### ie 지원
-
-- 별도의 설정 없이, ie 11을 지원합니다.
-
-### SSR 지원 (feat. NextJs)
+### SSR 지원 (feat. Next.Js)
 
 - 별도의 설정 없이, SSR을 지원하도록 구현했습니다.
 
 ### 기타 장점
 
-- pdfjs-dist를 내장하여, pdfjs-dist에서 pdf 파싱을 위한 worker setting이 불필요합니다.
 - pdf 내부의 한글 글자 클릭 시, custom 한 action을 사용할 수 있도록 추가했습니다.
