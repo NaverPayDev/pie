@@ -1,11 +1,12 @@
 import {memo, useCallback, useRef} from 'react'
 
 import {usePdfPageContext} from '../../contexts/page'
-import {PDFRenderTask} from '../../pdfjs-dist/types/pdfjs'
 import {getPixelRatio} from '../../utils/pdf'
 
+import type {RenderTask} from 'pdfjs-dist'
+
 export const PageCanvas = memo(function PageCanvas() {
-    const pageRenderTask = useRef<PDFRenderTask>()
+    const pageRenderTask = useRef<RenderTask>()
     const {page, viewport: renderViewport, scale} = usePdfPageContext()
 
     const drawCanvas = useCallback(
