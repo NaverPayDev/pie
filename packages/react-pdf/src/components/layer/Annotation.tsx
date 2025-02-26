@@ -1,40 +1,22 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import {memo, useCallback, useState} from 'react'
+import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
+import {AnnotationLayer as PdfAnnotationLayer} from 'pdfjs-dist'
 
 import {usePdfPageContext} from '../../contexts/page'
 import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
-// @ts-ignore
-import * as pdfjs from '../../pdfjs-dist/legacy/build/pdf'
-// @ts-ignore
-import {PDFLinkService} from '../../pdfjs-dist/lib/web/pdf_link_service'
+import PDFLinkService from '../../utils/link-service'
 import styles from './Annotation.module.scss'
 
-import type {PDFAnnotations} from '../../pdfjs-dist/types/pdfjs'
+import type {AnnotationLayerParameters} from 'pdfjs-dist/types/src/display/annotation_layer'
 
 const cx = classNames.bind(styles)
-
-function getExternalLinkTargetValue(externalLinkTarget?: '_self' | '_blank' | '_parent' | '_top') {
-    switch (externalLinkTarget) {
-        case '_self':
-            return 1
-        case '_blank':
-            return 2
-        case '_parent':
-            return 3
-        case '_top':
-            return 4
-        default:
-            return 0
-    }
-}
 
 export const AnnotationLayer = memo(function AnnotationLayer() {
     const {externalLinkTarget} = usePdfContext()
     const {page, scale} = usePdfPageContext()
-    const [annotations, setAnnotations] = useState<PDFAnnotations | undefined>()
+    const [annotations, setAnnotations] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
 
     useIsomorphicLayoutEffect(() => {
         async function init() {
@@ -44,9 +26,15 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
         init()
     }, [page])
 
+    const pdfLinkService = useMemo(() => {
+        const linkService = new PDFLinkService()
+        linkService.setExternalLinkTarget(externalLinkTarget)
+        return linkService
+    }, [externalLinkTarget])
+
     const drawAnnotation = useCallback(
         (element: HTMLDivElement | null) => {
-            requestAnimationFrame(() => {
+            requestAnimationFrame(async () => {
                 if (!element) {
                     return
                 }
@@ -57,22 +45,31 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 const children = element.children
                 Array.from(children).map((el) => el.remove())
 
-                const linkService = new PDFLinkService({
-                    externalLinkTarget: getExternalLinkTargetValue(externalLinkTarget),
-                })
                 const viewport = page.getViewport({scale}).clone({dontFlip: true})
-                const parameters = {
-                    annotations,
+
+                const annotationLayerParameters = {
+                    // useless parameters
+                    accessibilityManager: null,
+                    annotationCanvasMap: null,
+                    annotationEditorUIManager: null,
+                    l10n: null,
+                    structTreeLayer: null,
+                    // required parameters
                     div: element,
-                    linkService,
                     page,
-                    renderInteractiveForms: false,
                     viewport,
                 }
 
-                try {
-                    pdfjs?.AnnotationLayer?.render(parameters)
-                } catch {}
+                const parameters: AnnotationLayerParameters = {
+                    annotations,
+                    div: element,
+                    linkService: pdfLinkService,
+                    page,
+                    renderForms: false,
+                    viewport,
+                }
+
+                await new PdfAnnotationLayer(annotationLayerParameters).render(parameters).catch(() => {})
 
                 if (children.length > 0 && children?.[0]) {
                     const firstChildren = children[0] as HTMLElement
@@ -92,7 +89,7 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 }
             })
         },
-        [annotations, externalLinkTarget, page, scale],
+        [annotations, pdfLinkService, page, scale],
     )
 
     if (!annotations) {
