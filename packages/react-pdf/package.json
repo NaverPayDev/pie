@@ -20,15 +20,16 @@
         "start": "rollup -c --watch"
     },
     "dependencies": {
+        "classnames": "^2.5.1",
         "intersection-observer": "^0.12.2",
-        "classnames": "^2.5.1"
+        "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {
-        "rollup": "^2.79.1",
-        "@naverpay/tsconfig": "workspace:^",
         "@naverpay/rollup": "workspace:^",
+        "@naverpay/tsconfig": "workspace:^",
+        "@types/node": "^20.12.7",
         "@types/react": "^18.2.75",
-        "@types/node": "^20.12.7"
+        "rollup": "^2.79.1"
     },
     "peerDependencies": {
         "react": "^17 || ^18"
