@@ -1,6 +1,6 @@
-import type {TextContentItem} from '../pdfjs-dist/types/pdfjs'
+import type {TextItem, TextMarkedContent} from 'pdfjs-dist/types/src/display/api'
 
-function tokenizeTextItems(texts: TextContentItem[]) {
+function tokenizeTextItems(texts: TextItem[]) {
     return texts.reduce((result, textItem) => {
         const {str, width, transform, ...rest} = textItem
         const splittedStr = str.split(' ')
@@ -14,13 +14,16 @@ function tokenizeTextItems(texts: TextContentItem[]) {
             newTransform[4] += lastWidth + (reducedStrsLength === 0 ? 0 : 3.5)
             calculatedStr.push({str: s, width: currentStrWidth, transform: newTransform, ...rest})
             return calculatedStr
-        }, [] as TextContentItem[])
+        }, [] as TextItem[])
         return [...result, ...tokenizedStr]
-    }, [] as TextContentItem[])
+    }, [] as TextItem[])
 }
 
-export function mergeTextItems(texts: TextContentItem[], options?: {tokenize?: boolean}) {
+export function mergeTextItems(texts: (TextItem | TextMarkedContent)[], options?: {tokenize?: boolean}) {
     const mergedTextItems = texts.reduce((result, token, index) => {
+        if ('type' in token) {
+            return result
+        }
         if (index === 0) {
             result.push(token)
             return result
@@ -35,6 +38,6 @@ export function mergeTextItems(texts: TextContentItem[], options?: {tokenize?: b
         }
 
         return result
-    }, [] as TextContentItem[])
+    }, [] as TextItem[])
     return options?.tokenize ? tokenizeTextItems(mergedTextItems) : mergedTextItems
 }

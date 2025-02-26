@@ -8,14 +8,15 @@ import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import {mergeTextItems} from '../../utils/text'
 import styles from './Text.module.scss'
 
-import type {TextContent, TextContentItem} from '../../pdfjs-dist/types/pdfjs'
+import type {TextItem} from 'pdfjs-dist/types/src/display/api'
+import type {TextContent} from 'pdfjs-dist/types/src/display/text_layer'
 
 const cx = classNames.bind(styles)
 
 export const TextLayerItem = memo(function TextLayerItem({
     textItem: {str: text, transform, fontName, width},
 }: {
-    textItem: TextContentItem
+    textItem: TextItem
 }) {
     const {page, scale} = usePdfPageContext()
     const {rotation, viewBox} = page.getViewport({scale})
@@ -78,7 +79,7 @@ export const TextLayer = memo(function TextLayer() {
     useIsomorphicLayoutEffect(() => {
         async function init() {
             const {items, styles: textStyles} = await page.getTextContent()
-            setTexts({items: mergeTextItems(items, {tokenize}), styles: textStyles})
+            setTexts({items: mergeTextItems(items, {tokenize}), styles: textStyles, lang: null})
         }
         init()
     }, [page, tokenize])
@@ -99,9 +100,12 @@ export const TextLayer = memo(function TextLayer() {
                 height: `${Math.floor(viewport.height)}px`,
             }}
         >
-            {texts.items.map((text, index) => (
-                <TextLayerItem key={index} textItem={text} />
-            ))}
+            {texts.items.map((text, index) => {
+                if ('str' in text) {
+                    return <TextLayerItem key={index} textItem={text} />
+                }
+                return null
+            })}
         </div>
     )
 })
