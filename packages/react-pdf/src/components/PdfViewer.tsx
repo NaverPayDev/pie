@@ -5,10 +5,11 @@ import classNames from 'classnames/bind'
 import {PdfProvider, PdfProviderContext} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
 import usePdfViewerPageWidth from '../hooks/usePdfViewerPageWidth'
-import {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
 import {getPdfDocument} from '../utils/pdf'
 import {Pages} from './Pages'
 import styles from './PdfViewer.module.scss'
+
+import type {PDFDocumentProxy} from 'pdfjs-dist'
 
 const cx = classNames.bind(styles)
 
@@ -19,6 +20,7 @@ export type PdfViewerProps = PdfRenderProps & {
      * pdf load 시 필요한 props
      */
     pdfUrl: string
+    pdfWorkerSource?: string
     cMapUrl?: string
     cMapCompressed?: boolean
     withCredentials?: boolean
@@ -44,11 +46,11 @@ export type PdfViewerProps = PdfRenderProps & {
 
 export function PdfViewer({
     pdfUrl,
+    pdfWorkerSource,
     tokenize: injectedTokenize,
     onClickWords,
     header,
     footer,
-    renderMode = 'canvas',
     lazyLoading = true,
     externalLinkTarget = '_blank',
     onLoadPDFRender,
@@ -80,7 +82,7 @@ export function PdfViewer({
         async function init() {
             try {
                 const pdfDocument = await getPdfDocument(loadPdfConfig)
-                if (!pdf || pdf.fingerprint !== pdfDocument.fingerprint) {
+                if (!pdf || pdf.fingerprints.toString() !== pdfDocument.fingerprints.toString()) {
                     setPdf(pdfDocument)
                 }
                 onLoadPDFRender?.()
@@ -134,7 +136,6 @@ export function PdfViewer({
         <PdfProvider
             pdf={pdf}
             width={width}
-            renderMode={renderMode}
             lazyLoading={lazyLoading}
             externalLinkTarget={externalLinkTarget}
             tokenize={injectedTokenize ?? (onClickWords || []).length > 0}

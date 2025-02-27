@@ -1,17 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as pdfjs from '../pdfjs-dist/legacy/build/pdf'
+import pdfjs from 'pdfjs-dist'
 
-import type {PDFDocumentProxy, PDFLoadingTask} from '../pdfjs-dist/types/pdfjs'
+import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
 export const isSSR = () => typeof window === 'undefined'
 export const isLocalFileSystem = !isSSR() && window.location.protocol === 'file:'
 
-export function loadFromFile(file: Blob) {
+export function loadFromFile(file: Blob): Promise<string | Uint8Array> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader()
-        reader.onload = () =>
-            resolve(reader.result instanceof ArrayBuffer ? new Uint8Array(reader.result) : reader.result)
+        reader.onload = () => {
+            const result = reader.result instanceof ArrayBuffer ? new Uint8Array(reader.result) : reader.result
+            if (!result) {
+                reject(new Error('Error while reading a file.'))
+                return
+            }
+            resolve(result)
+        }
+
         reader.onerror = (event) => {
             reject(new Error(event.target?.error?.message || 'Error while reading a file.'))
         }
@@ -41,31 +46,13 @@ export function dataURItoUint8Array(dataURI: string) {
     return ia
 }
 
-interface GetPdfDocumentParams {
-    file: string | ArrayBuffer | Blob | File
-    cMapUrl?: string | null
-    cMapPacked?: boolean
-    withCredentials?: boolean
-}
+type PdfFile = string | ArrayBuffer | Blob | File
 
-export async function getPdfDocument({
-    file,
-    cMapUrl = null,
-    cMapPacked = false,
-    withCredentials = false,
-}: GetPdfDocumentParams): Promise<PDFDocumentProxy> {
-    if (isSSR()) {
-        throw new Error('client side에서 실행시켜 주세요.')
-    }
-
-    pdfjs.GlobalWorkerOptions.workerSrc = require('./pdf.worker.entry')
-
-    let source
-
+async function getPdfFile(file: PdfFile) {
     if (typeof file === 'string') {
         if (isDataURI(file)) {
             const fileUint8Array = dataURItoUint8Array(file)
-            source = {data: fileUint8Array}
+            return {data: fileUint8Array}
         } else {
             if (isLocalFileSystem) {
                 // eslint-disable-next-line no-console
@@ -73,32 +60,53 @@ export async function getPdfDocument({
                     'Loading PDF as base64 strings/URLs might not work on protocols other than HTTP/HTTPS. On Google Chrome, you can use --allow-file-access-from-files flag for debugging purposes.',
                 )
             }
-            source = {url: file}
+            return {url: file}
         }
     }
 
     // File is an ArrayBuffer
     if (file instanceof ArrayBuffer) {
-        source = {data: file}
+        return {data: file}
     }
 
-    if (file instanceof Blob || file instanceof File) {
-        source = {data: await loadFromFile(file)}
+    return {data: await loadFromFile(file)}
+}
+
+interface GetPdfDocumentParams {
+    file: PdfFile
+    workerSource?: string
+    cMapUrl?: string | null
+    cMapPacked?: boolean
+    withCredentials?: boolean
+}
+
+export async function getPdfDocument({
+    file,
+    workerSource,
+    cMapUrl = null,
+    cMapPacked = false,
+    withCredentials = false,
+}: GetPdfDocumentParams) {
+    if (isSSR()) {
+        throw new Error('client side에서 실행시켜 주세요.')
     }
 
-    if (cMapUrl) {
-        source = {...source, cMapUrl}
+    /**
+     * 자체적으로 worker를 제공하지 않으면, 해당 버전의 pdf worker unpkg cdn을 사용합니다.
+     */
+    pdfjs.GlobalWorkerOptions.workerSrc =
+        workerSource || `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+
+    const fileData = await getPdfFile(file)
+
+    const source: DocumentInitParameters = {
+        ...fileData,
+        ...(withCredentials ? {withCredentials} : {}),
+        ...(cMapUrl ? {cMapUrl} : {}),
+        ...(cMapPacked ? {cMapPacked} : {}),
     }
 
-    if (cMapPacked) {
-        source = {...source, cMapPacked}
-    }
-
-    const {promise} = pdfjs.getDocument({
-        ...source,
-        isEvalSupported: false,
-        withCredentials,
-    }) as PDFLoadingTask<PDFDocumentProxy>
+    const {promise} = pdfjs.getDocument(source)
     const pdfInfo = await promise
     return pdfInfo
 }

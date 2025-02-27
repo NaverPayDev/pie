@@ -1,6 +1,8 @@
 import {PropsWithChildren, createContext, useContext, useMemo} from 'react'
 
-import type {PDFDocumentProxy} from '../pdfjs-dist/types/pdfjs'
+import {ExternalLinkTarget} from '../utils/link-service'
+
+import type {PDFDocumentProxy} from 'pdfjs-dist'
 
 export interface PdfProviderContext {
     pdf: PDFDocumentProxy
@@ -8,10 +10,9 @@ export interface PdfProviderContext {
      * pdf 렌더링 시 필요한 props
      */
     width?: number
-    renderMode?: 'canvas' | 'svg' | null
     lazyLoading?: boolean
     tokenize?: boolean
-    externalLinkTarget?: '_self' | '_blank' | '_parent' | '_top'
+    externalLinkTarget?: ExternalLinkTarget
 }
 
 const Context = createContext<PdfProviderContext | undefined>(undefined)
