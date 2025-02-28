@@ -35,7 +35,6 @@
         "naverpay"
     ],
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.12.12",
         "jest-environment-jsdom": "^29.7.0",

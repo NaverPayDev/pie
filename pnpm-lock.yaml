@@ -103,9 +103,6 @@ importers:
       '@naverpay/browserslist-config':
         specifier: 1.6.1
         version: 1.6.1
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../../packages/tsconfig
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
@@ -178,9 +175,6 @@ importers:
 
   packages/es-http-status-codes:
     devDependencies:
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -203,9 +197,6 @@ importers:
         specifier: ^17 || ^18
         version: 18.2.0
     devDependencies:
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
@@ -279,9 +270,6 @@ importers:
         specifier: ^2.5.0
         version: 2.6.2
     devDependencies:
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@types/babel__core':
         specifier: ^7.1.14
         version: 7.20.5
@@ -301,9 +289,6 @@ importers:
         specifier: ^17 || ^18
         version: 18.2.0(react@18.2.0)
     devDependencies:
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.75
@@ -311,13 +296,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3
 
-  packages/tsconfig: {}
-
   packages/utils:
     devDependencies:
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -336,9 +316,6 @@ importers:
       '@jest/globals':
         specifier: ^29.5.0
         version: 29.7.0
-      '@naverpay/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       '@testing-library/react':
         specifier: ^15.0.7
         version: 15.0.7(@types/react@18.2.75)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)

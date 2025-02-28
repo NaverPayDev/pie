@@ -44,7 +44,6 @@
         "build": "pnpm clean && vite build"
     },
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/jest": "^29.5.12",
         "ts-jest": "^29.2.2"
     },

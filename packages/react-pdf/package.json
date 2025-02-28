@@ -39,7 +39,6 @@
         "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/node": "^20.12.7",
         "@types/react": "^18.2.75"
     },

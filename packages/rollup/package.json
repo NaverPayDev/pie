@@ -47,7 +47,6 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/babel__core": "^7.1.14",
         "@types/node": "^20.12.7",
         "rollup": "^2.79.1"
