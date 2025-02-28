@@ -31,9 +31,7 @@
     ],
     "scripts": {
         "clean": "rm -rf dist",
-        "build-declarations": "tsc --declarationDir dist",
-        "build": "pnpm run clean && pnpm run build-declarations && rollup -c",
-        "start": "rollup -c --watch"
+        "build": "pnpm run clean && vite build"
     },
     "dependencies": {
         "classnames": "^2.5.1",
@@ -41,11 +39,9 @@
         "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {
-        "@naverpay/rollup": "workspace:^",
         "@naverpay/tsconfig": "workspace:^",
         "@types/node": "^20.12.7",
-        "@types/react": "^18.2.75",
-        "rollup": "^2.79.1"
+        "@types/react": "^18.2.75"
     },
     "peerDependencies": {
         "react": "^17 || ^18"
