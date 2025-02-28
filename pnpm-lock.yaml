@@ -3,6 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
+  injectWorkspacePackages: true
 
 importers:
 
@@ -13,7 +14,7 @@ importers:
         version: 2.27.1
       '@naverpay/eslint-config':
         specifier: ^0.2.0
-        version: 0.2.0(dkh656se333qhgajlrlgtrnngy)
+        version: 0.2.0(4c22b4e063f485ccbff11e777c9a7a50)
       '@naverpay/markdown-lint':
         specifier: ^0.0.2
         version: 0.0.2
@@ -13498,7 +13499,7 @@ snapshots:
 
   '@naverpay/browserslist-config@2.1.0': {}
 
-  '@naverpay/eslint-config@0.2.0(dkh656se333qhgajlrlgtrnngy)':
+  '@naverpay/eslint-config@0.2.0(4c22b4e063f485ccbff11e777c9a7a50)':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/eslint-parser': 7.24.1(@babel/core@7.24.4)(eslint@8.57.0)
