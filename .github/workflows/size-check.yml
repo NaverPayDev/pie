@@ -1,0 +1,24 @@
+name: Analyze Pull Request Size
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    size-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Run Size Action
+              uses: naverpay/size-action@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  build_script: build
+                  compression: gzip
+                  language: 'en'
+                  cwd: './'
+                  show_total: true
+                  collapse_unchanged: true
+                  omit_unchanged: false
+                  minimum_change_threshold: 1000
+                  ignore_patterns: '**/playground/**'
