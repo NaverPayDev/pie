@@ -9,9 +9,9 @@ jobs:
     size-check:
         runs-on: ubuntu-latest
         steps:
+            - uses: pnpm/action-setup@v4
             - name: Run Size Action
               uses: NaverPayDev/size-action@main
-              uses: pnpm/action-setup@v4
               with:
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   build_script: build
