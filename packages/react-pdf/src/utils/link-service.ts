@@ -95,7 +95,9 @@ export default class PDFLinkService implements IPDFLinkService {
                         .then((pageIndex) => {
                             resolve(pageIndex)
                         })
-                        .catch(() => {})
+                        .catch(() => {
+                            // Do nothing
+                        })
                 } else if (typeof destRef === 'number') {
                     resolve(destRef)
                 }

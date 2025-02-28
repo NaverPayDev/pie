@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import path from 'path'
 
 import browserslist from '@naverpay/browserslist-config'
@@ -28,23 +29,6 @@ function verifyPackageJSON(packageDir: string) {
 
 const SUPPORT_MODULES: readonly ModuleFormat[] = ['cjs', 'esm']
 
-function getBabelPresets({react, ie}: Pick<GenerateRollupConfigOptions, 'react' | 'ie'>) {
-    const presetEnv = [
-        '@babel/preset-env',
-        {
-            useBuiltIns: 'usage',
-            targets: ie ? '> 0.25%, not dead, ie >= 11, not op_mini all' : browserslist.join(', '),
-            corejs: {version: 3.29, proposals: false},
-        },
-    ]
-
-    if (!react) {
-        return [presetEnv, '@babel/preset-typescript']
-    }
-
-    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: react.runtime}]]
-}
-
 interface GenerateRollupConfigOptions {
     entrypoint: string | Record<'index' & string, string>
     outpoint?: {
@@ -61,6 +45,23 @@ interface GenerateRollupConfigOptions {
     ie: boolean
     minify: boolean
     supportModules?: readonly ModuleFormat[]
+}
+
+function getBabelPresets({react, ie}: Pick<GenerateRollupConfigOptions, 'react' | 'ie'>) {
+    const presetEnv = [
+        '@babel/preset-env',
+        {
+            useBuiltIns: 'usage',
+            targets: ie ? '> 0.25%, not dead, ie >= 11, not op_mini all' : browserslist.join(', '),
+            corejs: {version: 3.29, proposals: false},
+        },
+    ]
+
+    if (!react) {
+        return [presetEnv, '@babel/preset-typescript']
+    }
+
+    return [presetEnv, '@babel/preset-typescript', ['@babel/preset-react', {runtime: react.runtime}]]
 }
 
 export function generateRollupConfig({

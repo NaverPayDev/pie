@@ -1,8 +1,8 @@
-import {PropsWithChildren, createContext, useContext, useMemo} from 'react'
+import {createContext, useContext, useMemo} from 'react'
 
-import {ExternalLinkTarget} from '../utils/link-service'
-
+import type {ExternalLinkTarget} from '../utils/link-service'
 import type {PDFDocumentProxy} from 'pdfjs-dist'
+import type {PropsWithChildren} from 'react'
 
 export interface PdfProviderContext {
     pdf: PDFDocumentProxy

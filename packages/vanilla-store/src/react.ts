@@ -2,7 +2,8 @@ import {useRef, useSyncExternalStore} from 'react'
 
 import {useSyncPersistStore} from './persist/hooks'
 import shallowEqual from './shallowEqual'
-import {SetAction, VanillaSelect, VanillaStore} from './type'
+
+import type {SetAction, VanillaSelect, VanillaStore} from './type'
 
 function useSyncStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())

@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 
-import {VanillaStore, VanillaSelect} from '../type'
+import type {VanillaStore, VanillaSelect} from '../type'
 
 export function useSyncPersistStore<State>(store: VanillaStore<State> | VanillaSelect<State>, value: State) {
     useEffect(() => {

@@ -1,5 +1,6 @@
-import {조사Option} from '../constants/hangul'
 import get조사 from './get조사'
+
+import type {조사Option} from '../constants/hangul'
 
 /**
  * @description 한글 단어의 마지막 단어에 따라 단어 + 조사를 반환합니다.

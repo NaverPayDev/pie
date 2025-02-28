@@ -1,7 +1,9 @@
 /* This file is auto-generated. Do not edit directly. */
-import {HttpStatusCodes, HttpStatusCode} from './status-code'
+import {HttpStatusCodes} from './status-code'
 
-export const ReasonPhrases: {[key in HttpStatusCode]: string} = {
+import type {HttpStatusCode} from './status-code'
+
+export const ReasonPhrases: Record<HttpStatusCode, string> = {
     [HttpStatusCodes.CONTINUE]: 'Continue',
     [HttpStatusCodes.SWITCHING_PROTOCOLS]: 'Switching Protocols',
     [HttpStatusCodes.PROCESSING]: 'Processing',
