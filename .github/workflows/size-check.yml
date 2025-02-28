@@ -10,6 +10,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.18.3'
             - uses: pnpm/action-setup@v4
             - name: Run Size Action
               uses: NaverPayDev/size-action@main
