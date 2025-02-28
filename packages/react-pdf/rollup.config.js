@@ -4,13 +4,10 @@ module.exports = generateRollupConfig({
     packageDir: __dirname,
     entrypoint: {
         index: './src/index.ts',
-        'pdf.worker.entry': './src/pdfjs-dist/legacy/build/pdf.worker.entry.js',
-        pdf: './src/pdfjs-dist/legacy/build/pdf.js',
-        'pdf.worker': './src/pdfjs-dist/legacy/build/pdf.worker.js',
+        'pdf.worker': './node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
     },
-    ie: true,
     react: {runtime: 'automatic'},
     scss: {ssr: false},
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    supportModules: ['cjs'],
+    supportModules: ['cjs', 'esm'],
 })

@@ -2,7 +2,8 @@ import {PropsWithChildren, createContext, useContext, useMemo} from 'react'
 
 import {usePdfContext} from './pdf'
 
-import type {PDFPageProxy, PDFPageViewport} from '../pdfjs-dist/types/pdfjs'
+import type {PDFPageProxy} from 'pdfjs-dist'
+import type {PageViewport} from 'pdfjs-dist/types/src/display/display_utils'
 
 interface PdfPageProviderProps {
     page: PDFPageProxy
@@ -12,7 +13,7 @@ interface PdfPageProviderProps {
 }
 
 export type PdfPageContext = PdfPageProviderProps & {
-    viewport: PDFPageViewport
+    viewport: PageViewport
     scale: number
 }
 

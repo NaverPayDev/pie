@@ -6,17 +6,17 @@ import {PdfPageProvider} from '../contexts/page'
 import {usePdfContext} from '../contexts/pdf'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
-import {PDFPageProxy} from '../pdfjs-dist/types/pdfjs'
 import {AnnotationLayer} from './layer/Annotation'
 import {TextLayer} from './layer/Text'
 import {PageCanvas} from './page/Canvas'
-import {PageSvg} from './page/Svg'
 import styles from './PdfViewer.module.scss'
+
+import type {PDFPageProxy} from 'pdfjs-dist'
 
 const cx = classNames.bind(styles)
 
 export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
-    const {pdf, renderMode} = usePdfContext()
+    const {pdf} = usePdfContext()
     const [page, setPage] = useState<PDFPageProxy | undefined>()
 
     useIsomorphicLayoutEffect(() => {
@@ -33,8 +33,7 @@ export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
 
     return (
         <PdfPageProvider page={page}>
-            {renderMode === 'canvas' && <PageCanvas />}
-            {renderMode === 'svg' && <PageSvg />}
+            <PageCanvas />
             <TextLayer />
             <AnnotationLayer />
         </PdfPageProvider>
