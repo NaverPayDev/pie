@@ -13,13 +13,6 @@ jobs:
             - name: Run Size Action
               uses: NaverPayDev/size-action@main
               with:
+                  cwd: './'
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   build_script: build
-                  compression: gzip
-                  language: 'en'
-                  cwd: './'
-                  show_total: true
-                  collapse_unchanged: true
-                  omit_unchanged: false
-                  minimum_change_threshold: 1000
-                  ignore_patterns: '**/playground/**'
