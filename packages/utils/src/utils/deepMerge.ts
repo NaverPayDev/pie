@@ -6,7 +6,7 @@ type AnyObject = Record<string, any>
  * @param isUndefinedValid 병합할 어떤 객체 내부 속성 중 undefined 가 있을경우 해당속성을 undefined로 덮어씌울지 여부(기본값은 true)
  * @returns 병합된 객체
  */
-const deepMerge = (objs: AnyObject[], isUndefinedValid: boolean = true): AnyObject => {
+const deepMerge = (objs: AnyObject[], isUndefinedValid = true): AnyObject => {
     return objs.reduce((acc: AnyObject, obj: AnyObject) => {
         Object.keys(obj).forEach((key) => {
             if (!isUndefinedValid && obj[key] === undefined) {

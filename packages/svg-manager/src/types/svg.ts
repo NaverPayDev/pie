@@ -1,14 +1,10 @@
-import {SVGProps} from 'react'
-
-import {Property} from 'csstype'
-
-import {IntRange} from './utility-types'
+import type {IntRange} from './utility-types'
+import type {Property} from 'csstype'
+import type {SVGProps} from 'react'
 
 type FillName = `fill${IntRange<2, 6>}`
 
-type SVGFillProps = {
-    [key in FillName]?: Property.Fill
-}
+type SVGFillProps = Partial<Record<FillName, Property.Fill>>
 
 export interface SVGStyleProps extends SVGProps<SVGSVGElement>, SVGFillProps {
     id?: string

@@ -1,4 +1,4 @@
-import {ReactNode, memo, useCallback, useEffect, useState} from 'react'
+import {memo, useCallback, useEffect, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
@@ -12,6 +12,7 @@ import {PageCanvas} from './page/Canvas'
 import styles from './PdfViewer.module.scss'
 
 import type {PDFPageProxy} from 'pdfjs-dist'
+import type {ReactNode} from 'react'
 
 const cx = classNames.bind(styles)
 

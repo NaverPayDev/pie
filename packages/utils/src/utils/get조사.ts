@@ -1,6 +1,7 @@
-import {조사Option} from '../constants/hangul'
 import disassemble문자 from './disassemble문자'
 import 마지막_문자_받침_여부 from './마지막_문자_받침_여부'
+
+import type {조사Option} from '../constants/hangul'
 
 /**
  * @description 한글 단어의 마지막 단어에 따라 조사를 가지고 옵니다. 받침이 ㄹ 이고 조사가 으로/로라면 로를 반환합니다.

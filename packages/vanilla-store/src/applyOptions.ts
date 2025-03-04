@@ -1,6 +1,7 @@
 import {LocalStoragePersist, SessionStoragePersist} from './persist'
-import {Persistent} from './persist/type'
-import {Options} from './type'
+
+import type {Persistent} from './persist/type'
+import type {Options} from './type'
 
 export const applyPersist = <State>(options: Options<State> = {}, addCallbacks: () => void, initialState: State) => {
     let persistStore: Persistent<State> | null = null

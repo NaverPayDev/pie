@@ -19,7 +19,7 @@ function hasComplexChildren(element: ReactNode): element is ReactElement<{childr
 
 function deepMap(
     children: ReactNode | ReactNode[],
-    deepMapFn: (child: ReactNode, index?: number, children?: ReactNode[]) => ReactNode,
+    deepMapFn: (child: ReactNode, index?: number, mapChildren?: ReactNode[]) => ReactNode,
 ): ReactNode[] {
     return Children.toArray(children).map((child: ReactNode, index: number, mapChildren: ReactNode[]) => {
         if (isValidElement(child) && hasComplexChildren(child)) {

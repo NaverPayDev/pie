@@ -1,9 +1,10 @@
-import {PropsWithChildren, createContext, useContext, useMemo} from 'react'
+import {createContext, useContext, useMemo} from 'react'
 
 import {usePdfContext} from './pdf'
 
 import type {PDFPageProxy} from 'pdfjs-dist'
 import type {PageViewport} from 'pdfjs-dist/types/src/display/display_utils'
+import type {PropsWithChildren} from 'react'
 
 interface PdfPageProviderProps {
     page: PDFPageProxy

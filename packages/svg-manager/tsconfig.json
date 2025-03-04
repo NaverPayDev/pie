@@ -1,5 +1,5 @@
 {
-    "extends": "@naverpay/tsconfig/base.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "./dist/cjs",

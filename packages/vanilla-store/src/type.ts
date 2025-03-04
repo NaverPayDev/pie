@@ -1,4 +1,4 @@
-import {Persistent} from './persist/type'
+import type {Persistent} from './persist/type'
 
 type PersistType = 'localStorage' | 'sessionStorage'
 export interface Options<State> {

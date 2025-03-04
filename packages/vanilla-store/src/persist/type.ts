@@ -2,7 +2,9 @@ export function isSerializeValue(value: unknown): boolean {
     try {
         JSON.stringify(value as string)
         return true
-    } catch (e) {
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
         return false
     }
 }

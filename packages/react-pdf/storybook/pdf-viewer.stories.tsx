@@ -1,5 +1,4 @@
-import React from 'react'
-
+/* eslint-disable @typescript-eslint/no-require-imports */
 import {PdfViewer} from '../dist/cjs/index'
 
 const meta = {

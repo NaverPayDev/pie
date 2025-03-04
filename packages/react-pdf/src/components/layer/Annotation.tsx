@@ -3,11 +3,11 @@ import {memo, useCallback, useMemo, useState} from 'react'
 import classNames from 'classnames/bind'
 import {AnnotationLayer as PdfAnnotationLayer} from 'pdfjs-dist'
 
+import styles from './Annotation.module.scss'
 import {usePdfPageContext} from '../../contexts/page'
 import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import PDFLinkService from '../../utils/link-service'
-import styles from './Annotation.module.scss'
 
 import type {AnnotationLayerParameters} from 'pdfjs-dist/types/src/display/annotation_layer'
 
@@ -69,7 +69,9 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                     viewport,
                 }
 
-                await new PdfAnnotationLayer(annotationLayerParameters).render(parameters).catch(() => {})
+                await new PdfAnnotationLayer(annotationLayerParameters).render(parameters).catch(() => {
+                    // Do nothing
+                })
 
                 if (children.length > 0 && children?.[0]) {
                     const firstChildren = children[0] as HTMLElement

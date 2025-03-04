@@ -1,6 +1,14 @@
 {
     "name": "@naverpay/svg-manager",
     "version": "0.0.2",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/svg-manager"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/svg-manager/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
@@ -33,7 +41,6 @@
         "dist"
     ],
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/react": "^18.2.75",
         "csstype": "^3.1.3"
     },

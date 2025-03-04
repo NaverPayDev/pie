@@ -12,10 +12,6 @@ export const INTERNAL_CONFIG: {name: string; description?: string}[] = [
         description: 'React로 작성된 svg 컴포넌트의 공통 인터페이스를 제공합니다.',
     },
     {
-        name: '@naverpay/tsconfig',
-        description: '',
-    },
-    {
         name: '@naverpay/utils',
         description: '자바스크립트 유틸리티 라이브러리입니다.',
     },

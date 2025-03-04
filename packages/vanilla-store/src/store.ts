@@ -1,6 +1,7 @@
 import {applyPersist} from './applyOptions'
-import {Persistent} from './persist/type'
-import {Options, VanillaStore} from './type'
+
+import type {Persistent} from './persist/type'
+import type {Options, VanillaStore} from './type'
 
 export interface Subscription<Value> {
     getCurrentValue: () => Value
