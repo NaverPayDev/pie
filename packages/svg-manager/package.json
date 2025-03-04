@@ -2,15 +2,22 @@
     "name": "@naverpay/svg-manager",
     "version": "0.0.2",
     "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "require": "./dist/cjs/index.js",
-            "import": "./dist/esm/index.mjs",
-            "types": "./dist/cjs/index.d.ts"
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
         },
         "./package.json": "./package.json"
     },
+    "sideEffects": false,
     "keywords": [
         "naver",
         "naverpay",
@@ -20,18 +27,15 @@
     "author": "@NaverPayDev/frontend",
     "scripts": {
         "clean": "rm -rf dist",
-        "build-declarations": "tsc",
-        "build": "npm run clean && npm run build-declarations && rollup -c"
+        "build": "npm run clean && vite build"
     },
     "files": [
         "dist"
     ],
     "devDependencies": {
-        "@naverpay/rollup": "workspace:^",
         "@naverpay/tsconfig": "workspace:^",
         "@types/react": "^18.2.75",
-        "csstype": "^3.1.3",
-        "rollup": "^2.79.1"
+        "csstype": "^3.1.3"
     },
     "peerDependencies": {
         "react": "^17 || ^18",

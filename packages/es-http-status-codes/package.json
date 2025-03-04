@@ -18,7 +18,8 @@
         "lightweight"
     ],
     "main": "./dist/cjs/index.js",
-    "module": "./dist/module/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
     "homepage": "https://github.com/NaverPayDev/pie/tree/main/packages/es-http-status-codes",
     "exports": {
         ".": {
@@ -40,18 +41,12 @@
         "clean": "rm -rf dist",
         "generate": "node ./script/index.js",
         "test": "jest",
-        "build": "pnpm clean && pnpm build-declarations && rollup -c",
-        "build-declarations:cjs": "tsup src/index.ts --format cjs --dts-only --out-dir ./dist/cjs --minify",
-        "build-declarations:esm": "tsup src/index.ts --format esm --dts-only --out-dir ./dist/esm --minify",
-        "build-declarations": "pnpm build-declarations:cjs && pnpm build-declarations:esm"
+        "build": "pnpm clean && vite build"
     },
     "devDependencies": {
-        "@naverpay/rollup": "workspace:^",
         "@naverpay/tsconfig": "workspace:^",
         "@types/jest": "^29.5.12",
-        "rollup": "^2.79.1",
-        "ts-jest": "^29.2.2",
-        "tsup": "^8.1.0"
+        "ts-jest": "^29.2.2"
     },
     "author": "@NaverPayDev/frontend",
     "license": "MIT"
