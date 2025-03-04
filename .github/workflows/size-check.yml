@@ -3,15 +3,14 @@ name: Analyze Pull Request Size
 on:
     pull_request:
         branches:
-            - main
+            - '**'
 
 jobs:
     size-check:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
+            - uses: actions/setup-node@v3
               with:
                   node-version: '20.18.3'
             - uses: pnpm/action-setup@v4
