@@ -38,6 +38,6 @@ pnpm publish --tag beta --dry-run --filter "$workspace_name" --no-git-checks
 git checkout -- package.json
 
 # GitHub Release 생성
-gh release create $NEW_VERSION --prerelease --title "Pre-release $NEW_VERSION" --notes "This is a pre-release version."
+gh release create $workspace_name@$NEW_VERSION --prerelease --title "$workspace_name@$NEW_VERSION" --notes "This is a pre-release version of $workspace_name." --target $(git rev-parse --abbrev-ref HEAD)
 
 echo "$workspace_name is successfully published and created GitHub release: $NEW_VERSION"
