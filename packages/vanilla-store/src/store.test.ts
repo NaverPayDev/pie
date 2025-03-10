@@ -1,3 +1,4 @@
+import shallowEqual from './shallowEqual'
 import {createVanillaStore} from './store'
 
 interface SampleObject {
@@ -82,7 +83,7 @@ describe('Store', () => {
         const sampleObject = {count: 0, name: 'hello'}
         const sessionStorageKey = 'test'
 
-        const store = createVanillaStore(sampleObject, {
+        const store = createVanillaStore(sampleObject, shallowEqual, {
             persist: {type: 'sessionStorage', key: sessionStorageKey, typeAssertion: isStoreValue},
         })
         const newValue = {count: 1, name: 'world'}
