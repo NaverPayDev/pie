@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import path from 'path'
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
@@ -48,14 +49,14 @@ const config = {
     docs: {
         autodocs: 'tag',
     },
-    webpackFinal(config) {
-        config.resolve.alias = {
-            ...config.resolve.alias,
+    webpackFinal(configParam) {
+        configParam.resolve.alias = {
+            ...configParam.resolve.alias,
             react: path.resolve(__dirname, '../node_modules/react'),
             'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
             'core-js/modules': path.resolve(__dirname, '../node_modules/core-js/modules'),
         }
-        return config
+        return configParam
     },
 }
 export default config

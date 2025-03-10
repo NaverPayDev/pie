@@ -34,7 +34,6 @@
         "@docusaurus/types": "3.0.1",
         "@easyops-cn/docusaurus-search-local": "^0.40.1",
         "@naverpay/browserslist-config": "1.6.1",
-        "@naverpay/tsconfig": "workspace:^",
         "@types/semver": "^7.5.8",
         "@types/shelljs": "^0.8.15",
         "concurrently": "^8.2.2",

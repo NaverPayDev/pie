@@ -1,5 +1,5 @@
-import {가_CHAR_CODE, 중성, 초성, 종성} from '../constants/hangul'
 import 한글_여부 from './한글_여부'
+import {가_CHAR_CODE, 중성, 초성, 종성} from '../constants/hangul'
 
 /**
  * @description 한글 한글자를 초성/중성/종성으로 분리합니다. ex) 밟 > ㅂ / ㅏ / ㄹㅂ

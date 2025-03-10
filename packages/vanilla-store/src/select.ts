@@ -1,7 +1,8 @@
 import {applyPersist} from './applyOptions'
-import {Persistent} from './persist/type'
 import shallowEqual from './shallowEqual'
-import {Options, VanillaSelect, VanillaStore} from './type'
+
+import type {Persistent} from './persist/type'
+import type {Options, VanillaSelect, VanillaStore} from './type'
 
 export const createVanillaSelect = <State, StoreState>(
     store: VanillaStore<StoreState>,

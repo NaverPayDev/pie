@@ -1,5 +1,5 @@
-import {가_CHAR_CODE} from '../constants/hangul'
 import 한글_여부 from './한글_여부'
+import {가_CHAR_CODE} from '../constants/hangul'
 
 /**
  * @description 한글의 마지막 단어 받침 여부를 확인하는 유틸입니다.

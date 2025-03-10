@@ -1,15 +1,17 @@
-import {CSSProperties, MouseEventHandler, ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
-import {PdfProvider, PdfProviderContext} from '../contexts/pdf'
+import {Pages} from './Pages'
+import styles from './PdfViewer.module.scss'
+import {PdfProvider} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
 import usePdfViewerPageWidth from '../hooks/usePdfViewerPageWidth'
 import {getPdfDocument} from '../utils/pdf'
-import {Pages} from './Pages'
-import styles from './PdfViewer.module.scss'
 
+import type {PdfProviderContext} from '../contexts/pdf'
 import type {PDFDocumentProxy} from 'pdfjs-dist'
+import type {CSSProperties, MouseEventHandler, ReactNode} from 'react'
 
 const cx = classNames.bind(styles)
 

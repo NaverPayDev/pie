@@ -2,6 +2,14 @@
     "name": "@naverpay/utils",
     "description": "javascript utility library",
     "version": "0.1.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/utils"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/utils/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
@@ -24,10 +32,6 @@
         "build": "npm run clean && vite build",
         "test": "jest"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NaverPayDev/pie.git"
-    },
     "keywords": [
         "javascript",
         "utils",
@@ -35,7 +39,6 @@
         "naverpay"
     ],
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.12.12",
         "jest-environment-jsdom": "^29.7.0",

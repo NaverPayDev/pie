@@ -1,6 +1,14 @@
 {
     "name": "@naverpay/vanilla-store",
     "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/vanilla-store"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/vanilla-store/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
@@ -28,10 +36,6 @@
         "test": "jest",
         "publint": "attw --pack && publint"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NaverPayDev/pie.git"
-    },
     "keywords": [
         "state manager",
         "naver",
@@ -39,7 +43,6 @@
     ],
     "devDependencies": {
         "@jest/globals": "^29.5.0",
-        "@naverpay/tsconfig": "workspace:^",
         "@testing-library/react": "^15.0.7",
         "@types/jest": "^29.5.12",
         "@types/react": "^18.2.0",

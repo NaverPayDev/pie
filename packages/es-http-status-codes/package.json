@@ -1,6 +1,14 @@
 {
     "name": "@naverpay/es-http-status-codes",
     "version": "0.0.3",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/es-http-status-codes"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/es-http-status-codes/",
     "sideEffects": false,
     "description": "A lightweight, tree-shakable utility for HTTP status codes and reason phrases in TypeScript/JavaScript. Auto-generated and ESM-compatible.",
     "keywords": [
@@ -20,7 +28,6 @@
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
-    "homepage": "https://github.com/NaverPayDev/pie/tree/main/packages/es-http-status-codes",
     "exports": {
         ".": {
             "import": {
@@ -44,7 +51,6 @@
         "build": "pnpm clean && vite build"
     },
     "devDependencies": {
-        "@naverpay/tsconfig": "workspace:^",
         "@types/jest": "^29.5.12",
         "ts-jest": "^29.2.2"
     },

@@ -1,3 +1,9 @@
 packages:
-    - 'packages/*'
-    - 'apps/*'
+    - packages/*
+    - apps/*
+onlyBuiltDependencies:
+    - '@naverpay/markdown-lint'
+    - '@swc/core'
+    - core-js
+    - core-js-pure
+    - esbuild

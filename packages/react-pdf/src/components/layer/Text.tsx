@@ -2,11 +2,11 @@ import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
 
+import styles from './Text.module.scss'
 import {usePdfPageContext} from '../../contexts/page'
 import {usePdfContext} from '../../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../../hooks/useIsomorphicLayoutEffect'
 import {mergeTextItems} from '../../utils/text'
-import styles from './Text.module.scss'
 
 import type {TextItem} from 'pdfjs-dist/types/src/display/api'
 import type {TextContent} from 'pdfjs-dist/types/src/display/text_layer'
