@@ -32,7 +32,7 @@ echo "New version: $NEW_VERSION"
 
 
 # npm publish 실행
-pnpm publish --tag beta --dry-run --filter "$workspace_name" --no-git-checks
+pnpm publish --tag beta --filter "$workspace_name" --no-git-checks
 
 # package.json 복원
 git checkout -- package.json
