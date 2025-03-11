@@ -1,7 +1,7 @@
 import {Persistent, isSerializeValue} from './type'
 
 export default class SessionStoragePersist<Value> extends Persistent<Value> {
-    get deserialized() {
+    get serialized() {
         return window.sessionStorage.getItem(this.key)
     }
 

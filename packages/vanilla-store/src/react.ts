@@ -18,10 +18,10 @@ function useSyncWithInitialValue<State>(store: VanillaStore<State> | VanillaSele
     const ref = useRef<State | null>(initialValue || null)
 
     useEffect(() => {
-        const deserialized = store.persistStore?.deserialized
+        const serialized = store.persistStore?.serialized
         const persistValue = store.persistStore?.value
 
-        if (!isNil(deserialized) && !isNil(persistValue)) {
+        if (!isNil(serialized) && !isNil(persistValue)) {
             store.set(persistValue)
             ref.current = null
             return
