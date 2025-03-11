@@ -1,6 +1,10 @@
 import {Persistent, isSerializeValue} from './type'
 
 export default class LocalStoragePersist<Value> extends Persistent<Value> {
+    get deserialized() {
+        return window.localStorage.getItem(this.key)
+    }
+
     get value(): Value {
         const storageValue = window.localStorage.getItem(this.key)
 
