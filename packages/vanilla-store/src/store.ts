@@ -54,8 +54,27 @@ export const createVanillaStore = <State>(
         return {
             get: storeBase.get,
             set: (() => {
+                const setInServerError = new Error(
+                    '[@naverpay/vanilla-store] The set method can only be called from the client',
+                )
+                const stack = setInServerError.stack
+
                 // eslint-disable-next-line no-console
-                console.error('[서버 스토어 오류] set 메서드는 클라이언트에서만 호출 가능합니다')
+                console.error(
+                    `
+╔═══════════════════════════════════════════╗
+║             SERVER STORE ERROR            ║
+╚═══════════════════════════════════════════╝
+
+⚠️  ${setInServerError.message}
+
+%cSTACK TRACE%c
+---------------
+${stack}
+`,
+                    'font-weight: bold; color: red;',
+                    'font-weight: normal;',
+                )
 
                 return initialState
             }) as unknown as SetAction<State>,
