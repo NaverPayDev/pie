@@ -59,7 +59,7 @@ export function useSetStore<State>(store: VanillaStore<State> | VanillaSelect<St
     return store.set
 }
 
-export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
+function useSyncExternalStoreWithSelector<Snapshot, Selection>(
     subscribe: (onStoreChange: () => void) => () => void,
     getSnapshot: () => Snapshot,
     getServerSnapshot: undefined | (() => Snapshot),
