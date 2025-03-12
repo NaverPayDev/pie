@@ -1,7 +1,7 @@
 import {useEffect, useRef, useSyncExternalStore} from 'react'
 
 import {useSyncPersistStore} from './persist/hooks'
-import shallowEqual from './shallowEqual'
+import {shallowEqual} from './shallowEqual'
 
 import type {SetAction, VanillaSelect, VanillaStore} from './type'
 

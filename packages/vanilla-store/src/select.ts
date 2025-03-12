@@ -1,5 +1,5 @@
 import {applyPersist} from './applyOptions'
-import shallowEqual from './shallowEqual'
+import {shallowEqual} from './shallowEqual'
 
 import type {Persistent} from './persist/type'
 import type {Options, VanillaSelect, VanillaStore} from './type'
