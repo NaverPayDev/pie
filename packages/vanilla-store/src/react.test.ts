@@ -5,6 +5,7 @@ import {renderHook, act} from '@testing-library/react'
 
 import {useGetStore, useSetStore, useStore, useStoreSelector} from './react'
 import {createVanillaSelect} from './select'
+import {shallowEqual} from './shallowEqual'
 import {createVanillaStore} from './store'
 
 interface SampleObject {
@@ -47,7 +48,7 @@ export function createMockSessionStorage(storage: any) {
     })
 }
 
-const store = createVanillaStore(sampleObject, {
+const store = createVanillaStore(sampleObject, shallowEqual, {
     persist: {type: 'sessionStorage', key: sessionStorageKey, typeAssertion: isStoreValue},
 })
 

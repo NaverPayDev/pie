@@ -1,6 +1,10 @@
 import {Persistent, isSerializeValue} from './type'
 
 export default class SessionStoragePersist<Value> extends Persistent<Value> {
+    get serialized() {
+        return window.sessionStorage.getItem(this.key)
+    }
+
     get value(): Value {
         const storageValue = window.sessionStorage.getItem(this.key)
         if (!isSerializeValue(storageValue)) {

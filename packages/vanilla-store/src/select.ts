@@ -1,5 +1,5 @@
 import {applyPersist} from './applyOptions'
-import shallowEqual from './shallowEqual'
+import {shallowEqual} from './shallowEqual'
 
 import type {Persistent} from './persist/type'
 import type {Options, VanillaSelect, VanillaStore} from './type'
@@ -38,8 +38,19 @@ export const createVanillaSelect = <State, StoreState>(
 
     const subscribe = (callback: () => void) => {
         callbacks.add(callback)
+
+        // Add a subscription to detect changes in the original store (the store object from which the select is derived)
+        const unsubscribeOriginalStore = store.subscribe(() => {
+            const next = selectFn(store.get())
+            if (!equalityFn(next, state)) {
+                state = next
+                callback()
+            }
+        })
+
         return () => {
             callbacks.delete(callback)
+            unsubscribeOriginalStore()
         }
     }
 

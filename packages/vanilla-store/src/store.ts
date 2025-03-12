@@ -1,27 +1,32 @@
 import {applyPersist} from './applyOptions'
+import {shallowEqual} from './shallowEqual'
 
 import type {Persistent} from './persist/type'
-import type {Options, VanillaStore} from './type'
+import type {Options, SetAction, VanillaStore} from './type'
 
+const isServer = typeof window === 'undefined'
 export interface Subscription<Value> {
     getCurrentValue: () => Value
     subscribe: (callback: () => void) => () => void
 }
 
-export const createVanillaStore = <State>(initialState: State, options?: Options<State>): VanillaStore<State> => {
+export const createVanillaStore = <State>(
+    initialState: State,
+    equalityFn: (a: State, b: State) => boolean = shallowEqual,
+    options?: Options<State>,
+): VanillaStore<State> => {
     let state = initialState
 
     const callbacks = new Set<() => void>()
 
     const get = () => state
     const set = (nextState: State | ((prev: State) => State)) => {
-        if (typeof window === 'undefined') {
-            throw new Error('This function is not available in Server side.')
+        const next = typeof nextState === 'function' ? (nextState as (prev: State) => State)(state) : nextState
+
+        if (!equalityFn(next, state)) {
+            state = next
+            callbacks.forEach((callback) => callback())
         }
-
-        state = typeof nextState === 'function' ? (nextState as (prev: State) => State)(state) : nextState
-
-        callbacks.forEach((callback) => callback())
 
         return state
     }
@@ -35,8 +40,6 @@ export const createVanillaStore = <State>(initialState: State, options?: Options
             }
         })
 
-    persistStore = applyPersist(options, addCallbacks, initialState)
-
     const subscribe = (callback: () => void) => {
         callbacks.add(callback)
         return () => {
@@ -44,5 +47,43 @@ export const createVanillaStore = <State>(initialState: State, options?: Options
         }
     }
 
-    return {get, set, subscribe, persistStore}
+    const storeBase = {get, set, subscribe}
+
+    // Return read-only store on server.
+    if (isServer) {
+        return {
+            get: storeBase.get,
+            set: (() => {
+                const setInServerError = new Error(
+                    '[@naverpay/vanilla-store] The set method can only be called from the client',
+                )
+                const stack = setInServerError.stack
+
+                // eslint-disable-next-line no-console
+                console.error(
+                    `
+╔═══════════════════════════════════════════╗
+║             SERVER STORE ERROR            ║
+╚═══════════════════════════════════════════╝
+
+⚠️  ${setInServerError.message}
+
+%cSTACK TRACE%c
+---------------
+${stack}
+`,
+                    'font-weight: bold; color: red;',
+                    'font-weight: normal;',
+                )
+
+                return initialState
+            }) as unknown as SetAction<State>,
+            subscribe: storeBase.subscribe,
+            persistStore: null,
+        }
+    }
+
+    persistStore = applyPersist(options, addCallbacks, initialState)
+
+    return {...storeBase, persistStore}
 }

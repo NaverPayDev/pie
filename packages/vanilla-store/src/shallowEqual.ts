@@ -13,7 +13,7 @@ const objectIs: (x: any, y: any) => boolean = typeof Object.is === 'function' ? 
  * @param b
  * @returns boolean
  */
-export default function shallowEqual<T>(a: T, b: T): boolean {
+export function shallowEqual<T>(a: T, b: T): boolean {
     if (objectIs(a, b)) {
         return true
     }

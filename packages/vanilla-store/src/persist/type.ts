@@ -15,6 +15,9 @@ export abstract class Persistent<Value> {
         this.typeAssertion = typeAssertion
     }
 
+    // Raw value from storage
+    abstract get serialized(): string | null
+
     abstract get value(): Value | null
 
     abstract set value(value: Value | null)
