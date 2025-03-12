@@ -20,6 +20,7 @@ done
 
 # 선택된 워크스페이스에서 스크립트 실행
 if [ -n "$workspace_name" ] && [ -n "$workspace_path" ]; then
+    pnpm build --filter "$workspace_name"
     ./prerelease.sh "$workspace_name" "$workspace_path"
 else
     echo "워크스페이스가 선택되지 않았습니다."
