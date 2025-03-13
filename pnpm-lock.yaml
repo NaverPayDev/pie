@@ -3,7 +3,6 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
-  injectWorkspacePackages: true
 
 importers:
 
@@ -19,8 +18,8 @@ importers:
         specifier: ^0.0.2
         version: 0.0.2
       '@naverpay/pite':
-        specifier: 1.1.3
-        version: 1.1.3(@babel/core@7.24.4)(@types/babel__core@7.20.5)(rollup@4.34.8)(tsup@8.1.0(@swc/core@1.4.15)(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.14.9)(typescript@5.3.3))(typescript@5.3.3))(typescript@5.3.3)(vite@6.2.0(@types/node@20.14.9)(jiti@1.21.0)(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1))
+        specifier: 2.0.0
+        version: 2.0.0(@babel/core@7.24.4)(@types/babel__core@7.20.5)(rollup@4.34.8)(tsup@8.1.0(@swc/core@1.4.15)(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.14.9)(typescript@5.3.3))(typescript@5.3.3))(typescript@5.3.3)(vite@6.2.0(@types/node@20.14.9)(jiti@1.21.0)(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1))
       '@naverpay/prettier-config':
         specifier: ^0.0.2
         version: 0.0.2
@@ -2160,8 +2159,8 @@ packages:
     resolution: {integrity: sha512-AIHnC0mfRYZ46d158VcdReU23gcvxM8pWJza3XUreINsRkg5TThMDjomxrVGsbJW1cC6CuUlCWZIfrRPwYzoZQ==}
     hasBin: true
 
-  '@naverpay/pite@1.1.3':
-    resolution: {integrity: sha512-acIi1j0wnFt+Y/ZjrfLGL/qhFSes6oaDl2s0To3jCdaAoQNR6uRtwtGXJrFu4IInZKGAj7NaJHYHJ+VJRc1zcw==}
+  '@naverpay/pite@2.0.0':
+    resolution: {integrity: sha512-Es4sA6PMHOmdYK4NujBVUqVzwaq+snvX1Oqk9kBlJr+czaL/m7OrHHBOsqUfxRsbVmcY3F6K5IdVX0sAS7okpw==}
     engines: {node: 22.11.0, pnpm: 9.12.3}
     peerDependencies:
       tsup: '>=8.3.5'
@@ -4137,6 +4136,13 @@ packages:
   builtin-modules@3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
+
+  builtin-modules@5.0.0:
+    resolution: {integrity: sha512-bkXY9WsVpY7CvMhKSR6pZilZu9Ln5WDrKVBUXf2S443etkmEO4V58heTecXcUIsNsi4Rx8JUO4NfX1IcQl4deg==}
+    engines: {node: '>=18.20'}
+
+  builtins@5.1.0:
+    resolution: {integrity: sha512-SW9lzGTLvWTP1AY8xeAMZimqDrIaSdLQUcVr9DMef51niJ022Ri87SwRRKYm4A6iHfkPaiVUu/Duw2Wc4J7kKg==}
 
   bundle-require@4.2.1:
     resolution: {integrity: sha512-7Q/6vkyYAwOmQNRw75x+4yRtZCZJXUDmHHlFdkiV0wgv/reNjtJwpu1jPJ0w2kbEpIM0uoKI3S4/f39dU7AjSA==}
@@ -8683,6 +8689,19 @@ packages:
     resolution: {integrity: sha512-gx4nBxYm5BysmEQS+e2tAMrtFxrGvk+Pe5ppafRibQi0zlW7VYAbEGk6IKDw9sJGPdFWgVTE0o4BU4cdG0Fylg==}
     peerDependencies:
       rollup: 2.x || 3.x || 4.x
+
+  rollup-plugin-visualizer@5.14.0:
+    resolution: {integrity: sha512-VlDXneTDaKsHIw8yzJAFWtrzguoJ/LnQ+lMpoVfYJ3jJF4Ihe5oYLAqLklIK/35lgUY+1yEzCkHyZ1j4A5w5fA==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      rolldown: 1.x
+      rollup: 2.x || 3.x || 4.x
+    peerDependenciesMeta:
+      rolldown:
+        optional: true
+      rollup:
+        optional: true
 
   rollup@4.18.0:
     resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
@@ -13585,7 +13604,7 @@ snapshots:
     dependencies:
       markdownlint-cli2: 0.11.0
 
-  '@naverpay/pite@1.1.3(@babel/core@7.24.4)(@types/babel__core@7.20.5)(rollup@4.34.8)(tsup@8.1.0(@swc/core@1.4.15)(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.14.9)(typescript@5.3.3))(typescript@5.3.3))(typescript@5.3.3)(vite@6.2.0(@types/node@20.14.9)(jiti@1.21.0)(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1))':
+  '@naverpay/pite@2.0.0(@babel/core@7.24.4)(@types/babel__core@7.20.5)(rollup@4.34.8)(tsup@8.1.0(@swc/core@1.4.15)(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.14.9)(typescript@5.3.3))(typescript@5.3.3))(typescript@5.3.3)(vite@6.2.0(@types/node@20.14.9)(jiti@1.21.0)(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1))':
     dependencies:
       '@babel/plugin-transform-runtime': 7.26.9(@babel/core@7.24.4)
       '@naverpay/browserslist-config': 2.1.0
@@ -13594,17 +13613,21 @@ snapshots:
       babel-plugin-polyfill-corejs3: 0.11.1(@babel/core@7.24.4)
       browserslist: 4.24.4
       browserslist-to-esbuild: 2.1.1(browserslist@4.24.4)
+      builtin-modules: 5.0.0
+      builtins: 5.1.0
       chalk: 5.4.1
       cosmiconfig: 9.0.0(typescript@5.3.3)
       glob: 11.0.1
       publint: 0.3.6
       rollup-plugin-preserve-directives: 0.4.0(rollup@4.34.8)
+      rollup-plugin-visualizer: 5.14.0(rollup@4.34.8)
       sass-embedded: 1.85.1
       tsup: 8.1.0(@swc/core@1.4.15)(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.14.9)(typescript@5.3.3))(typescript@5.3.3)
       vite: 6.2.0(@types/node@20.14.9)(jiti@1.21.0)(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/babel__core'
+      - rolldown
       - rollup
       - supports-color
       - typescript
@@ -16125,6 +16148,12 @@ snapshots:
       ieee754: 1.2.1
 
   builtin-modules@3.3.0: {}
+
+  builtin-modules@5.0.0: {}
+
+  builtins@5.1.0:
+    dependencies:
+      semver: 7.7.1
 
   bundle-require@4.2.1(esbuild@0.21.5):
     dependencies:
@@ -21967,6 +21996,15 @@ snapshots:
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.34.8)
       magic-string: 0.30.9
+      rollup: 4.34.8
+
+  rollup-plugin-visualizer@5.14.0(rollup@4.34.8):
+    dependencies:
+      open: 8.4.2
+      picomatch: 4.0.2
+      source-map: 0.7.4
+      yargs: 17.7.2
+    optionalDependencies:
       rollup: 4.34.8
 
   rollup@4.18.0:
