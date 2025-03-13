@@ -7,7 +7,7 @@ export default createViteConfig({
         index: './src/index.ts',
         'pdf.worker': './node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
     },
-    ignoredPolyfills: ['es.array.push'],
+    skipRequiredPolyfillCheck: ['es.array.push'],
     options: {
         minify: false,
     },
