@@ -53,7 +53,7 @@ const createVanillaStore: (initialState: State, equalityFn?: (left: State, right
 **arguments**
 
 - `arguments[0]` (required): 만들고자 하는 스토어의 기본값 입니다.
-- `arguments[1]` (optional): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 무분별한 객체 재생성으로 인한 메모리 누수 오류가 발생하거나, 성능을 최적화하고자 할 때 정의합니다. 기본값은 `shallowEqual` 입니다.
+- `arguments[1]` (optional): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 무분별한 객체 재생성으로 인한 메모리 누수 오류가 발생하거나, 성능을 최적화하고자 할 때 정의합니다. 기본값은 [`shallowEqual`](https://github.com/NaverPayDev/pie/blob/main/packages/vanilla-store/src/shallowEqual.ts)입니다.
 - `arguments[2]` (optional): `options` 영역이며, 다음과 같은 값을 인수로 받습니다.
   - `persist`: 스토어의 값을 `localStorage`, `sessionStorage`, `redisStorage` (지원예정) 를 각각 인수로 받습니다.
   - `key`: 위 스토어에서 사용할 키 값입니다. 스토어에서는 이 값의 중복 여부를 현재 확인해주지 않습니다. (지원 예정) 반드시 스토어 간의 값의 유일성을 확인하시기 바랍니다.
@@ -127,7 +127,7 @@ const createVanillaSelect: (store: {
 
 - `arguments[0]` (required): 베이스 스토어입니다.
 - `arguments[1]` (required): `arguments[0]`으로부터 새 값을 반환할 셀렉터 함수입니다.
-- `arguments[2]` (required): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 기본값은 `shallowEqual` 입니다.
+- `arguments[2]` (required): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 기본값은 [`shallowEqual`](https://github.com/NaverPayDev/pie/blob/main/packages/vanilla-store/src/shallowEqual.ts)입니다.
 - `arguments[3]` (optional): `options` 영역이며, 다음과 같은 값을 인수로 받습니다.
   - `persist`: 스토어의 값을 `localStorage`, `sessionStorage`, `redisStorage` (지원예정) 를 각각 인수로 받습니다.
   - `key`: 위 스토어에서 사용할 키 값입니다. 스토어에서는 이 값의 중복 여부를 현재 확인해주지 않습니다. (지원 예정) 반드시 스토어 간의 값의 유일성을 확인하시기 바랍니다.
