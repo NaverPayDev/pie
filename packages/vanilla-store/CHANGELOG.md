@@ -1,5 +1,27 @@
 # @naverpay/vanilla-store
 
+## 1.0.0
+
+### Major Changes
+
+-   74114ff: [vanilla-store] Expand on Server
+
+    PR: [[vanilla-store] Expand on Server](https://github.com/NaverPayDev/pie/pull/131)
+
+### Patch Changes
+
+-   42111e0: pite 2.0.0으로 pie를 빌드합니다
+
+    PR: [pite 2.0.0으로 pie를 빌드합니다](https://github.com/NaverPayDev/pie/pull/134)
+
+-   61158ef: pie를 pite 1.1.0을 사용해 빌드합니다
+
+    PR: [pie를 pite 1.1.0을 사용해 빌드합니다](https://github.com/NaverPayDev/pie/pull/125)
+
+-   b06e92c: [vanilla-store] Update README.md & add react@19 to peerDeps
+
+    PR: [[vanilla-store] Update README.md & add react@19 to peerDeps](https://github.com/NaverPayDev/pie/pull/135)
+
 ## 0.1.0
 
 ### Minor Changes
