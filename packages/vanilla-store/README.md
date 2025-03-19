@@ -17,7 +17,7 @@
 - `react@^18.0.0`
 - <https://github.com/NaverPayDev/browserslist-config>
 
-> "Why does it only support React 18?"
+> "Why does it only support React 18 or later?"
 >
 > It operates based on React@18's useSyncExternalStore, therefore, lower versions are not supported. While it is possible to provide backward compatibility using a [shim](https://www.npmjs.com/package/use-sync-external-store), we are not considering it as it unnecessarily increases the bundle size.
 
@@ -29,14 +29,6 @@
 
 ## Features
 
-> **⚠️ Experimental Notice**  
->
-> This library is in an experimental phase and under active development. The public API is subject to change without prior notice until version 1.0.0 is released. Use at your own discretion.
->
-> **⚠️ 실험적 라이브러리 안내**  
->
-> 이 라이브러리는 실험적 단계에 있으며, 활발히 개발 중입니다. 1.0.0 버전이 출시되기 전까지 공개된 API는 사전 공지 없이 변경될 수 있습니다. 사용 시 유의해 주세요.
-
 ### `createVanillaStore`
 
 스토어를 만드는 API 입니다. 컴포넌트 외부 등 반복적으로 실행될 여지가 없는 독립적인 환경에서 생성해야 올바르게 한번만 만들어질 수 있습니다.
@@ -44,7 +36,7 @@
 #### Signatures
 
 ```ts
-const createVanillaStore: (initialState: State, options?: {
+const createVanillaStore: (initialState: State, equalityFn?: (left: State, right: State) => boolean, options?: {
     persist: {
         type: PersistType;
         key: string;
@@ -61,7 +53,8 @@ const createVanillaStore: (initialState: State, options?: {
 **arguments**
 
 - `arguments[0]` (required): 만들고자 하는 스토어의 기본값 입니다.
-- `arguments[1]` (optional): `options` 영역이며, 다음과 같은 값을 인수로 받습니다.
+- `arguments[1]` (optional): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 무분별한 객체 재생성으로 인한 메모리 누수 오류가 발생하거나, 성능을 최적화하고자 할 때 정의합니다. 기본값은 [`shallowEqual`](https://github.com/NaverPayDev/pie/blob/main/packages/vanilla-store/src/shallowEqual.ts)입니다.
+- `arguments[2]` (optional): `options` 영역이며, 다음과 같은 값을 인수로 받습니다.
   - `persist`: 스토어의 값을 `localStorage`, `sessionStorage`, `redisStorage` (지원예정) 를 각각 인수로 받습니다.
   - `key`: 위 스토어에서 사용할 키 값입니다. 스토어에서는 이 값의 중복 여부를 현재 확인해주지 않습니다. (지원 예정) 반드시 스토어 간의 값의 유일성을 확인하시기 바랍니다.
   - `typeAssertion`: 외부 스토어 값은 대부분 믿을 수 없습니다. 타입 가드 함수를 여기에 넘겨주면, 타입이 맞는 경우에만 해당 스토어에 값으로 사용합니다. `typeAssertion`이 없으면 해당 값 자체를 스토어에 바로 할당합니다.
@@ -106,7 +99,7 @@ const store = createVanillaStore<Store>(
 
 ### `createVanillaSelect`
 
-VanillaStore의 원래 값으로부터 유래한 다른 값을 스토어로 관리할 때 사용됩니다. `createVanillaSelect`로부터 생성된 스토어는 읽기만 가능한 스토어로 외부에 `set`을 제공하지 않습니다.
+VanillaStore의 상태를 정제한 값을 상태로 관리할 때 사용됩니다. `createVanillaSelect`로부터 생성된 스토어는 읽기만 가능한 스토어로 외부에 `set`을 제공하지 않습니다.
 
 #### Signatures
 
@@ -134,7 +127,7 @@ const createVanillaSelect: (store: {
 
 - `arguments[0]` (required): 베이스 스토어입니다.
 - `arguments[1]` (required): `arguments[0]`으로부터 새 값을 반환할 셀렉터 함수입니다.
-- `arguments[2]` (required): 참조안정성을 보장하기 위한 동등 비교 함수입니다.
+- `arguments[2]` (required): 참조안정성을 보장하기 위한 동등 비교 함수입니다. 기본값은 [`shallowEqual`](https://github.com/NaverPayDev/pie/blob/main/packages/vanilla-store/src/shallowEqual.ts)입니다.
 - `arguments[3]` (optional): `options` 영역이며, 다음과 같은 값을 인수로 받습니다.
   - `persist`: 스토어의 값을 `localStorage`, `sessionStorage`, `redisStorage` (지원예정) 를 각각 인수로 받습니다.
   - `key`: 위 스토어에서 사용할 키 값입니다. 스토어에서는 이 값의 중복 여부를 현재 확인해주지 않습니다. (지원 예정) 반드시 스토어 간의 값의 유일성을 확인하시기 바랍니다.
