@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/svg-manager",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/NaverPayDev/pie/tree/main/packages/svg-manager"
