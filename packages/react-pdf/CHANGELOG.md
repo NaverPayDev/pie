@@ -1,5 +1,26 @@
 # @naverpay/react-pdf
 
+## 1.0.0
+
+### Major Changes
+
+-   81d253a: ## [react-pdf] Drop Support for Internet Explorer
+
+    ### Migrate to `pdfjs-dist` and Improve PDF Rendering
+
+    -   Removed legacy `pdfjs-dist` and updated all components accordingly.
+    -   Removed SVG rendering (previously an experimental feature).
+    -   Added support for ESM modules.
+    -   Updated worker settings to allow usage via CDN.
+
+    PR: [[react-pdf] Drop Support for Internet Explorer](https://github.com/NaverPayDev/pie/pull/124)
+
+### Patch Changes
+
+-   42111e0: pite 2.0.0으로 pie를 빌드합니다
+
+    PR: [pite 2.0.0으로 pie를 빌드합니다](https://github.com/NaverPayDev/pie/pull/134)
+
 ## 0.3.4
 
 ### Patch Changes
