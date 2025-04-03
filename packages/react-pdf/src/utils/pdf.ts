@@ -1,4 +1,4 @@
-import pdfjs from 'pdfjs-dist'
+import {version, getDocument, GlobalWorkerOptions} from 'pdfjs-dist'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
@@ -94,8 +94,7 @@ export async function getPdfDocument({
     /**
      * 자체적으로 worker를 제공하지 않으면, 해당 버전의 pdf worker unpkg cdn을 사용합니다.
      */
-    pdfjs.GlobalWorkerOptions.workerSrc =
-        workerSource || `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
 
     const fileData = await getPdfFile(file)
 
@@ -106,7 +105,7 @@ export async function getPdfDocument({
         ...(cMapPacked ? {cMapPacked} : {}),
     }
 
-    const {promise} = pdfjs.getDocument(source)
+    const {promise} = getDocument(source)
     const pdfInfo = await promise
     return pdfInfo
 }
