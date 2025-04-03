@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.0.1
+
+### Patch Changes
+
+-   8bbd752: [react-pdf] pdfjs dist에 export default 가 없어 생기는 빌드 에러를 해결합니다
+
+    PR: [[react-pdf] pdfjs dist에 export default 가 없어 생기는 빌드 에러를 해결합니다](https://github.com/NaverPayDev/pie/pull/139)
+
 ## 1.0.0
 
 ### Major Changes
