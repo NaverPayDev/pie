@@ -1,4 +1,7 @@
-import {getDocument} from 'pdfjs-dist'
+import {getDocument, GlobalWorkerOptions} from 'pdfjs-dist'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
@@ -64,6 +67,7 @@ async function getPdfFile(file: PdfFile) {
         }
     }
 
+    // File is an ArrayBuffer
     if (file instanceof ArrayBuffer) {
         return {data: file}
     }
@@ -81,7 +85,7 @@ interface GetPdfDocumentParams {
 
 export async function getPdfDocument({
     file,
-    // workerSource,
+    workerSource,
     cMapUrl = null,
     cMapPacked = false,
     withCredentials = false,
@@ -89,6 +93,8 @@ export async function getPdfDocument({
     if (isSSR()) {
         throw new Error('client side에서 실행시켜 주세요.')
     }
+
+    GlobalWorkerOptions.workerSrc = workerSource || new URL(pdfjsWorker, import.meta.url).toString()
 
     const fileData = await getPdfFile(file)
 
