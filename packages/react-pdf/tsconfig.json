@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "lib": ["dom", "es2017", "es2024"],
+        "lib": ["dom", "ES2017", "ES2024"],
         "baseUrl": ".",
         "emitDeclarationOnly": true,
         "declarationDir": "./dist",
