@@ -4,7 +4,7 @@ import 'core-js/features/url/parse'
 import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
-import {AnnotationLayer as PdfAnnotationLayer} from 'pdfjs-dist'
+import {AnnotationLayer as PdfAnnotationLayer} from 'pdfjs-dist/legacy/build/pdf.mjs'
 
 import styles from './Annotation.module.scss'
 import {usePdfPageContext} from '../../contexts/page'

@@ -1,7 +1,7 @@
 import 'core-js/features/promise/with-resolvers'
 import 'core-js/features/url/parse'
 
-import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist'
+import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist/legacy/build/pdf.mjs'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
