@@ -2,6 +2,7 @@
 import {useCallback, useEffect, useRef} from 'react'
 
 import {renderHook, act} from '@testing-library/react'
+import {describe, test, expect, afterEach} from 'vitest'
 
 import {useGetStore, useSetStore, useStore, useStoreSelector} from './react'
 import {createVanillaSelect} from './select'
