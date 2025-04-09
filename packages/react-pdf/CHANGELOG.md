@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.0.3
+
+### Patch Changes
+
+-   7336006: ✨ feat: add URL parsing polyfill to PdfViewer, AnnotationLayer, and pdf utilities
+
+    PR: [✨ feat: add URL parsing polyfill to PdfViewer, AnnotationLayer, and pdf utilities](https://github.com/NaverPayDev/pie/pull/144)
+
 ## 1.0.2
 
 ### Patch Changes
