@@ -24,7 +24,6 @@
                 "default": "./dist/cjs/index.js"
             }
         },
-        "./pdf.worker.js": "./dist/cjs/pdf.worker.js",
         "./package.json": "./package.json"
     },
     "keywords": [
