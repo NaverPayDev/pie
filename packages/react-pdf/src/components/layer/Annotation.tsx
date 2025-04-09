@@ -1,6 +1,3 @@
-import 'core-js/features/promise/with-resolvers'
-import 'core-js/features/url/parse'
-
 import {memo, useCallback, useMemo, useState} from 'react'
 
 import classNames from 'classnames/bind'
