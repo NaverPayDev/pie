@@ -93,7 +93,7 @@ export async function getPdfDocument({
         throw new Error('client side에서 실행시켜 주세요.')
     }
 
-    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/legacy/build/pdf.worker.min.mjs`
+    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
 
     const fileData = await getPdfFile(file)
 
