@@ -1,3 +1,5 @@
+import {describe, test, expect, vi} from 'vitest'
+
 import {shallowEqual} from './shallowEqual'
 import {createVanillaStore} from './store'
 
@@ -71,7 +73,7 @@ describe('Store', () => {
         const sampleObject = {count: 0, name: 'hello'}
         const store = createVanillaStore(sampleObject)
 
-        const spy = jest.fn()
+        const spy = vi.fn()
         store.subscribe(() => spy())
 
         store.set({count: 1, name: 'world'})

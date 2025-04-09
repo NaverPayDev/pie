@@ -1,14 +1,16 @@
+import {describe, expect, afterEach, vi, it} from 'vitest'
+
 import debounce from '../src/utils/debounce'
 
 describe('debounce', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
 
     afterEach(() => {
-        jest.clearAllTimers()
+        vi.clearAllTimers()
     })
 
     it('should debounce a function', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc} = debounce(func, 100)
 
         debouncedFunc()
@@ -17,20 +19,20 @@ describe('debounce', () => {
 
         expect(func).not.toHaveBeenCalled()
 
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
 
         expect(func).toHaveBeenCalledTimes(1)
     })
 
     it('should call function immediately if leading is true', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc} = debounce(func, 100, {leading: true})
 
         debouncedFunc()
 
         expect(func).toHaveBeenCalledTimes(1)
 
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
 
         expect(func).toHaveBeenCalledTimes(1)
 
@@ -40,7 +42,7 @@ describe('debounce', () => {
     })
 
     it('should call function on trailing edge if trailing is true', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc} = debounce(func, 100, {trailing: true})
 
         debouncedFunc()
@@ -48,13 +50,13 @@ describe('debounce', () => {
 
         expect(func).not.toHaveBeenCalled()
 
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
 
         expect(func).toHaveBeenCalledTimes(1)
     })
 
     it('should not call function on trailing edge if trailing is false', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc} = debounce(func, 100, {trailing: false})
 
         debouncedFunc()
@@ -62,46 +64,46 @@ describe('debounce', () => {
 
         expect(func).not.toHaveBeenCalled()
 
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
 
         expect(func).not.toHaveBeenCalled()
     })
 
     it('should respect maxWait option', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc} = debounce(func, 100, {maxWait: 150})
 
         debouncedFunc()
-        jest.advanceTimersByTime(50)
+        vi.advanceTimersByTime(50)
         debouncedFunc()
-        jest.advanceTimersByTime(50)
+        vi.advanceTimersByTime(50)
         debouncedFunc()
-        jest.advanceTimersByTime(50)
+        vi.advanceTimersByTime(50)
 
         expect(func).toHaveBeenCalledTimes(1)
 
-        jest.advanceTimersByTime(50)
+        vi.advanceTimersByTime(50)
         debouncedFunc()
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
         debouncedFunc()
 
         expect(func).toHaveBeenCalledTimes(2)
     })
 
     it('should cancel delayed function call', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc, cancel} = debounce(func, 100)
 
         debouncedFunc()
         cancel()
 
-        jest.advanceTimersByTime(100)
+        vi.advanceTimersByTime(100)
 
         expect(func).not.toHaveBeenCalled()
     })
 
     it('should flush delayed function call', () => {
-        const func = jest.fn()
+        const func = vi.fn()
         const {debounce: debouncedFunc, flush} = debounce(func, 100)
 
         debouncedFunc()

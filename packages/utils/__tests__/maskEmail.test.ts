@@ -1,3 +1,5 @@
+import {describe, expect, it} from 'vitest'
+
 import maskEmail from '../src/utils/maskEmail'
 
 describe('이메일을 마스킹', () => {

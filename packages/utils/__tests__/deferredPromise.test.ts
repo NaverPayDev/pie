@@ -1,3 +1,5 @@
+import {describe, expect, beforeEach, test, vi} from 'vitest'
+
 import DeferredPromise from '../src/utils/deferredPromise'
 import sleep from '../src/utils/sleep'
 
@@ -9,7 +11,7 @@ describe('DeferredPromise', () => {
     })
 
     test('resolve 되면 then절 실행', async () => {
-        const fn = jest.fn()
+        const fn = vi.fn()
         deferredPromise.then(fn)
         deferredPromise.resolve()
 
@@ -19,7 +21,7 @@ describe('DeferredPromise', () => {
     })
 
     test('reject 되면 catch절 실행', async () => {
-        const fn = jest.fn()
+        const fn = vi.fn()
         deferredPromise.catch(fn)
         deferredPromise.reject()
 
@@ -29,7 +31,7 @@ describe('DeferredPromise', () => {
     })
 
     test('resolve 되면 finally절 실행', async () => {
-        const fn = jest.fn()
+        const fn = vi.fn()
         deferredPromise.finally(fn)
         deferredPromise.resolve()
 
@@ -51,9 +53,9 @@ describe('DeferredPromise', () => {
     })
 
     test('여러번 then 절을 사용해도 resolve후 모두 실행', async () => {
-        const fn1 = jest.fn()
-        const fn2 = jest.fn()
-        const fn3 = jest.fn()
+        const fn1 = vi.fn()
+        const fn2 = vi.fn()
+        const fn3 = vi.fn()
 
         deferredPromise.then(fn1)
         deferredPromise.then(fn2)
@@ -68,9 +70,9 @@ describe('DeferredPromise', () => {
     })
 
     test('여러번 catch 절을 사용해도 reject 모두 실행', async () => {
-        const fn1 = jest.fn()
-        const fn2 = jest.fn()
-        const fn3 = jest.fn()
+        const fn1 = vi.fn()
+        const fn2 = vi.fn()
+        const fn3 = vi.fn()
 
         deferredPromise.catch(fn1)
         deferredPromise.catch(fn2)

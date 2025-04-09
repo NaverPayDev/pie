@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest'
+
 import getKoreanWithSuffix from '../src/utils/getKoreanWithSuffix'
 
 describe('getKoreanWithSuffix', () => {

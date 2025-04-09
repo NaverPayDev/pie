@@ -24,7 +24,6 @@
                 "default": "./dist/cjs/index.js"
             }
         },
-        "./pdf.worker.js": "./dist/cjs/pdf.worker.js",
         "./package.json": "./package.json"
     },
     "keywords": [
@@ -43,7 +42,7 @@
     },
     "dependencies": {
         "classnames": "^2.5.1",
-        "intersection-observer": "^0.12.2",
+        "core-js": "3.41.0",
         "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {
@@ -51,6 +50,6 @@
         "@types/react": "^18.2.75"
     },
     "peerDependencies": {
-        "react": "^17 || ^18"
+        "react": "^17 || ^18 || ^19"
     }
 }

@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest'
+
 import createSeededRandom from '../src/utils/createSeededRandom'
 
 describe('createSeededRandom', () => {

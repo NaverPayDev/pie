@@ -30,7 +30,7 @@
     "scripts": {
         "clean": "rm -rf dist",
         "build": "npm run clean && vite build",
-        "test": "jest"
+        "test": "vitest --watch=false --reporter=default"
     },
     "keywords": [
         "javascript",
@@ -39,10 +39,9 @@
         "naverpay"
     ],
     "devDependencies": {
-        "@types/jest": "^29.5.12",
         "@types/node": "^20.12.12",
-        "jest-environment-jsdom": "^29.7.0",
-        "ts-jest": "^29.1.2"
+        "happy-dom": "^17.4.4",
+        "vitest": "^3.1.1"
     },
     "files": [
         "dist"

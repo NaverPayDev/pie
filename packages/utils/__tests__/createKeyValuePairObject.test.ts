@@ -1,3 +1,5 @@
+import {describe, test, expect} from 'vitest'
+
 import createKeyValuePairObject from '../src/utils/createKeyValuePairObject'
 
 describe('createKeyValuePairObject', () => {

@@ -1,4 +1,6 @@
-import {version, getDocument, GlobalWorkerOptions} from 'pdfjs-dist'
+import 'core-js/features/promise/with-resolvers'
+
+import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
@@ -91,9 +93,6 @@ export async function getPdfDocument({
         throw new Error('client side에서 실행시켜 주세요.')
     }
 
-    /**
-     * 자체적으로 worker를 제공하지 않으면, 해당 버전의 pdf worker unpkg cdn을 사용합니다.
-     */
     GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
 
     const fileData = await getPdfFile(file)

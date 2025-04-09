@@ -1,3 +1,5 @@
+import {describe, expect, it} from 'vitest'
+
 import createNumberFormatter from '../src/utils/createNumberFormatter'
 
 describe('createNumberFormatter', () => {
