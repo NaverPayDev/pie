@@ -1,7 +1,4 @@
-import {getDocument, GlobalWorkerOptions} from 'pdfjs-dist'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs'
+import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
@@ -94,7 +91,7 @@ export async function getPdfDocument({
         throw new Error('client side에서 실행시켜 주세요.')
     }
 
-    GlobalWorkerOptions.workerSrc = workerSource || new URL(pdfjsWorker, import.meta.url).toString()
+    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
 
     const fileData = await getPdfFile(file)
 
