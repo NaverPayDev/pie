@@ -1,4 +1,5 @@
 import 'core-js/features/promise/with-resolvers'
+import 'core-js/features/url/parse'
 
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
