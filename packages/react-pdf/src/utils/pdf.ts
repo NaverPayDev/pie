@@ -1,6 +1,4 @@
-import 'core-js/features/promise/with-resolvers'
-
-import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist'
+import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist/legacy/build/pdf.mjs'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
 
@@ -93,7 +91,7 @@ export async function getPdfDocument({
         throw new Error('client side에서 실행시켜 주세요.')
     }
 
-    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
+    GlobalWorkerOptions.workerSrc = workerSource || `//unpkg.com/pdfjs-dist@${version}/legacy/build/pdf.worker.min.mjs`
 
     const fileData = await getPdfFile(file)
 

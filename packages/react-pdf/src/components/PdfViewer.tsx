@@ -1,5 +1,3 @@
-import 'core-js/features/promise/with-resolvers'
-
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import classNames from 'classnames/bind'
