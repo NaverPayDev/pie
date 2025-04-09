@@ -7,7 +7,7 @@ export default createViteConfig({
         index: './src/index.ts',
     },
     skipRequiredPolyfillCheck: ['es.array.push'],
-    includeRequiredPolyfill: ['es.promise.with-resolvers']
+    includeRequiredPolyfill: ['es.promise.with-resolvers'],
     options: {
         minify: false,
     },
