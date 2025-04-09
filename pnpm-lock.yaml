@@ -187,6 +187,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      core-js:
+        specifier: 3.41.0
+        version: 3.41.0
       pdfjs-dist:
         specifier: ^4.10.38
         version: 4.10.38
@@ -4224,6 +4227,9 @@ packages:
 
   core-js@3.37.0:
     resolution: {integrity: sha512-fu5vHevQ8ZG4og+LXug8ulUtVxjOcEYvifJr7L5Bfq9GOztVqsKd9/59hUk2ZSbCrS3BqUr3EpaYGIYzq7g3Ug==}
+
+  core-js@3.41.0:
+    resolution: {integrity: sha512-SJ4/EHwS36QMJd6h/Rg+GyR4A5xE0FSI3eZ+iBVpfqf1x0eTSg1smWLHrA+2jQThZSh97fmSgFSU8B61nxosxA==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -11158,7 +11164,7 @@ snapshots:
       combine-promises: 1.2.0
       commander: 5.1.0
       copy-webpack-plugin: 11.0.0(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
-      core-js: 3.37.0
+      core-js: 3.41.0
       css-loader: 6.11.0(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
       css-minimizer-webpack-plugin: 4.2.2(clean-css@5.3.3)(esbuild@0.25.0)(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
       cssnano: 5.1.15(postcss@8.5.3)
@@ -11251,7 +11257,7 @@ snapshots:
       combine-promises: 1.2.0
       commander: 5.1.0
       copy-webpack-plugin: 11.0.0(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
-      core-js: 3.37.0
+      core-js: 3.41.0
       css-loader: 6.11.0(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
       css-minimizer-webpack-plugin: 4.2.2(clean-css@5.3.3)(esbuild@0.25.0)(webpack@5.90.3(@swc/core@1.4.15)(esbuild@0.25.0))
       cssnano: 5.1.15(postcss@8.5.3)
@@ -15789,6 +15795,8 @@ snapshots:
   core-js-pure@3.37.0: {}
 
   core-js@3.37.0: {}
+
+  core-js@3.41.0: {}
 
   core-util-is@1.0.3: {}
 

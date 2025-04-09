@@ -42,6 +42,7 @@
     },
     "dependencies": {
         "classnames": "^2.5.1",
+        "core-js": "3.41.0",
         "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {

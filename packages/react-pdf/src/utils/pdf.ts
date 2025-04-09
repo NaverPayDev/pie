@@ -1,3 +1,5 @@
+import 'core-js/features/promise/with-resolvers'
+
 import {getDocument, GlobalWorkerOptions, version} from 'pdfjs-dist'
 
 import type {DocumentInitParameters} from 'pdfjs-dist/types/src/display/api'
