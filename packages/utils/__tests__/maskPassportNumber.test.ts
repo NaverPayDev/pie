@@ -1,3 +1,5 @@
+import {describe, expect, it} from 'vitest'
+
 import maskPassportNumber from '../src/utils/maskPassportNumber'
 
 describe('여권번호를 마스킹', () => {

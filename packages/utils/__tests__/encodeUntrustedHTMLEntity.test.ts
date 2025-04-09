@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest'
+
 import encodeHTMLEntity from '../src/utils/encodeHTMLEntity'
 
 const patternForVerify = /[<>'"]/

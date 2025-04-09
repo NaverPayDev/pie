@@ -1,3 +1,5 @@
+import {describe, expect, it} from 'vitest'
+
 import maskPhoneNumber from '../src/utils/maskPhoneNumber'
 
 describe('전화번호를 마스킹', () => {

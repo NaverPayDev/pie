@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest'
+
 import formatTenThousandUnitsAmount from '../src/utils/formatTenThousandUnitsAmount'
 
 describe('formatTenThousandUnitsAmount', () => {
