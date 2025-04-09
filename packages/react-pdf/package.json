@@ -44,7 +44,7 @@
     "dependencies": {
         "classnames": "^2.5.1",
         "intersection-observer": "^0.12.2",
-        "pdfjs-dist": "^4.10.38"
+        "pdfjs-dist": "^5.1.91"
     },
     "devDependencies": {
         "@types/node": "^20.12.7",
