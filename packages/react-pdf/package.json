@@ -51,6 +51,6 @@
         "@types/react": "^18.2.75"
     },
     "peerDependencies": {
-        "react": "^17 || ^18"
+        "react": "^17 || ^18 || ^19"
     }
 }
