@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.0.4
+
+### Patch Changes
+
+-   d9aabb6: [react-pdf] style export
+
+    PR: [[react-pdf] style export ](https://github.com/NaverPayDev/pie/pull/146)
+
 ## 1.0.3
 
 ### Patch Changes
