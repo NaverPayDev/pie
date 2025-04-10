@@ -24,6 +24,10 @@
                 "default": "./dist/cjs/index.js"
             }
         },
+        "./style.css": {
+            "import": "./dist/esm/style.css",
+            "require": "./dist/cjs/style.css"
+        },
         "./package.json": "./package.json"
     },
     "keywords": [
