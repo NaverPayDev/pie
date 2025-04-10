@@ -9,6 +9,6 @@
         "typeRoots": ["./node_modules/@types"],
         "types": ["react", "node"]
     },
-    "include": ["./src/**/*.ts*", "./typings"],
+    "include": ["./src/**/*.ts*", "./typings", "./storybook"],
     "exclude": ["node_modules", "dist"]
 }
