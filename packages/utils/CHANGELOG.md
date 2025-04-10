@@ -1,5 +1,13 @@
 # @naverpay/utils
 
+## 0.2.0
+
+### Minor Changes
+
+-   f273b64: chore: unify peer dependency versions for consistency across the project
+
+    PR: [chore: unify peer dependency versions for consistency across the project](https://github.com/NaverPayDev/pie/pull/148)
+
 ## 0.1.2
 
 ### Patch Changes
