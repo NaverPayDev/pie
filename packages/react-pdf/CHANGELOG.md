@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.1.0
+
+### Minor Changes
+
+-   f273b64: chore: unify peer dependency versions for consistency across the project
+
+    PR: [chore: unify peer dependency versions for consistency across the project](https://github.com/NaverPayDev/pie/pull/148)
+
 ## 1.0.4
 
 ### Patch Changes
