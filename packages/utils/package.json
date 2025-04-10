@@ -39,7 +39,7 @@
         "naverpay"
     ],
     "devDependencies": {
-        "@types/node": "^20.12.12",
+        "@types/node": "catalog:",
         "happy-dom": "^17.4.4",
         "vitest": "^3.1.1"
     },

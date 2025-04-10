@@ -49,10 +49,10 @@
         "pdfjs-dist": "^4.10.38"
     },
     "devDependencies": {
-        "@types/node": "^20.12.7",
-        "@types/react": "^18.2.75"
+        "@types/node": "catalog:",
+        "@types/react": "catalog:"
     },
     "peerDependencies": {
-        "react": "^17 || ^18 || ^19"
+        "react": "catalog:"
     }
 }

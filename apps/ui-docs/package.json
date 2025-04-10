@@ -10,6 +10,7 @@
     },
     "devDependencies": {
         "core-js": "^3.29.0",
+        "@naverpay/react-pdf": "workspace:^",
         "@storybook/addon-essentials": "^7.6.10",
         "@storybook/addon-interactions": "^7.6.10",
         "@storybook/addon-links": "^7.6.10",
@@ -18,14 +19,13 @@
         "@storybook/blocks": "^7.6.10",
         "@storybook/react-webpack5": "^7.6.10",
         "css-loader": "^5.2.6",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "catalog:",
+        "react-dom": "catalog:",
         "sass": "^1.32.11",
         "sass-loader": "^10.2.0",
         "storybook": "^7.6.10",
         "storybook-addon-state": "^1.0.3",
         "style-loader": "^2.0.0",
-        "tsconfig-paths-webpack-plugin": "^3.5.1",
-        "@naverpay/react-pdf": "workspace:^"
+        "tsconfig-paths-webpack-plugin": "^3.5.1"
     }
 }
