@@ -7,3 +7,12 @@ onlyBuiltDependencies:
     - core-js
     - core-js-pure
     - esbuild
+
+# 출시되는 패키지의 의존성 중 프로젝트 전체 레벨에서 일관되게 지원하는 버전을 통일할 수 있습니다.
+# peerDependencies 에서만 제한적으로 사용합니다.
+catalog:
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
+    '@types/node': ^22.10.2
+    '@types/react': ^18.3.3
+    '@types/react-dom': ^18.3.5
