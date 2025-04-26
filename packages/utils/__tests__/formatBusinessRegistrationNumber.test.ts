@@ -1,6 +1,6 @@
 import {describe, expect, test} from 'vitest'
 
-import {formatBusinessRegistrationNumber} from '../src/utils/formatBusinessRegistrationNumber'
+import formatBusinessRegistrationNumber from '../src/utils/formatBusinessRegistrationNumber'
 
 describe('formatBusinessRegistrationNumber', () => {
     test('format valid business numbers correctly', () => {

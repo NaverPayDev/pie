@@ -1,4 +1,4 @@
-import {isValidBusinessRegistrationNumber} from './isValidBusinessRegistrationNumber'
+import isValidBusinessRegistrationNumber from './isValidBusinessRegistrationNumber'
 
 type BusinessNumberInput = string | [string, string, string]
 
@@ -6,7 +6,7 @@ interface FormatBusinessOptions {
     debug?: boolean
 }
 
-export function formatBusinessRegistrationNumber(
+export default function formatBusinessRegistrationNumber(
     input: BusinessNumberInput,
     options?: FormatBusinessOptions,
 ): string | null {

@@ -1,6 +1,6 @@
 import {describe, expect, test} from 'vitest'
 
-import {isValidBusinessRegistrationNumber} from '../src/utils/isValidBusinessRegistrationNumber'
+import isValidBusinessRegistrationNumber from '../src/utils/isValidBusinessRegistrationNumber'
 
 describe('isValidBusinessRegistrationNumber', () => {
     test('valid business numbers', () => {

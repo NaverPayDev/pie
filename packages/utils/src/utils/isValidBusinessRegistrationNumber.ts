@@ -4,7 +4,7 @@ interface ValidateBusinessOptions {
     debug?: boolean
 }
 
-export function isValidBusinessRegistrationNumber(
+export default function isValidBusinessRegistrationNumber(
     input: BusinessNumberInput,
     options?: ValidateBusinessOptions,
 ): boolean {
