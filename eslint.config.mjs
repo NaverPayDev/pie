@@ -41,6 +41,7 @@ export default [
             '**/dist',
 
             'apps/docs/docs',
+            'apps/docs/.docusaurus',
             '.changeset/*',
 
             'packages/react-pdf/src/pdfjs-dist/**', // react pdf에 사용될 pdfjs-dist build 파일은 eslint 확인에서 제거합니다.
