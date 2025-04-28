@@ -42,6 +42,10 @@ npm install @naverpay/utils
 | [sleep](./src/utils/sleep.md)                                               | `sleep`는 자바스크립트의 쓰레드를 ms 만큼 중지(지연) 시킵니다.                                                                                                 |
 | [throttle](./src/utils/throttle.md)                                         | 특정 함수가 일정 시간 간격 이상으로 호출되도록 제한하는 유틸리티입니다.                                                                                        |
 | [with조사](./src/utils/with조사.md)                                         | 한글 단어의 마지막 단어에 따라 단어 + 조사를 반환합니다.                                                                                                       |
+| [formatBusinessRegistrationNumber](./src/utils/formatBusinessRegistrationNumber.md) | 사업자 등록번호를 형식에 맞게 변환해줍니다.                                                                                                                   |
+| [formatKoreanPhoneNumber](./src/utils/formatKoreanPhoneNumber.md) | 대한민국 휴대전화 번호를 형식에 맞게 변환해줍니다.                                                                                                                         |
+| [isValidBusinessRegistrationNumber](./src/utils/isValidBusinessRegistrationNumber.md) | 사업자 등록번호가 유효한지 검증합니다.                                                                                                                       |
+| [isValidKoreanPhoneNumber](./src/utils/isValidKoreanPhoneNumber.md) | 대한민국 휴대전화 번호가 유효한지 검증합니다.                                                                                                                   |
 
 ## Contribution
 
