@@ -1,5 +1,13 @@
 # @naverpay/utils
 
+## 0.3.0
+
+### Minor Changes
+
+-   17ab0c5: 전화번호, 사업자번호 유틸 추가
+
+    PR: [전화번호, 사업자번호 유틸 추가](https://github.com/NaverPayDev/pie/pull/150)
+
 ## 0.2.0
 
 ### Minor Changes
