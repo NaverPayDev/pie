@@ -40,3 +40,4 @@ jobs:
                   publish_script: pnpm run release:canary # Script to execute Canary deployment
                   packages_dir: packages # Directory of packages to detect changes (default: packages,share)
                   excludes: '.turbo,.github' # Files or directories to exclude from change detection
+                  version_template: '{VERSION}-canary.{DATE}-{COMMITID7}'
