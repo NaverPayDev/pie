@@ -1,5 +1,5 @@
 # Adjust according to your needs
-name: changeset canary publish
+name: Release Canary
 
 on:
     issue_comment:
