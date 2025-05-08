@@ -8,10 +8,15 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+    contents: write # to create release
+
 jobs:
     canary:
         if: ${{ github.event.issue.pull_request && (github.event.comment.body == 'rc-publish' || github.event.comment.body == '/rc-publish')}}
         runs-on: ubuntu-latest
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         steps:
             - name: Get PR branch name
               id: get_branch
