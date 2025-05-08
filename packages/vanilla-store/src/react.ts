@@ -1,9 +1,11 @@
-import {useEffect, useRef, useSyncExternalStore} from 'react'
+import {useEffect, useLayoutEffect, useRef, useSyncExternalStore} from 'react'
 
 import {useSyncPersistStore} from './persist/hooks'
 import {shallowEqual} from './shallowEqual'
 
 import type {SetAction, VanillaSelect, VanillaStore} from './type'
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 function useSyncStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
@@ -17,7 +19,7 @@ const isNil = (value: unknown): value is NilType => value == null
 function useSyncWithInitialValue<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const ref = useRef<State | null>(initialValue || null)
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const serialized = store.persistStore?.serialized
         const persistValue = store.persistStore?.value
 
