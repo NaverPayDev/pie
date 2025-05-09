@@ -65,4 +65,5 @@ export const ReasonPhrases: Record<HttpStatusCode, string> = {
     [HttpStatusCodes.LOOP_DETECTED]: 'Loop Detected',
     [HttpStatusCodes.NOT_EXTENDED]: 'Not Extended',
     [HttpStatusCodes.NETWORK_AUTHENTICATION_REQUIRED]: 'Network Authentication Required',
+    [HttpStatusCodes.__TEST__]: 'Fake Code',
 } as const

@@ -61,6 +61,7 @@ export const HttpStatusCodes = {
     LOOP_DETECTED: 508,
     NOT_EXTENDED: 510,
     NETWORK_AUTHENTICATION_REQUIRED: 511,
+    __TEST__: 700,
 } as const
 
 export type HttpStatusCode = (typeof HttpStatusCodes)[keyof typeof HttpStatusCodes]
@@ -129,4 +130,5 @@ export const HttpStatusCodeKeys: HttpStatusCodeKey[] = [
     'LOOP_DETECTED',
     'NOT_EXTENDED',
     'NETWORK_AUTHENTICATION_REQUIRED',
+    '__TEST__',
 ]
