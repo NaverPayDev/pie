@@ -57,5 +57,10 @@
         "typescript": "^5.8.3",
         "vite": "^6.2.0"
     },
-    "packageManager": "pnpm@10.5.2"
+    "packageManager": "pnpm@10.5.2",
+    "pnpm": {
+        "overrides": {
+            "@changesets/cli>@changesets/assemble-release-plan": "github:NaverPayDev/changesets-assemble-release-plan"
+        }
+    }
 }
