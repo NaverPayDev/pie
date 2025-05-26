@@ -24,8 +24,8 @@
         "markdownlint": "markdownlint '**/*.md' '#apps/docs/**/*.md' '#.changeset' '#**/CHANGELOG.md'",
         "markdownlint:fix": "markdownlint --fix '**/*.md' '#apps/docs/**/*.md' '#.changeset' '#**/CHANGELOG.md'",
         "clean": "turbo run clean && rm -rf ./node_modules && pnpm i",
-        "release:canary": "pnpm run build && changeset publish --no-git-tag",
-        "release": "pnpm run build && changeset publish",
+        "release:canary": "changeset publish --no-git-tag",
+        "release": "changeset publish",
         "build:docs": "turbo build:docs",
         "storybook": "turbo start --filter ui-docs"
     },
