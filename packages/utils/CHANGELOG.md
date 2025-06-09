@@ -1,5 +1,11 @@
 # @naverpay/utils
 
+## 1.0.0
+
+### Major Changes
+
+-   d02d12a: 1.0.0 버전을 출시합니다. (변경사항은 없는 메이저버전 출시)
+
 ## 0.3.1
 
 ### Patch Changes
