@@ -1,5 +1,13 @@
 # @naverpay/vanilla-store
 
+## 1.1.1
+
+### Patch Changes
+
+-   c442c82: ✨ export PersistType for better accessibility in type definitions
+
+    PR: [✨ export PersistType for better accessibility in type definitions](https://github.com/NaverPayDev/pie/pull/164)
+
 ## 1.1.0
 
 ### Minor Changes
