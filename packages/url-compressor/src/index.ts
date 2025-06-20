@@ -1,1 +1,1 @@
-export {UrlCompressor} from './UrlCompressor'
+export {URLCompressor} from './URLCompressor'
