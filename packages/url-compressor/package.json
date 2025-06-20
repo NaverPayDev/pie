@@ -38,6 +38,7 @@
     ],
     "scripts": {
         "clean": "rm -rf dist",
+        "test": "vitest --watch=false --reporter=default",
         "build": "pnpm run clean && vite build"
     }
 }
