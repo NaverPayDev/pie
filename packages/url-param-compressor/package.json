@@ -3,12 +3,12 @@
     "version": "0.0.1",
     "repository": {
         "type": "git",
-        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/url-compressor"
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/url-param-compressor"
     },
     "bugs": {
         "url": "https://github.com/NaverPayDev/pie/issues"
     },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/url-compressor/",
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/url-param-compressor/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
