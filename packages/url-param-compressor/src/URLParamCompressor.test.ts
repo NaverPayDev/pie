@@ -1,8 +1,8 @@
 import {beforeAll, describe, test, expect} from 'vitest'
 
-import {URLCompressor} from './URLCompressor'
+import {URLParamCompressor} from './URLParamCompressor'
 
-const compressor = new URLCompressor()
+const compressor = new URLParamCompressor()
 
 describe('Test with long url', () => {
     const redirectUrls = {
