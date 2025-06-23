@@ -25,11 +25,16 @@ export class URLParamCompressor {
     }
 
     private base64URLToUint8Array(base64: string) {
-        if (typeof Buffer !== 'undefined') {
-            return new Uint8Array(Buffer.from(base64, 'base64'))
+        const restoreBase64 = (urlSafe: string) => {
+            const base64URL = urlSafe.replace(/-/g, '+').replace(/_/g, '/')
+            return base64URL.length % 4 === 0 ? base64URL : base64URL + '='.repeat(4 - (base64URL.length % 4))
         }
 
-        const binary = atob(base64)
+        if (typeof Buffer !== 'undefined') {
+            return new Uint8Array(Buffer.from(restoreBase64(base64), 'base64'))
+        }
+
+        const binary = atob(restoreBase64(base64))
         const len = binary.length
         const uint8 = new Uint8Array(len)
         for (let i = 0; i < len; i++) {
