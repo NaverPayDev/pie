@@ -39,36 +39,29 @@ export class URLParamCompressor {
     }
 
     compress(urlObj: Record<string, string>) {
-        const param = Object.keys(urlObj)
-            .map((key) => `${key}=${urlObj[key]}`)
+        return Object.keys(urlObj)
+            .map((key) => {
+                const value = urlObj[key]
+                const compressed = this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(urlObj[key])))
+
+                return urlObj[key].length < compressed.length ? `${key}=${value}` : `${key}=${compressed}`
+            })
             .join('&')
-
-        const compressed = Object.keys(urlObj)
-            .map((key) => `${key}=${this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(urlObj[key])))}`)
-            .join('&')
-
-        if (param.length <= compressed.length) {
-            return param
-        }
-
-        return compressed
     }
 
     decompress(compressedParams: string, paramKeys: string[]) {
         const param = new URLSearchParams(compressedParams)
 
-        try {
-            const result = paramKeys.reduce<Record<string, string>>((acc, key) => {
-                if (param.has(key)) {
+        const result = paramKeys.reduce<Record<string, string>>((acc, key) => {
+            if (param.has(key)) {
+                try {
                     acc[key] = this.Uint8ArrayToString(inflateSync(this.base64URLToUint8Array(param.get(key)!)))
-                }
+                } catch {}
+            }
 
-                return acc
-            }, {})
+            return acc
+        }, {})
 
-            return result
-        } catch {
-            return {}
-        }
+        return result
     }
 }
