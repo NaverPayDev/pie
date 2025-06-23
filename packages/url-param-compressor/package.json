@@ -42,7 +42,8 @@
         "build": "pnpm run clean && vite build"
     },
     "devDependencies": {
-        "vitest": "^3.1.1"
+        "vitest": "^3.1.1",
+        "@types/node": "catalog:"
     },
     "dependencies": {
         "fflate": "^0.8.2"

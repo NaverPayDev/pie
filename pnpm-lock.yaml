@@ -241,6 +241,9 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.14.0
       vitest:
         specifier: ^3.1.1
         version: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(happy-dom@17.4.4)(jiti@1.21.0)(jsdom@20.0.3(canvas@2.11.2))(sass-embedded@1.85.1)(sass@1.75.0)(terser@5.28.1)
