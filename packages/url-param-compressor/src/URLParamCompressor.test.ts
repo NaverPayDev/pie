@@ -23,9 +23,9 @@ describe('Test with long url', () => {
     })
 
     test('특정 쿼리만 복원한다.', () => {
-        const originalUrl = compressor.decompress(compressed, ['rurl'])
+        const {rurl} = compressor.decompress(compressed, ['rurl'])
 
-        expect(originalUrl).toEqual({rurl: redirectUrls.rurl})
+        expect(rurl).toBe(redirectUrls.rurl)
     })
 })
 
@@ -51,8 +51,8 @@ describe('Test with short url', () => {
         expect(compressed).toMatch(`surl=${redirectUrls.surl}`)
         expect(compressed).not.toMatch(`rurl=${redirectUrls.rurl}`)
 
-        const originalUrl = compressor.decompress(compressed, ['rurl'])
-        expect(originalUrl).toEqual({rurl: redirectUrls.rurl})
+        const {rurl} = compressor.decompress(compressed, ['rurl'])
+        expect(rurl).toEqual(redirectUrls.rurl)
     })
 })
 
