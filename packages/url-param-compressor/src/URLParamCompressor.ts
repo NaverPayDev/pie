@@ -50,9 +50,7 @@ export class URLParamCompressor {
     }
 
     compress(urlObj: Record<string, string>) {
-        const param = Object.keys(urlObj)
-            .map((key) => `${key}=${urlObj[key]}`)
-            .join('&')
+        const param = new URLSearchParams(urlObj).toString()
 
         const compressed = this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(param)))
 
@@ -63,9 +61,10 @@ export class URLParamCompressor {
         try {
             const decompressed = this.uint8ArrayToString(inflateSync(this.base64URLToUint8Array(compressedParams)))
 
-            const result = decompressed.split('&').reduce<Record<string, string>>((acc, param) => {
-                const [key, value] = param.split('=')
-                acc[key] = value
+            const decompressedParams = new URLSearchParams(decompressed)
+
+            const result = Array.from(decompressedParams.keys()).reduce<Record<string, string>>((acc, key) => {
+                acc[key] = decompressedParams.get(key)!
                 return acc
             }, {})
 

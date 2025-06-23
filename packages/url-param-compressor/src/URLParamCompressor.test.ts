@@ -31,7 +31,7 @@ describe('Test with short url', () => {
 
         const compressed = compressor.compress(redirectUrls)
 
-        expect(compressed).toBe(`rurl=${redirectUrls.rurl}`)
+        expect(compressed).toBe(new URLSearchParams(redirectUrls).toString())
     })
 })
 
