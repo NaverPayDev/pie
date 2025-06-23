@@ -1,6 +1,12 @@
 import {deflateSync, inflateSync} from 'fflate'
 
 export class URLParamCompressor {
+    private paramsMap: Map<string, Map<string, string>>
+
+    constructor() {
+        this.paramsMap = new Map()
+    }
+
     private stringToUint8Array(value: string) {
         return new TextEncoder().encode(value)
     }
@@ -53,21 +59,29 @@ export class URLParamCompressor {
         return param.length <= compressed.length ? param : compressed
     }
 
-    decompress(compressedParams: string, paramKeys: string[]) {
+    decompress(compressedParams: string) {
         try {
             const decompressed = this.uint8ArrayToString(inflateSync(this.base64URLToUint8Array(compressedParams)))
 
-            return decompressed.split('&').reduce<Record<string, string>>((acc, param) => {
+            const result = decompressed.split('&').reduce<Record<string, string>>((acc, param) => {
                 const [key, value] = param.split('=')
-
-                if (paramKeys.includes(key)) {
-                    acc[key] = value
-                }
-
+                acc[key] = value
                 return acc
             }, {})
+
+            this.paramsMap = this.paramsMap.set(compressedParams, new Map(Object.entries(result)))
+
+            return result
         } catch {
             return {}
         }
+    }
+
+    get(compressed: string, key: string) {
+        if (!this.paramsMap.has(compressed)) {
+            this.decompress(compressed)
+        }
+
+        return this.paramsMap.get(compressed)?.get(key)
     }
 }
