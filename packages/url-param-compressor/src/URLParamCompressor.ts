@@ -1,10 +1,12 @@
 import {deflateSync, inflateSync} from 'fflate'
 
+import LRUCache from './utils/LRUCache'
+
 export class URLParamCompressor {
-    private paramsMap: Map<string, Map<string, string>>
+    private paramsMap: LRUCache<Map<string, string>>
 
     constructor() {
-        this.paramsMap = new Map()
+        this.paramsMap = new LRUCache(100)
     }
 
     private stringToUint8Array(value: string) {
@@ -68,7 +70,7 @@ export class URLParamCompressor {
                 return acc
             }, {})
 
-            this.paramsMap = this.paramsMap.set(compressedParams, new Map(Object.entries(result)))
+            this.paramsMap.put(compressedParams, new Map(Object.entries(result)))
 
             return result
         } catch {
@@ -77,7 +79,7 @@ export class URLParamCompressor {
     }
 
     get(compressed: string, key: string) {
-        if (!this.paramsMap.has(compressed)) {
+        if (this.paramsMap.get(compressed) === undefined) {
             this.decompress(compressed)
         }
 
