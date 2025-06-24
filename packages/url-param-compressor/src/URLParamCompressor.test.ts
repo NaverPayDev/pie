@@ -2,7 +2,7 @@ import {beforeAll, describe, test, expect} from 'vitest'
 
 import {URLParamCompressor} from './URLParamCompressor'
 
-const compressor = new URLParamCompressor()
+const compressor = new URLParamCompressor({debug: true})
 
 describe('Test with long url', () => {
     const redirectUrls = {
