@@ -4,9 +4,11 @@ import LRUCache from './utils/LRUCache'
 
 export class URLParamCompressor {
     private paramsMap: LRUCache<Map<string, string>>
+    private debug: boolean
 
-    constructor() {
+    constructor(options?: {debug?: boolean}) {
         this.paramsMap = new LRUCache(100)
+        this.debug = !!options?.debug
     }
 
     private stringToUint8Array(value: string) {
@@ -53,10 +55,21 @@ export class URLParamCompressor {
 
     compress(urlObj: Record<string, string>) {
         const param = new URLSearchParams(urlObj).toString()
-
         const compressed = this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(param)))
+        const paramLen = param.length
+        const compressedLen = compressed.length
 
-        return param.length <= compressed.length ? param : compressed
+        if (this.debug) {
+            if (paramLen < compressedLen) {
+                // eslint-disable-next-line no-console
+                console.log('⚠️ Compression increased size - skipped.')
+            } else {
+                // eslint-disable-next-line no-console
+                console.log(`📦 Compressed by ${((compressedLen / paramLen) * 100).toFixed(2)}%`)
+            }
+        }
+
+        return paramLen <= compressedLen ? param : compressed
     }
 
     decompress(compressedParams: string) {
