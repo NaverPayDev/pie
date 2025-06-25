@@ -1,4 +1,4 @@
-import {beforeAll, describe, test, expect} from 'vitest'
+import {beforeAll, describe, test, expect, it} from 'vitest'
 
 import {URLParamCompressor} from './URLParamCompressor'
 
@@ -78,5 +78,91 @@ describe('Get specific param', () => {
         const result = compressor.get('abcdefg', 'a')
 
         expect(result).toEqual(undefined)
+    })
+})
+
+describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
+    describe('기본 네비게이션: example.com → next1 → next2 → next3', () => {
+        it('각 단계별 압축과 해제가 정상 동작함', () => {
+            // 1→2단계: 홈페이지 정보 압축
+            const step2Data = {
+                rurl: 'https://example.com',
+                surl: 'https://example.com',
+            }
+            const step2Compressed = compressor.compress(step2Data)
+            const step2Restored = compressor.decompress(step2Compressed)
+
+            expect(step2Restored.rurl).toBe('https://example.com')
+            expect(step2Restored.surl).toBe('https://example.com')
+
+            const step2FullUrl = `https://example.com/next1?rurl=${encodeURIComponent(
+                'https://example.com',
+            )}&surl=${encodeURIComponent('https://example.com')}`
+            const step3Data = {
+                rurl: step2FullUrl,
+                surl: step2FullUrl,
+            }
+            const step3Compressed = compressor.compress(step3Data)
+            const step3Restored = compressor.decompress(step3Compressed)
+
+            expect(step3Restored.rurl).toBe(step2FullUrl)
+            expect(step3Restored.surl).toBe(step2FullUrl)
+
+            const step3FullUrl = `https://example.com/next1/next2?rurl=${encodeURIComponent(
+                step2FullUrl,
+            )}&surl=${encodeURIComponent(step2FullUrl)}`
+            const step4Data = {
+                rurl: step3FullUrl,
+                surl: step3FullUrl,
+            }
+            const step4Compressed = compressor.compress(step4Data)
+            const step4Restored = compressor.decompress(step4Compressed)
+
+            expect(step4Restored.rurl).toBe(step3FullUrl)
+            expect(step4Restored.surl).toBe(step3FullUrl)
+        })
+
+        it('복잡한 쿼리 데이터도 압축/해제됨', () => {
+            const baseUrl = 'https://shop.com/products'
+            const queryParams = 'category=electronics&brand=apple&price=1000-3000&sort=price&page=2'
+            const fullUrl = `${baseUrl}?${queryParams}`
+
+            const complexData = {
+                rurl: fullUrl,
+                surl: fullUrl,
+                productId: 'macbook-pro-m3',
+                selectedColor: 'space-gray',
+                selectedStorage: '512gb',
+                userPrefs: JSON.stringify({theme: 'dark', currency: 'USD'}),
+                searchHistory: JSON.stringify(['laptop', 'macbook', 'apple computer']),
+            }
+
+            const compressed = compressor.compress(complexData)
+            const restored = compressor.decompress(compressed)
+
+            expect(restored).toEqual(complexData)
+        })
+
+        it('중첩된 히스토리에서 이전 페이지 정보 추출 가능', () => {
+            // 3단계 네비게이션 후 역추적
+            const originalPage = 'https://example.com'
+
+            const step2Data = {rurl: originalPage, surl: originalPage}
+            const step2Compressed = compressor.compress(step2Data)
+
+            const step2Restored = compressor.decompress(step2Compressed)
+            const step2FullUrl = `https://example.com/next1?rurl=${encodeURIComponent(
+                step2Restored.rurl!,
+            )}&surl=${encodeURIComponent(step2Restored.surl!)}`
+            const step3Data = {rurl: step2FullUrl, surl: step2FullUrl}
+            const step3Compressed = compressor.compress(step3Data)
+
+            // step3에서 이전 페이지 정보 추출
+            const step3Restored = compressor.decompress(step3Compressed)
+            const step2Params = new URLSearchParams(step3Restored.rurl!.split('?')[1])
+
+            expect(step2Params.get('rurl')).toBe(originalPage)
+            expect(step2Params.get('surl')).toBe(originalPage)
+        })
     })
 })
