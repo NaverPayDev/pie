@@ -9,8 +9,8 @@ export class URLParamCompressor {
     private debug: boolean
     private deflateOptions: DeflateOptions
 
-    constructor(options?: {debug?: boolean; deflateOptions?: DeflateOptions}) {
-        this.paramsMap = new LRUCache(100)
+    constructor(options?: {cacheCapacity?: number; debug?: boolean; deflateOptions?: DeflateOptions}) {
+        this.paramsMap = new LRUCache(options?.cacheCapacity ?? 100)
         this.debug = !!options?.debug
 
         this.deflateOptions = {
