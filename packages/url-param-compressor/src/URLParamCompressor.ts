@@ -99,7 +99,12 @@ export class URLParamCompressor {
             this.paramsMap.put(compressedParams, new Map(Object.entries(result)))
 
             return result
-        } catch {
+        } catch (error) {
+            if (this.debug) {
+                // eslint-disable-next-line no-console
+                console.error(error)
+            }
+
             return null
         }
     }
