@@ -87,8 +87,13 @@ describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
                 rurl: 'https://example.com',
                 surl: 'https://example.com',
             }
-            const step2Compressed = compressor.compress(step2Data)
+            const {result: step2Compressed} = compressor.compress(step2Data)
             const step2Restored = compressor.decompress(step2Compressed)
+
+            expect(step2Restored).not.toBe(null)
+            if (step2Restored === null) {
+                return
+            }
 
             expect(step2Restored.rurl).toBe('https://example.com')
             expect(step2Restored.surl).toBe('https://example.com')
@@ -100,8 +105,13 @@ describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
                 rurl: step2FullUrl,
                 surl: step2FullUrl,
             }
-            const step3Compressed = compressor.compress(step3Data)
+            const {result: step3Compressed} = compressor.compress(step3Data)
             const step3Restored = compressor.decompress(step3Compressed)
+
+            expect(step3Restored).not.toBe(null)
+            if (step3Restored === null) {
+                return
+            }
 
             expect(step3Restored.rurl).toBe(step2FullUrl)
             expect(step3Restored.surl).toBe(step2FullUrl)
@@ -113,8 +123,13 @@ describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
                 rurl: step3FullUrl,
                 surl: step3FullUrl,
             }
-            const step4Compressed = compressor.compress(step4Data)
+            const {result: step4Compressed} = compressor.compress(step4Data)
             const step4Restored = compressor.decompress(step4Compressed)
+
+            expect(step4Restored).not.toBe(null)
+            if (step4Restored === null) {
+                return
+            }
 
             expect(step4Restored.rurl).toBe(step3FullUrl)
             expect(step4Restored.surl).toBe(step3FullUrl)
@@ -135,7 +150,7 @@ describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
                 searchHistory: JSON.stringify(['laptop', 'macbook', 'apple computer']),
             }
 
-            const compressed = compressor.compress(complexData)
+            const {result: compressed} = compressor.compress(complexData)
             const restored = compressor.decompress(compressed)
 
             expect(restored).toEqual(complexData)
@@ -146,17 +161,29 @@ describe('URLParamCompressor 페이지 네비게이션 시나리오', () => {
             const originalPage = 'https://example.com'
 
             const step2Data = {rurl: originalPage, surl: originalPage}
-            const step2Compressed = compressor.compress(step2Data)
+            const {result: step2Compressed} = compressor.compress(step2Data)
 
             const step2Restored = compressor.decompress(step2Compressed)
+
+            expect(step2Restored).not.toBe(null)
+            if (step2Restored === null) {
+                return
+            }
+
             const step2FullUrl = `https://example.com/next1?rurl=${encodeURIComponent(
                 step2Restored.rurl!,
             )}&surl=${encodeURIComponent(step2Restored.surl!)}`
             const step3Data = {rurl: step2FullUrl, surl: step2FullUrl}
-            const step3Compressed = compressor.compress(step3Data)
+            const {result: step3Compressed} = compressor.compress(step3Data)
 
             // step3에서 이전 페이지 정보 추출
             const step3Restored = compressor.decompress(step3Compressed)
+
+            expect(step3Restored).not.toBe(null)
+            if (step3Restored === null) {
+                return
+            }
+
             const step2Params = new URLSearchParams(step3Restored.rurl!.split('?')[1])
 
             expect(step2Params.get('rurl')).toBe(originalPage)
