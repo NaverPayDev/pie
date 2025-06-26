@@ -36,7 +36,7 @@ describe('Invalid data', () => {
     test('유효하지 않은 데이터라면 빈 객체를 반환한다.', () => {
         const result = compressor.decompress('abcdefg')
 
-        expect(result).toEqual({})
+        expect(result).toEqual(null)
     })
 })
 

@@ -89,7 +89,7 @@ export class URLParamCompressor {
 
             return result
         } catch {
-            return {}
+            return null
         }
     }
 
