@@ -10,16 +10,12 @@ describe('Test with long url', () => {
         surl: 'https%3A%2F%2Forders.pay.naver.com%2Fordersheet%2Fseller%2Ffds%2Fauth%2FkeypadFail%3Faction%3DREPLACE%26rurl%3Dhttps%3A%2F%2Forders.pay.naver.com%2Fordersheet%2Fseller%2Fapply%2Fshopn%2F2025031282074571%2F2025031282074571%26surl%3Dhttps%3A%2F%2Forders.pay.naver.com%2Fordersheet%2Fseller%2F443c0630-0505-1a01-d19c-d058401cefc8%3FbackUrl%3Dhttps%253A%252F%252Fproduct.shoppinglive.naver.com%252Fproducts%252F11364953053%253FNaPm%253Dct%25253Dm85vd8dp%25257Cci%25253Dshopn%25257Ctr%25253Dlim5%25257Chk%25253D489dc88bc28518bc226b9042238b545b141afd74%25257Ctrx%25253D1574969_1%2526nt_source%253Dnshoplive%2526nt_medium%253D1574969%2526nt_detail%253Donair%2526nt_keyword%253Dshoppinglive%2526prdFrom%253Db_1574969%2526extras%253D%25257B%252522entryInfo%252522%25253A%25257B%252522sourceId%252522%25253A%2525221574969%252522%25252C%252522sourceType%252522%25253A%252522BROADCAST%252522%25252C%252522externalId%252522%25253A%252522shoppinglive%252522%25252C%252522externalServiceType%252522%25253A%252522NAVER%252522%25252C%252522tr%252522%25253A%252522lim5%252522%25252C%252522trx%252522%25253A%2525221574969_1%252522%25252C%252522fm%252522%25253Anull%25252C%252522sn%252522%25253Anull%25252C%252522ea%252522%25253Anull%25252C%252522returnParams%252522%25253A%252522%25257B%25257D%252522%25252C%252522slAccountType%252522%25253A%252522NAVER%252522%25252C%252522slAccountId%252522%25253A%252522d7reO%252522%25252C%252522commissionType%252522%25253Anull%25252C%252522thirdPartyInfoAgreementType%252522%25253Anull%25257D%25257D%2526header%253Dfalse%26nl-au%3D72b8fa00d4844155bd16c5682f869759',
     }
 
-    let compressed = ''
-
-    beforeAll(() => {
-        compressed = compressor.compress(redirectUrls)
-    })
-
     test('원본 url로 복원한다.', () => {
-        const originalUrl = compressor.decompress(compressed)
+        const {result, isCompressed} = compressor.compress(redirectUrls)
+        const originalUrl = compressor.decompress(result)
 
         expect(originalUrl).toEqual(redirectUrls)
+        expect(isCompressed).toBe(true)
     })
 })
 
@@ -29,9 +25,10 @@ describe('Test with short url', () => {
             rurl: 'https%3A%2F%2Fnaver.com',
         }
 
-        const compressed = compressor.compress(redirectUrls)
+        const {result, isCompressed} = compressor.compress(redirectUrls)
 
-        expect(compressed).toBe(new URLSearchParams(redirectUrls).toString())
+        expect(result).toBe(new URLSearchParams(redirectUrls).toString())
+        expect(isCompressed).toBe(false)
     })
 })
 
@@ -51,7 +48,8 @@ describe('Get specific param', () => {
 
     let compressed = ''
     beforeAll(() => {
-        compressed = compressor.compress(redirectUrls)
+        const {result} = compressor.compress(redirectUrls)
+        compressed = result
     })
 
     test('특정 key를 정확하게 가져온다.', () => {
@@ -63,7 +61,7 @@ describe('Get specific param', () => {
             surl: 'https%253A%252F%252Forders.pay.naver.com%252Fordersheet%252Fseller%252Ffds%252Fauth%252FkeypadFail%253Faction%253DREPLACE%2526rurl%253Dhttps%253A%252F%252Forders.pay.naver.com%252Fordersheet%252Fseller%252Fapply%252Fshopn%252F2025031282074571%252F2025031282074571%2526surl%253Dhttps%253A%252F%252Forders.pay.naver.com%252Fordersheet%252Fseller%252F443c0630-0505-1a01-d19c-d058401cefc8%253FbackUrl%253Dhttps%25253A%25252F%25252Fproduct.shoppinglive.naver.com%25252Fproducts%25252F11364953053%25253FNaPm%25253Dct%2525253Dm85vd8dp%2525257Cci%2525253Dshopn%2525257Ctr%2525253Dlim5%2525257Chk%2525253D489dc88bc28518bc226b9042238b545b141afd74%2525257Ctrx%2525253D1574969_1%252526nt_source%25253Dnshoplive%252526nt_medium%25253D1574969%252526nt_detail%25253Donair%252526nt_keyword%25253Dshoppinglive%252526prdFrom%25253Db_1574969%252526extras%25253D%2525257B%25252522entryInfo%25252522%2525253A%2525257B%25252522sourceId%25252522%2525253A%252525221574969%25252522%2525252C%25252522sourceType%25252522%2525253A%25252522BROADCAST%25252522%2525252C%25252522externalId%25252522%2525253A%25252522shoppinglive%25252522%2525252C%25252522externalServiceType%25252522%2525253A%25252522NAVER%25252522%2525252C%25252522tr%25252522%2525253A%25252522lim5%25252522%2525252C%25252522trx%25252522%2525253A%252525221574969_1%25252522%2525252C%25252522fm%25252522%2525253Anull%2525252C%25252522sn%25252522%2525253Anull%2525252C%25252522ea%25252522%2525253Anull%2525252C%25252522returnParams%25252522%2525253A%25252522%2525257B%2525257D%25252522%2525252C%25252522slAccountType%25252522%2525253A%25252522NAVER%25252522%2525252C%25252522slAccountId%25252522%2525253A%25252522d7reO%25252522%2525252C%25252522commissionType%25252522%2525253Anull%2525252C%25252522thirdPartyInfoAgreementType%25252522%2525253Anull%2525257D%2525257D%252526header%25253Dfalse%2526nl-au%253D72b8fa00d4844155bd16c5682f869759',
         }
 
-        const compressed2 = compressor.compress(redirectUrls2)
+        const {result: compressed2} = compressor.compress(redirectUrls2)
         const result2 = compressor.get(compressed2, 'surl')
         expect(result2).toBe(redirectUrls.surl)
     })

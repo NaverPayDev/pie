@@ -69,7 +69,9 @@ export class URLParamCompressor {
             }
         }
 
-        return paramLen <= compressedLen ? param : compressed
+        const result = paramLen <= compressedLen ? param : compressed
+        const isCompressed = paramLen > compressedLen
+        return {result, isCompressed}
     }
 
     decompress(compressedParams: string) {
