@@ -2,13 +2,22 @@ import {deflateSync, inflateSync} from 'fflate'
 
 import LRUCache from './utils/LRUCache'
 
+import type {DeflateOptions} from 'fflate'
+
 export class URLParamCompressor {
     private paramsMap: LRUCache<Map<string, string>>
     private debug: boolean
+    private deflateOptions: DeflateOptions
 
-    constructor(options?: {debug?: boolean}) {
-        this.paramsMap = new LRUCache(100)
+    constructor(options?: {cacheCapacity?: number; debug?: boolean; deflateOptions?: DeflateOptions}) {
+        this.paramsMap = new LRUCache(options?.cacheCapacity ?? 100)
         this.debug = !!options?.debug
+
+        this.deflateOptions = {
+            level: options?.deflateOptions?.level ?? 6,
+            mem: options?.deflateOptions?.mem,
+            dictionary: options?.deflateOptions?.dictionary,
+        }
     }
 
     private stringToUint8Array(value: string) {
@@ -55,7 +64,7 @@ export class URLParamCompressor {
 
     compress(urlObj: Record<string, string>) {
         const param = new URLSearchParams(urlObj).toString()
-        const compressed = this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(param)))
+        const compressed = this.uint8ArrayToBase64URL(deflateSync(this.stringToUint8Array(param), this.deflateOptions))
         const paramLen = param.length
         const compressedLen = compressed.length
 
@@ -69,12 +78,16 @@ export class URLParamCompressor {
             }
         }
 
-        return paramLen <= compressedLen ? param : compressed
+        const result = paramLen <= compressedLen ? param : compressed
+        const isCompressed = paramLen > compressedLen
+        return {result, isCompressed}
     }
 
     decompress(compressedParams: string) {
         try {
-            const decompressed = this.uint8ArrayToString(inflateSync(this.base64URLToUint8Array(compressedParams)))
+            const decompressed = this.uint8ArrayToString(
+                inflateSync(this.base64URLToUint8Array(compressedParams), {dictionary: this.deflateOptions.dictionary}),
+            )
 
             const decompressedParams = new URLSearchParams(decompressed)
 
@@ -86,8 +99,13 @@ export class URLParamCompressor {
             this.paramsMap.put(compressedParams, new Map(Object.entries(result)))
 
             return result
-        } catch {
-            return {}
+        } catch (error) {
+            if (this.debug) {
+                // eslint-disable-next-line no-console
+                console.error(error)
+            }
+
+            return null
         }
     }
 

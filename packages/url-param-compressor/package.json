@@ -1,5 +1,5 @@
 {
-    "name": "url-param-compressor",
+    "name": "@naverpay/url-param-compressor",
     "version": "0.0.1",
     "repository": {
         "type": "git",
