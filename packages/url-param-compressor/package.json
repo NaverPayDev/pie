@@ -39,11 +39,13 @@
     "scripts": {
         "clean": "rm -rf dist",
         "test": "vitest --watch=false --reporter=default",
+        "test:playwright": "playwright test",
         "build": "pnpm run clean && vite build"
     },
     "devDependencies": {
-        "vitest": "^3.1.1",
-        "@types/node": "catalog:"
+        "@playwright/test": "^1.53.1",
+        "@types/node": "catalog:",
+        "vitest": "^3.1.1"
     },
     "dependencies": {
         "fflate": "^0.8.2"
