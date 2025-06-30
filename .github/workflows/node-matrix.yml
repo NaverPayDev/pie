@@ -23,7 +23,6 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'pnpm'
-            - run: cd packages/${{ matrix.package }}
-            - run: pnpm install --frozen-lockfile
-            - run: pnpm run build
-            - run: pnpm run test
+            - run: pnpm --filter "./packages/${{ matrix.package }}" install --frozen-lockfile
+            - run: pnpm --filter "./packages/${{ matrix.package }}" run build
+            - run: pnpm --filter "./packages/${{ matrix.package }}" run test:node

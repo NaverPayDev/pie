@@ -23,6 +23,11 @@ jobs:
 
     BuildAndTest:
         runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                playwright-package: [url-param-compressor]
+
         steps:
             - uses: actions/checkout@v4
             - uses: pnpm/action-setup@v4
@@ -33,5 +38,8 @@ jobs:
                   cache: 'pnpm'
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+            - name: Install Playwright
+              working-directory: packages/${{ matrix.playwright-package }}
+              run: pnpm exec playwright install --with-deps
             - run: pnpm run build
             - run: pnpm run test
