@@ -84,3 +84,6 @@ apps/web/cache/
 
 # pdfjs dist build 파일은 git에 포함합니다.
 !packages/react-pdf/src/pdfjs-dist/legacy/build
+
+# playwright 테스트 결과
+packages/url-param-compressor/test-results
