@@ -33,7 +33,7 @@ describe('Test with short url', () => {
 })
 
 describe('Invalid data', () => {
-    test('유효하지 않은 데이터라면 빈 객체를 반환한다.', () => {
+    test('유효하지 않은 데이터라면 null을 반환한다.', () => {
         const result = compressor.decompress('abcdefg')
 
         expect(result).toEqual(null)
