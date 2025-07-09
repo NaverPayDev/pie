@@ -12,7 +12,7 @@
 - LRU 캐시를 통한 성능 최적화
 - Base64 URL-safe 인코딩 지원
 - Node.js와 브라우저 환경 모두 지원
-- 작은 용량으로 압축이 효과적이지 않을 경우 자동 스킵
+- 압축 결과가 원본보다 용량이 큰 경우 자동 스킵
 
 ## Installation
 
@@ -41,7 +41,7 @@ const params = {
 }
 
 const {result, isCompressed} = compressor.compress(params)
-console.log(result) // 압축된 문자열 또는 원본 문자열(압축이 효과적이지 않은 경우)
+console.log(result) // 압축된 문자열 또는 원본 문자열(압축 결과가 원본보다 긴 경우)
 console.log(isCompressed) // 압축 여부
 
 // 해제
