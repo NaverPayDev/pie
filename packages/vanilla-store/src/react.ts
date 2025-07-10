@@ -1,13 +1,11 @@
 import {useEffect, useRef, useSyncExternalStore} from 'react'
 
-import {useSyncPersistStore} from './persist/hooks'
 import {shallowEqual} from './shallowEqual'
 
 import type {SetAction, VanillaSelect, VanillaStore} from './type'
 
 function useSyncStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     const value = useSyncExternalStore(store.subscribe, store.get, () => initialValue || store.get())
-    useSyncPersistStore(store, value)
     return value
 }
 
@@ -54,8 +52,6 @@ export function useSetStore<State>(store: VanillaSelect<State>, initialValue?: S
 export function useSetStore<State>(store: VanillaStore<State>, initialValue?: State): SetAction<State>
 export function useSetStore<State>(store: VanillaStore<State> | VanillaSelect<State>, initialValue?: State) {
     useSyncWithInitialValue(store, initialValue)
-    useSyncStore(store, initialValue)
-
     return store.set
 }
 
