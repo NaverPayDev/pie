@@ -1,0 +1,55 @@
+{
+    "name": "@naverpay/url-param-compressor",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/pie/tree/main/packages/url-param-compressor"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/url-param-compressor/",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
+        },
+        "./package.json": "./package.json"
+    },
+    "keywords": [
+        "naver",
+        "naverpay",
+        "naver financial",
+        "url",
+        "compressor"
+    ],
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rm -rf dist",
+        "test": "pnpm run test:node && pnpm run test:browser",
+        "test:node": "vitest --watch=false --reporter=default",
+        "test:browser": "playwright test",
+        "bench": "vitest bench --run ./src/*.bench.ts",
+        "build": "pnpm run clean && vite build"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.53.1",
+        "@types/node": "catalog:",
+        "vitest": "^3.1.1"
+    },
+    "dependencies": {
+        "fflate": "^0.8.2"
+    }
+}

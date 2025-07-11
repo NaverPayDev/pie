@@ -17,6 +17,7 @@
         "start": "turbo run start",
         "build": "turbo run build",
         "test": "turbo run test",
+        "bench": "turbo run bench",
         "lint": "eslint '**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,yaml,yml}'",
         "lint:fix": "pnpm run lint --fix",
         "prettier": "prettier --check '**/*.{json,yaml,md,ts,tsx,js,jsx}'",

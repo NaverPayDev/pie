@@ -1,0 +1,28 @@
+name: Node.js Matrix
+
+on:
+    pull_request:
+        branches:
+            - '**'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                package: [url-param-compressor]
+                node-version: [18.x, 20.x, 22.x]
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - run: pnpm --filter "./packages/${{ matrix.package }}" install --frozen-lockfile
+            - run: pnpm --filter "./packages/${{ matrix.package }}" run build
+            - run: pnpm --filter "./packages/${{ matrix.package }}" run test:node

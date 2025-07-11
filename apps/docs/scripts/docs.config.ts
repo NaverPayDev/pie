@@ -15,4 +15,8 @@ export const INTERNAL_CONFIG: {name: string; description?: string}[] = [
         name: '@naverpay/es-http-status-codes',
         description: 'http-status-codes를 ESModule로 만들었습니다.',
     },
+    {
+        name: '@naverpay/url-param-compressor',
+        description: 'URL 파라미터를 압축하고 해제하는 유틸리티입니다.',
+    },
 ]
