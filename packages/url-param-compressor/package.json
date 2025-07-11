@@ -41,6 +41,7 @@
         "test": "pnpm run test:node && pnpm run test:browser",
         "test:node": "vitest --watch=false --reporter=default",
         "test:browser": "playwright test",
+        "bench": "vitest bench --run ./src/*.bench.ts",
         "build": "pnpm run clean && vite build"
     },
     "devDependencies": {

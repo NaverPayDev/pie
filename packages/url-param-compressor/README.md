@@ -41,7 +41,7 @@ const params = {
 }
 
 const {result, isCompressed} = compressor.compress(params)
-console.log(result) // 압축된 문자열 또는 원본 문자열(압축 결과가 원본보다 긴 경우)
+console.log(result) // 압축된 문자열(URL-safe base64 처리된) 또는 원본 문자열(압축 결과가 원본보다 긴 경우)
 console.log(isCompressed) // 압축 여부
 
 // 해제
@@ -67,3 +67,17 @@ const compressor = new URLParamCompressor({
 // 압축된 문자열에서 특정 키의 값을 바로 조회
 const value = compressor.get(compressedString, 'userId')
 ```
+
+## Benchmark
+
+Performance Benchmark on Extremely Long Parameters
+(⚠️ Benchmark results may differ depending on how repetitive, nested, or complex the URL parameters are.)
+
+| Method | Length(char) | Mean(s) | Compression Ratio (%) |
+|:--------:|:--------------:|:---------:|:------------:|
+| compress | ~5000 | 0.0914  | 16.24 |
+| compress | ~10000 | 0.1324  | 8.91 |
+| compress | ~50000 | 0.5187  | 2.28 |
+| decompress |  ~5000 | 0.0645 | |
+| decompress | ~10000 | 0.0817 | |
+| decompress | ~50000 | 0.2431 | |
