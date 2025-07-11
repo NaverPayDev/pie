@@ -21,6 +21,9 @@
         "test": {
             "cache": false
         },
+        "bench": {
+            "cache": false
+        },
         "clean": {
             "cache": false
         },
