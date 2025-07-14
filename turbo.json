@@ -34,6 +34,10 @@
             "dependsOn": ["^build"],
             "outputs": ["dist/**"]
         },
+        "playground#build:docs": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**"]
+        },
         "docs#start": {},
         "ui-docs#start": {
             "dependsOn": ["^build"]
