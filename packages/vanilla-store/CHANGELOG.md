@@ -1,5 +1,13 @@
 # @naverpay/vanilla-store
 
+## 1.1.2
+
+### Patch Changes
+
+-   99a70ac: [vanilla-store] Remove useSyncPersistStore from useSyncStore and useSetStore
+
+    PR: [[vanilla-store] Remove useSyncPersistStore from useSyncStore and useSetStore](https://github.com/NaverPayDev/pie/pull/181)
+
 ## 1.1.1
 
 ### Patch Changes
