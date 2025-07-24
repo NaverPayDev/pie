@@ -15,7 +15,10 @@ export const createVanillaSelect = <State, StoreState>(
     let state: State = selectFn(store.get())
 
     const get = () => {
-        const next = selectFn(store.get())
+        const persistValue = store.persistStore?.value
+        const currentValue = persistValue && !shallowEqual(persistValue, store.get()) ? persistValue : store.get()
+
+        const next = selectFn(currentValue)
 
         if (!equalityFn(next, state)) {
             state = next
