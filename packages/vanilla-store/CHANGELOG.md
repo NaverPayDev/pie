@@ -1,5 +1,13 @@
 # @naverpay/vanilla-store
 
+## 1.1.3
+
+### Patch Changes
+
+-   87fc79d: [vanilla-store] Use persistValue as a priority in `VanillaSelect.get`
+
+    PR: [[vanilla-store] Use persistValue as a priority in `VanillaSelect.get`](https://github.com/NaverPayDev/pie/pull/188)
+
 ## 1.1.2
 
 ### Patch Changes
