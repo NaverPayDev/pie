@@ -1,3 +1,4 @@
+'use client'
 import {cloneElement, useEffect, useState} from 'react'
 
 import {toSingleton} from './utils'
