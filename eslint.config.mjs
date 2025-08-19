@@ -1,4 +1,5 @@
 import naverpay from '@naverpay/eslint-config'
+import naverpayPlugin from '@naverpay/eslint-plugin'
 
 export default [
     {
@@ -48,4 +49,14 @@ export default [
         ],
     },
     ...naverpay.configs.react,
+    ...naverpay.configs.packageJson,
+    {
+        plugins: {
+            '@naverpay': naverpayPlugin,
+        },
+        rules: {
+            '@naverpay/peer-deps-in-dev-deps': 'error',
+            'package-json/require-type': 'off',
+        },
+    },
 ]
