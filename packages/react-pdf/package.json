@@ -1,17 +1,22 @@
 {
     "name": "@naverpay/react-pdf",
     "version": "1.1.0",
+    "description": "A React component for rendering PDF documents",
+    "keywords": [
+        "naver",
+        "naverpay",
+        "naver financial",
+        "pdf",
+        "react-pdf"
+    ],
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/react-pdf/",
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/NaverPayDev/pie/tree/main/packages/react-pdf"
     },
-    "bugs": {
-        "url": "https://github.com/NaverPayDev/pie/issues"
-    },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/react-pdf/",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.mjs",
-    "types": "./dist/cjs/index.d.ts",
     "sideEffects": false,
     "exports": {
         ".": {
@@ -24,25 +29,21 @@
                 "default": "./dist/cjs/index.js"
             }
         },
+        "./package.json": "./package.json",
         "./style.css": {
             "import": "./dist/esm/style.css",
             "require": "./dist/cjs/style.css"
-        },
-        "./package.json": "./package.json"
+        }
     },
-    "keywords": [
-        "naver",
-        "naverpay",
-        "naver financial",
-        "pdf",
-        "react-pdf"
-    ],
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
     "files": [
         "dist"
     ],
     "scripts": {
-        "clean": "rm -rf dist",
-        "build": "pnpm run clean && vite build"
+        "build": "pnpm run clean && vite build",
+        "clean": "rm -rf dist"
     },
     "dependencies": {
         "classnames": "^2.5.1",
