@@ -1,6 +1,6 @@
-import {cloneElement} from 'react'
+import {cloneElement, useEffect, useState} from 'react'
 
-import {generateRandomString, toSingleton} from './utils'
+import {toSingleton} from './utils'
 import deepMap from './utils/deepMap'
 
 import type {PropsWithChildren, ReactElement} from 'react'
@@ -10,11 +10,20 @@ const reactRecursiveChildrenMap = deepMap.bind(deepMap)
 const generateLocalIdMap = toSingleton(() => new Map<string, number>())
 const localIdsMap = generateLocalIdMap()
 
-const SvgUniqueID = ({
-    children,
-    prefixId = '__SVG_ID__',
-    id = generateRandomString(),
-}: PropsWithChildren<{prefixId?: string; id?: string}>) => {
+let globalIdCounter = 0
+
+const SvgUniqueID = ({children, prefixId = '__SVG_ID__'}: PropsWithChildren<{prefixId?: string}>) => {
+    const [id, setId] = useState('')
+
+    useEffect(() => {
+        setId(`client-${++globalIdCounter}`)
+    }, [])
+
+    // Return original children if no id is generated
+    if (!id) {
+        return <>{children}</>
+    }
+
     let lastLocalId = 0
 
     const getHookedId = (originalId?: string) => {
