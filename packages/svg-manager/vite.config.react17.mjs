@@ -26,9 +26,6 @@ export default defineConfig({
                 {
                     format: 'cjs',
                     entryFileNames: 'react17/cjs/index.js',
-                    exports: 'named',
-                    interop: 'auto',
-                    generatedCode: 'es2015',
                 },
             ],
         },
@@ -38,4 +35,7 @@ export default defineConfig({
             jsxRuntime: 'classic',
         }),
     ],
+    esbuild: {
+        jsxInject: `import React from 'react'`,
+    },
 })
