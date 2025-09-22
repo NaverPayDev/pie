@@ -2,7 +2,7 @@
 
 ## 🚨 Warning
 
-- 스타일이 적용된 PdfViewer를 사용하기 위해서는, `PdfViewer`를 사용하는 파일 최상단에 `import '@naverpay/react-pdf/index.css'` 추가가 필요합니다.
+- 스타일이 적용된 PdfViewer를 사용하기 위해서는, `PdfViewer`를 사용하는 파일 최상단에 `import '@naverpay/react-pdf/style.css'` 추가가 필요합니다.
 
 ## 기본 사용법
 
