@@ -1,17 +1,21 @@
 {
     "name": "@naverpay/vanilla-store",
     "version": "1.1.3",
+    "description": "A lightweight library for state management in React",
+    "keywords": [
+        "state manager",
+        "naver",
+        "naver-financial"
+    ],
+    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/vanilla-store/",
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/pie/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/NaverPayDev/pie/tree/main/packages/vanilla-store"
     },
-    "bugs": {
-        "url": "https://github.com/NaverPayDev/pie/issues"
-    },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/vanilla-store/",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.mjs",
-    "types": "./dist/cjs/index.d.ts",
+    "sideEffects": false,
     "exports": {
         ".": {
             "import": {
@@ -25,22 +29,22 @@
         },
         "./package.json": "./package.json"
     },
-    "sideEffects": false,
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
+        "build": "pnpm clean && vite build",
+        "clean": "rm -rf dist",
         "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
         "lint:fix": "pnpm lint --fix",
         "prettier": "prettier --check '**/*.{ts,tsx,js,jsx,json,md}'",
         "prettier:fix": "prettier --write '**/*.{ts,tsx,js,jsx,json,md}'",
-        "clean": "rm -rf dist",
-        "build": "pnpm clean && vite build",
-        "test": "vitest --watch=false --reporter=default",
-        "publint": "attw --pack && publint"
+        "publint": "attw --pack && publint",
+        "test": "vitest --watch=false --reporter=default"
     },
-    "keywords": [
-        "state manager",
-        "naver",
-        "naver-financial"
-    ],
     "devDependencies": {
         "@testing-library/react": "^15.0.7",
         "@types/react": "catalog:",
@@ -50,8 +54,5 @@
     },
     "peerDependencies": {
         "react": "catalog:"
-    },
-    "files": [
-        "dist"
-    ]
+    }
 }

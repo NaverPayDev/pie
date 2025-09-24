@@ -16,3 +16,10 @@ catalog:
     '@types/node': ^22.10.2
     '@types/react': ^18.3.3
     '@types/react-dom': ^18.3.5
+
+catalogs:
+    react17:
+        react: ^17 || ^18 || ^19
+        react-dom: ^17 || ^18 || ^19
+        '@types/react': ^17 || ^18 || ^19
+        '@types/react-dom': ^17 || ^18 || ^19
