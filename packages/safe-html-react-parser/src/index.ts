@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Utilizes html-react-parser with DOMPurify for safe HTML parsing
  */
@@ -6,7 +7,12 @@ import DOMPurify from 'isomorphic-dompurify'
 
 import type {DOMNode, HTMLReactParserOptions} from 'html-react-parser'
 
-const parse = htmlReactParser.default || htmlReactParser
+// html-react-parser가 esm에서 cjs 모듈을 re-export 하는 문제 처리
+// In CJS: htmlReactParser.default.default is the actual function
+// In ESM: htmlReactParser.default is the function
+const parse = ((htmlReactParser as any).default?.default ||
+    (htmlReactParser as any).default ||
+    htmlReactParser) as typeof htmlReactParser.default
 
 export interface SafeParseOptions extends HTMLReactParserOptions {
     /**
