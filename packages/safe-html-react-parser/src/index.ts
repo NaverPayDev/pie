@@ -1,8 +1,12 @@
 /**
  * Utilizes html-react-parser with DOMPurify for safe HTML parsing
  */
-import parse, {type DOMNode, type HTMLReactParserOptions} from 'html-react-parser'
+import * as htmlReactParser from 'html-react-parser'
 import DOMPurify from 'isomorphic-dompurify'
+
+import type {DOMNode, HTMLReactParserOptions} from 'html-react-parser'
+
+const parse = htmlReactParser.default || htmlReactParser
 
 export interface SafeParseOptions extends HTMLReactParserOptions {
     /**
