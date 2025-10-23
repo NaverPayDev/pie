@@ -9,6 +9,10 @@ A secure wrapper for **html-react-parser** with **isomorphic-dompurify** that au
 - 🌐 **Universal**: Works in both browser and Node.js (SSR) environments
 - 🏷️ **Custom Tags**: Handles project-specific tags like `<custom>` safely
 
+## Requirements
+
+- Node.js >=20.19.5: isomorphic-dompurify@^2.30.1
+
 ## Installation
 
 ```bash
