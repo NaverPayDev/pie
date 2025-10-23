@@ -46,8 +46,8 @@ export const DEFAULT_SANITIZE_CONFIG: DOMPurify.Config = {
 }
 
 /**
- * @param htmlString - 파싱할 HTML 문자열
- * @param options - html-react-parser 옵션 및 DOMPurify 설정
+ * @param htmlString - HTML string to parse
+ * @param options - html-react-parser options with DOMPurify settings
  * @returns Parsed React elements
  */
 export function safeParse(htmlString: string, options: SafeParseOptions = {}) {
