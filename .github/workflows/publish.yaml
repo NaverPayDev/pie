@@ -87,7 +87,7 @@ jobs:
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   npm_tag: canary
                   publish_script: pnpm run release:canary
-                  packages_dir: '.'
+                  packages_dir: 'packages'
                   excludes: '.turbo,.github'
                   version_template: '{VERSION}-canary.{DATE}-{COMMITID7}'
 
@@ -98,7 +98,7 @@ jobs:
                   github_token: ${{ secrets.ACTION_TOKEN }}
                   npm_tag: rc
                   publish_script: pnpm run release:canary
-                  packages_dir: '.'
+                  packages_dir: 'packages'
                   excludes: '.turbo,.github'
                   version_template: '{VERSION}-rc.{DATE}-{COMMITID7}'
                   create_release: true
