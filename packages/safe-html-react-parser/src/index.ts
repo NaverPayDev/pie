@@ -4,9 +4,13 @@
  */
 import * as htmlReactParser from 'html-react-parser'
 
-import {sanitizeHtml, type SanitizeConfig} from './utils/dompurify'
+import {sanitizeHtml, type SanitizerOptions as DOMPurifyOptionsType, type SanitizeConfig} from './utils/dompurify'
 
 import type {DOMNode, HTMLReactParserOptions} from 'html-react-parser'
+
+// Re-export configuration function
+export {configureDOMPurify} from './utils/dompurify'
+export type {DOMWindow, DOMWindowFactory, SanitizerOptions as DOMPurifyOptions} from './utils/dompurify'
 
 // Solving the issue of html-react-parser re-exporting cjs modules in esm
 // In CJS: htmlReactParser.default.default is the actual function
@@ -17,13 +21,27 @@ const parse = ((htmlReactParser as any).default?.default ||
 
 export interface SafeParseOptions extends HTMLReactParserOptions {
     /**
-     * DOMPurify Options
+     * DOMPurify sanitization configuration
      */
     sanitizeConfig?: SanitizeConfig
     /**
      * Custom tag preservation option (temporary conversion before and after DOMPurify processing)
      */
     preserveCustomTags?: string[]
+    /**
+     * Server-side DOMPurify options (DOM implementation, caching, etc.)
+     * Only used on server-side. Ignored on client-side.
+     *
+     * @example
+     * import { Window } from 'happy-dom'
+     * safeParse(html, {
+     *   domPurifyOptions: {
+     *     domWindowFactory: () => new Window(),
+     *     enableCache: true
+     *   }
+     * })
+     */
+    domPurifyOptions?: DOMPurifyOptionsType
 }
 
 export const DEFAULT_SANITIZE_CONFIG: SanitizeConfig = {
@@ -62,7 +80,7 @@ export const DEFAULT_SANITIZE_CONFIG: SanitizeConfig = {
  * @returns Parsed React elements
  */
 export function safeParse(htmlString: string, options: SafeParseOptions = {}) {
-    const {sanitizeConfig = DEFAULT_SANITIZE_CONFIG, preserveCustomTags, ...parserOptions} = options
+    const {sanitizeConfig = DEFAULT_SANITIZE_CONFIG, preserveCustomTags, domPurifyOptions, ...parserOptions} = options
 
     // Temporarily convert custom tags to safe tags to preserve them during DOMPurify processing
     const processedHtml =
@@ -74,7 +92,7 @@ export function safeParse(htmlString: string, options: SafeParseOptions = {}) {
             htmlString,
         ) || htmlString
 
-    const sanitizedHtml = sanitizeHtml(processedHtml, sanitizeConfig)
+    const sanitizedHtml = sanitizeHtml(processedHtml, sanitizeConfig, domPurifyOptions)
 
     if (!sanitizedHtml) {
         return null

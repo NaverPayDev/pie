@@ -1,6 +1,6 @@
 # safe-html-react-parser
 
-A secure wrapper for **html-react-parser** with **isomorphic-dompurify** that automatically sanitizes HTML before parsing.
+A secure wrapper for **html-react-parser** with **DOMPurify** that automatically sanitizes HTML before parsing.
 
 ## What it does
 
@@ -8,16 +8,31 @@ A secure wrapper for **html-react-parser** with **isomorphic-dompurify** that au
 - ⚛️ **React**: Seamlessly integrates with html-react-parser
 - 🌐 **Universal**: Works in both browser and Node.js (SSR) environments
 - 🏷️ **Custom Tags**: Handles project-specific tags like `<custom>` safely
-
-## Requirements
-
-- Node.js >=20.19.5: isomorphic-dompurify@^2.30.1
+- 🚀 **Flexible**: Choose your DOM implementation (jsdom, happy-dom, or linkedom)
+- ⚡ **Optimized**: Built-in caching and memory management
 
 ## Installation
 
 ```bash
 npm install @naverpay/safe-html-react-parser
 ```
+
+### Choosing a DOM Implementation (Server-Side Only)
+
+For server-side rendering, you need to install one of the following DOM implementations:
+
+```bash
+# Option 1: jsdom (most complete, heavier)
+npm install jsdom
+
+# Option 2: happy-dom (faster, lighter, recommended)
+npm install happy-dom
+
+# Option 3: linkedom (fastest, lightest)
+npm install linkedom
+```
+
+The library will automatically detect and use the first available implementation in this order: jsdom → happy-dom → linkedom.
 
 ## Basic Usage
 
@@ -119,6 +134,63 @@ const result = safeParse(html, {
 })
 ```
 
+### Configuring DOM Implementation (Server-Side)
+
+You have two ways to configure the DOM implementation:
+
+#### Method 1: Per-call configuration (Recommended)
+
+Pass `domPurifyOptions` directly to `safeParse()`:
+
+```tsx
+import { safeParse } from '@naverpay/safe-html-react-parser'
+import { Window } from 'happy-dom'
+
+const result = safeParse(htmlString, {
+  domPurifyOptions: {
+    domWindowFactory: () => new Window(),
+    enableCache: true,
+    maxCacheSize: 100
+  }
+})
+```
+
+#### Method 2: Global configuration
+
+Configure once at app initialization:
+
+```tsx
+import { configureDOMPurify } from '@naverpay/safe-html-react-parser'
+
+// Using jsdom
+import { JSDOM } from 'jsdom'
+configureDOMPurify({
+  domWindowFactory: () => new JSDOM('<!DOCTYPE html>'),
+  enableCache: true,
+  maxCacheSize: 100,
+  recreateInterval: 1000 // Recreate DOM instance every 1000 sanitizations
+})
+
+// Using happy-dom (recommended for better performance)
+import { Window } from 'happy-dom'
+configureDOMPurify({
+  domWindowFactory: () => new Window(),
+  enableCache: true,
+  recreateInterval: 500
+})
+
+// Using linkedom (fastest, minimal footprint)
+import { parseHTML } from 'linkedom'
+configureDOMPurify({
+  domWindowFactory: () => parseHTML('<!DOCTYPE html>'),
+  enableCache: true
+})
+```
+
+> [!NOTE]
+>
+> If you don't configure anything, the library will automatically try jsdom → happy-dom → linkedom in that order.
+
 ## Default Allowed Tags
 
 By default, the following HTML tags are allowed:
@@ -132,6 +204,37 @@ ALLOWED_TAGS: [
 ]
 ```
 
+## Performance Optimization
+
+### Caching
+
+By default, caching is enabled to improve performance:
+
+```tsx
+configureDOMPurify({
+  enableCache: true,      // Default: true
+  maxCacheSize: 100,      // Default: 100
+})
+```
+
+### Memory Management
+
+The DOM instance is automatically recreated periodically to prevent memory leaks:
+
+```tsx
+configureDOMPurify({
+  recreateInterval: 1000  // Default: 1000 sanitization calls
+})
+```
+
+### DOM Implementation Comparison
+
+| Implementation | Speed | Memory | Completeness | Recommended For |
+|----------------|-------|--------|--------------|-----------------|
+| **jsdom** | Slower | Higher | Most complete | Maximum compatibility |
+| **happy-dom** | Fast | Medium | Good | **Balanced (Recommended)** |
+| **linkedom** | Fastest | Lowest | Basic | Performance-critical apps |
+
 ## Security Notes
 
 - All HTML is sanitized by DOMPurify before parsing
@@ -142,7 +245,8 @@ ALLOWED_TAGS: [
 ## Built with
 
 - [html-react-parser@^5.2.7](https://github.com/remarkablemark/html-react-parser) - HTML string to React element parser
-- [isomorphic-dompurify@^2.30.1](https://github.com/kkomelin/isomorphic-dompurify) - Universal XSS sanitizer
+- [dompurify@^3.3.0](https://github.com/cure53/DOMPurify) - XSS sanitizer
+- Optional: [jsdom](https://github.com/jsdom/jsdom), [happy-dom](https://github.com/capricorn86/happy-dom), or [linkedom](https://github.com/WebReflection/linkedom)
 
 ## License
 
