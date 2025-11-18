@@ -25,7 +25,8 @@ jobs:
               id: get_branch
               run: |
                   PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
-                  echo "::set-output name=branch::$(echo $PR | jq -r '.head.ref')"
+                  branch=$(echo "$PR" | jq -r '.head.ref')
+                  echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
     publish:
         runs-on: ubuntu-latest
