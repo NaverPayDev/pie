@@ -1,0 +1,106 @@
+name: Publish Package
+
+on:
+    push:
+        branches:
+            - main
+    issue_comment:
+        types:
+            - created
+
+permissions:
+    id-token: write
+    contents: write
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    get-branch:
+        if: github.event_name == 'issue_comment' && github.event.issue.pull_request && (github.event.comment.body == 'canary-publish' || github.event.comment.body == '/canary-publish' || github.event.comment.body == 'rc-publish' || github.event.comment.body == '/rc-publish')
+        runs-on: ubuntu-latest
+        outputs:
+            branch: ${{ steps.get_branch.outputs.branch }}
+        steps:
+            - name: Get PR branch name
+              id: get_branch
+              run: |
+                  PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
+                  branch=$(echo "$PR" | jq -r '.head.ref')
+                  echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+    publish:
+        runs-on: ubuntu-latest
+        needs: [get-branch]
+        if: |
+            always() &&
+            (github.event_name == 'push' ||
+             (github.event_name == 'issue_comment' && needs.get-branch.result == 'success'))
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ needs.get-branch.outputs.branch || github.ref }}
+                  token: ${{ secrets.ACTION_TOKEN }}
+                  fetch-depth: 0
+
+            - uses: pnpm/action-setup@v4
+
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+
+            - name: Check and upgrade npm
+              run: |
+                  echo "Current npm version:"
+                  npm --version
+                  npm install -g npm@latest
+                  echo "Upgraded npm version:"
+                  npm --version
+
+            - name: Install Dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build package
+              run: pnpm run build
+
+            - name: Publish - Release
+              if: github.event_name == 'push'
+              uses: NaverPayDev/changeset-actions/publish@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  git_username: npayfebot
+                  git_email: npay.fe.bot@navercorp.com
+                  publish_script: pnpm release
+                  pr_title: '🚀 version changed packages'
+                  commit_message: '📦 bump changed packages version'
+                  create_github_release_tag: true
+                  formatting_script: pnpm run markdownlint:fix
+              env:
+                  GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+
+            - name: Publish - Canary
+              if: github.event_name == 'issue_comment' && (github.event.comment.body == 'canary-publish' || github.event.comment.body == '/canary-publish')
+              uses: NaverPayDev/changeset-actions/canary-publish@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  npm_tag: canary
+                  publish_script: pnpm run release:canary
+                  packages_dir: '.'
+                  excludes: '.turbo,.github'
+                  version_template: '{VERSION}-canary.{DATE}-{COMMITID7}'
+
+            - name: Publish - RC
+              if: github.event_name == 'issue_comment' && (github.event.comment.body == 'rc-publish' || github.event.comment.body == '/rc-publish')
+              uses: NaverPayDev/changeset-actions/canary-publish@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  npm_tag: rc
+                  publish_script: pnpm run release:canary
+                  packages_dir: '.'
+                  excludes: '.turbo,.github'
+                  version_template: '{VERSION}-rc.{DATE}-{COMMITID7}'
+                  create_release: true
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
