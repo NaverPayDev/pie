@@ -3,11 +3,12 @@
  * Utilizes html-react-parser with DOMPurify for safe HTML parsing
  */
 import * as htmlReactParser from 'html-react-parser'
-import DOMPurify from 'isomorphic-dompurify'
+
+import {sanitizeHtml, type SanitizeConfig} from './utils/dompurify'
 
 import type {DOMNode, HTMLReactParserOptions} from 'html-react-parser'
 
-// html-react-parser가 esm에서 cjs 모듈을 re-export 하는 문제 처리
+// Solving the issue of html-react-parser re-exporting cjs modules in esm
 // In CJS: htmlReactParser.default.default is the actual function
 // In ESM: htmlReactParser.default is the function
 const parse = ((htmlReactParser as any).default?.default ||
@@ -18,14 +19,14 @@ export interface SafeParseOptions extends HTMLReactParserOptions {
     /**
      * DOMPurify Options
      */
-    sanitizeConfig?: DOMPurify.Config
+    sanitizeConfig?: SanitizeConfig
     /**
      * Custom tag preservation option (temporary conversion before and after DOMPurify processing)
      */
     preserveCustomTags?: string[]
 }
 
-export const DEFAULT_SANITIZE_CONFIG: DOMPurify.Config = {
+export const DEFAULT_SANITIZE_CONFIG: SanitizeConfig = {
     ALLOWED_TAGS: [
         'p',
         'br',
@@ -73,7 +74,11 @@ export function safeParse(htmlString: string, options: SafeParseOptions = {}) {
             htmlString,
         ) || htmlString
 
-    const sanitizedHtml = DOMPurify.sanitize(processedHtml, sanitizeConfig)
+    const sanitizedHtml = sanitizeHtml(processedHtml, sanitizeConfig)
+
+    if (!sanitizedHtml) {
+        return null
+    }
 
     return parse(sanitizedHtml, {
         ...parserOptions,
