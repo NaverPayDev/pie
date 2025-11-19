@@ -1,17 +1,49 @@
 import createDOMPurify from 'dompurify'
 
-/**
- * DOM Window interface that can be provided by jsdom, happy-dom, linkedom, etc.
- */
-export interface DOMWindow {
-    document: Document
-    [key: string]: unknown
-}
+import type {Window as HappyDOMWindow} from 'happy-dom'
+import type {JSDOM, DOMWindow as JSDOMWindow} from 'jsdom'
+import type {parseHTML} from 'linkedom'
 
 /**
- * Factory function to create a DOM window instance
+ * DOM Window types from supported libraries
+ * - jsdom: JSDOM Window
+ * - happy-dom: Window
+ * - linkedom: parseHTML result
+ *
+ * @example
+ * import { JSDOM } from 'jsdom'
+ * const jsdomWindow: DOMWindow = new JSDOM('<!DOCTYPE html>')
+ *
+ * @example
+ * import { Window } from 'happy-dom'
+ * const happyDomWindow: DOMWindow = new Window()
+ *
+ * @example
+ * import { parseHTML } from 'linkedom'
+ * const linkedomWindow: DOMWindow = parseHTML('<!DOCTYPE html>')
  */
-export type DOMWindowFactory = () => DOMWindow | {window: DOMWindow}
+export type DOMWindow = JSDOMWindow | HappyDOMWindow | ReturnType<typeof parseHTML>
+
+/**
+ * DOM instance types that can be provided directly or via factory
+ */
+export type DOMInstance = JSDOM | HappyDOMWindow | ReturnType<typeof parseHTML>
+
+/**
+ * Factory function to create a DOM window instance, or the instance itself
+ * - jsdom: JSDOM instance or factory returning JSDOM
+ * - happy-dom: Window instance or factory returning Window
+ * - linkedom: parseHTML result or factory returning parseHTML result
+ *
+ * @example
+ * // Direct instance
+ * domWindowFactory: new Window()
+ *
+ * @example
+ * // Factory function
+ * domWindowFactory: () => new Window()
+ */
+export type DOMWindowFactory = (() => DOMInstance) | DOMInstance
 
 export interface SanitizerOptions {
     /**
@@ -109,8 +141,8 @@ class OptimizedDOMPurify {
                 if (doc.head) {
                     doc.head.innerHTML = ''
                 }
-                while (doc.firstChild) {
-                    doc.removeChild(doc.firstChild)
+                if (doc.documentElement) {
+                    doc.documentElement.innerHTML = ''
                 }
             } catch {
                 // ignore cleanup errors
@@ -129,7 +161,7 @@ class OptimizedDOMPurify {
             global.gc()
         }
 
-        const result = this.domWindowFactory()
+        const result = typeof this.domWindowFactory === 'function' ? this.domWindowFactory() : this.domWindowFactory
         this.domInstance = 'window' in result ? (result as {window: DOMWindow}) : {window: result}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.purify = createDOMPurify(this.domInstance.window as any)
