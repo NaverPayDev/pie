@@ -96,7 +96,7 @@ class OptimizedDOMPurify {
     purify: ReturnType<typeof createDOMPurify> | null
     callCount: number
     enableCache: boolean
-    cache: Map<string | Node, string> | null
+    cache: Map<string, string> | null
     maxCacheSize: number
 
     constructor(options: SanitizerOptions = {}) {
@@ -174,19 +174,22 @@ class OptimizedDOMPurify {
 
     sanitize(dirty: DirtyHtml, config?: SanitizeConfig) {
         if (this.enableCache && !config && this.cache) {
-            if (this.cache.has(dirty)) {
-                return this.cache.get(dirty)
+            // Serialize Node to string for consistent cache key
+            const cacheKey = typeof dirty === 'string' ? dirty : dirty.toString()
+            if (this.cache.has(cacheKey)) {
+                return this.cache.get(cacheKey)
             }
         }
 
         const cleanHtml = this.purify?.sanitize(dirty, config)
 
         if (this.enableCache && !config && this.cache) {
+            const cacheKey = typeof dirty === 'string' ? dirty : dirty.toString()
             if (this.cache.size >= this.maxCacheSize) {
                 const firstKey = this.cache.keys().next().value
                 firstKey && this.cache.delete(firstKey)
             }
-            cleanHtml && this.cache.set(dirty, cleanHtml)
+            cleanHtml && this.cache.set(cacheKey, cleanHtml)
         }
 
         this.callCount++
