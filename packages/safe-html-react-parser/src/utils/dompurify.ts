@@ -1,5 +1,7 @@
 import createDOMPurify from 'dompurify'
 
+import {LRUCache} from './lru-cache'
+
 import type {Window as HappyDOMWindow} from 'happy-dom'
 import type {JSDOM, DOMWindow as JSDOMWindow} from 'jsdom'
 import type {parseHTML} from 'linkedom'
@@ -96,14 +98,14 @@ class OptimizedDOMPurify {
     purify: ReturnType<typeof createDOMPurify> | null
     callCount: number
     enableCache: boolean
-    cache: Map<string, string> | null
+    cache: LRUCache<string, string> | null
     maxCacheSize: number
 
     constructor(options: SanitizerOptions = {}) {
         this.recreateInterval = options?.recreateInterval || 1000
         this.enableCache = options?.enableCache !== false // Default true
-        this.cache = this.enableCache ? new Map() : null
         this.maxCacheSize = options?.maxCacheSize || 100
+        this.cache = this.enableCache ? new LRUCache(this.maxCacheSize) : null
 
         if (!options?.domWindowFactory) {
             throw new Error(
@@ -176,20 +178,17 @@ class OptimizedDOMPurify {
         if (this.enableCache && !config && this.cache) {
             // Serialize Node to string for consistent cache key
             const cacheKey = typeof dirty === 'string' ? dirty : dirty.toString()
-            if (this.cache.has(cacheKey)) {
-                return this.cache.get(cacheKey)
+            const cached = this.cache.get(cacheKey)
+            if (cached) {
+                return cached
             }
         }
 
         const cleanHtml = this.purify?.sanitize(dirty, config)
 
-        if (this.enableCache && !config && this.cache) {
+        if (this.enableCache && !config && this.cache && cleanHtml) {
             const cacheKey = typeof dirty === 'string' ? dirty : dirty.toString()
-            if (this.cache.size >= this.maxCacheSize) {
-                const firstKey = this.cache.keys().next().value
-                firstKey && this.cache.delete(firstKey)
-            }
-            cleanHtml && this.cache.set(cacheKey, cleanHtml)
+            this.cache.set(cacheKey, cleanHtml)
         }
 
         this.callCount++
