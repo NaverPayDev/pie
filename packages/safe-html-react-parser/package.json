@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/safe-html-react-parser",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A secure wrapper for html-react-parser with isomorphic-dompurify that automatically sanitizes HTML before parsing.",
     "repository": {
         "type": "git",
