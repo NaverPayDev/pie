@@ -7,6 +7,9 @@ import type {RenderTask} from 'pdfjs-dist'
 
 export const PageCanvas = memo(function PageCanvas() {
     const pageRenderTask = useRef<RenderTask>()
+
+    const renderingId = useRef(0)
+
     const {page, viewport: renderViewport, scale} = usePdfPageContext()
 
     const drawCanvas = useCallback(
@@ -23,6 +26,9 @@ export const PageCanvas = memo(function PageCanvas() {
 
                 pageRenderTask.current?.cancel()
 
+                // Generate new rendering ID (for tracking the last request)
+                const currentRenderingId = ++renderingId.current
+
                 const canvasViewport = page.getViewport({scale: scale * getPixelRatio()})
 
                 canvas.width = canvasViewport.width
@@ -32,6 +38,15 @@ export const PageCanvas = memo(function PageCanvas() {
                 canvas.style.height = `${Math.floor(renderViewport.height)}px`
 
                 pageRenderTask.current = page.render({canvasContext, viewport: canvasViewport})
+
+                pageRenderTask.current.promise.catch((error) => {
+                    // Ignore errors if they are not from the latest rendering
+                    if (currentRenderingId !== renderingId.current) {
+                        return
+                    }
+
+                    throw error
+                })
             })
         },
         [page, renderViewport.height, renderViewport.width, scale],
