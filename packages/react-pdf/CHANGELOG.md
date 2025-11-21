@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.1.1
+
+### Patch Changes
+
+-   f64ab4f: pdfjs-dist의 버전을 최신화합니다
+
+    PR: [pdfjs-dist의 버전을 최신화합니다](https://github.com/NaverPayDev/pie/pull/191)
+
 ## 1.1.0
 
 ### Minor Changes
