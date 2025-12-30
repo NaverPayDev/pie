@@ -9,7 +9,7 @@
     "bugs": {
         "url": "https://github.com/NaverPayDev/pie/issues"
     },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/utils/",
+    "homepage": "https://naverpaydev.github.io/pie/docs/@naverpay/utils/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",

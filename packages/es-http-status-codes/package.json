@@ -8,7 +8,7 @@
     "bugs": {
         "url": "https://github.com/NaverPayDev/pie/issues"
     },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/es-http-status-codes/",
+    "homepage": "https://naverpaydev.github.io/pie/docs/@naverpay/es-http-status-codes/",
     "sideEffects": false,
     "description": "A lightweight, tree-shakable utility for HTTP status codes and reason phrases in TypeScript/JavaScript. Auto-generated and ESM-compatible.",
     "keywords": [
