@@ -34,7 +34,6 @@
 pie 는 아래와 같은 패키지를 제공하고 있습니다.
 
 - [@naverpay/react-pdf](https://github.com/NaverPayDev/pie/tree/main/packages/react-pdf) : 한글에 적합한 PDF 뷰어를 제공합니다.
-- [@naverpay/rollup](https://github.com/NaverPayDev/pie/tree/main/packages/rollup) : 쉽게 패키지 번들러를 생성할 수 있습니다.
 
 ## 버전 릴리즈
 
