@@ -9,7 +9,7 @@
     "bugs": {
         "url": "https://github.com/NaverPayDev/pie/issues"
     },
-    "homepage": "https://naverpaydev.github.io/pie/docs/",
+    "homepage": "https://naverpaydev.github.io/pie/",
     "description": "common packages of naver financial fe",
     "version": "0.0.0",
     "scripts": {

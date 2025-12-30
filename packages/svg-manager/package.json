@@ -8,7 +8,7 @@
     "bugs": {
         "url": "https://github.com/NaverPayDev/pie/issues"
     },
-    "homepage": "https://naverpaydev.github.io/pie/docs/docs/@naverpay/svg-manager/",
+    "homepage": "https://naverpaydev.github.io/pie/docs/@naverpay/svg-manager/",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
     "types": "./dist/cjs/index.d.ts",
