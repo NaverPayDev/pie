@@ -76,6 +76,8 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 if (children.length > 0 && children?.[0]) {
                     const firstChildren = children[0] as HTMLElement
                     firstChildren.style.position = 'absolute'
+                    firstChildren.style.width = viewport.width + 'px'
+                    firstChildren.style.height = viewport.height + 'px'
 
                     const aTags = firstChildren.getElementsByTagName('a') as unknown as HTMLAnchorElement[]
 
@@ -86,6 +88,7 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                             elem.style.left = '0'
                             elem.style.width = '100%'
                             elem.style.height = '100%'
+                            elem.style.cursor = 'pointer'
                         }
                     }
                 }
