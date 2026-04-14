@@ -42,8 +42,7 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 /**
                  * rerender 전에 해당 layer를 초기화합니다.
                  */
-                const children = element.children
-                Array.from(children).map((el) => el.remove())
+                Array.from(element.children).forEach((el) => el.remove())
 
                 const viewport = page.getViewport({scale}).clone({dontFlip: true})
 
@@ -73,23 +72,22 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                     // Do nothing
                 })
 
-                if (children.length > 0 && children?.[0]) {
-                    const firstChildren = children[0] as HTMLElement
-                    firstChildren.style.position = 'absolute'
-                    firstChildren.style.width = Math.floor(viewport.width) + 'px'
-                    firstChildren.style.height = Math.floor(viewport.height) + 'px'
+                // element 크기 설정: SCSS에서 width: 100% / height: 100%는 부모 크기 기준
+                // 실제 픽셀 크기를 명시해야 a 태그 크기가 결정됨
+                // annotation layer 컨테이너의 크기를 viewport에 맞춰 설정하여 내부의 모든 a 태그가 올바른 클릭 영역을 가지도록 함
+                element.style.width = Math.floor(viewport.width) + 'px'
+                element.style.height = Math.floor(viewport.height) + 'px'
 
-                    const aTags = firstChildren.getElementsByTagName('a') as unknown as HTMLAnchorElement[]
+                const aTags = Array.from(element.getElementsByTagName('a'))
 
-                    if (aTags.length > 0) {
-                        for (const elem of aTags) {
-                            elem.style.position = 'absolute'
-                            elem.style.top = '0'
-                            elem.style.left = '0'
-                            elem.style.width = '100%'
-                            elem.style.height = '100%'
-                            elem.style.cursor = 'pointer'
-                        }
+                if (aTags.length > 0) {
+                    for (const elem of aTags as HTMLAnchorElement[]) {
+                        elem.style.position = 'absolute'
+                        elem.style.top = '0'
+                        elem.style.left = '0'
+                        elem.style.width = '100%'
+                        elem.style.height = '100%'
+                        elem.style.cursor = 'pointer'
                     }
                 }
             })
