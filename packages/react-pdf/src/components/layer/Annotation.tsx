@@ -69,16 +69,10 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 }
 
                 await new PdfAnnotationLayer(annotationLayerParameters).render(parameters).catch(() => {
-                    // Do nothing
+                    // PDF annotation rendering failed - silently ignore for now
                 })
 
-                const aTags = Array.from(element.getElementsByTagName('a'))
-
-                if (aTags.length > 0) {
-                    for (const elem of aTags as HTMLAnchorElement[]) {
-                        elem.style.cursor = 'pointer'
-                    }
-                }
+                // cursor: pointer는 SCSS에서 처리됨
             })
         },
         [annotations, pdfLinkService, page, scale],
