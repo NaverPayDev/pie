@@ -14,9 +14,12 @@
  */
 
 .annotationLayer {
-    section {
-        position: absolute;
-    }
+    position: relative;
+}
+
+.annotationLayer section {
+    position: absolute;
+}
 
     .linkAnnotation > a,
     .buttonWidgetAnnotation.pushButton > a {

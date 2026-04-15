@@ -72,24 +72,10 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                     // Do nothing
                 })
 
-                // element 크기 설정: SCSS에서 width: 100% / height: 100%는 부모 크기 기준
-                // 실제 픽셀 크기를 명시해야 a 태그 크기가 결정됨
-                // annotation layer 컨테이너의 크기를 viewport에 맞춰 설정하여 내부의 모든 a 태그가 올바른 클릭 영역을 가지도록 함
-                element.style.position = 'absolute'
-                element.style.top = '0'
-                element.style.left = '0'
-                element.style.width = Math.floor(viewport.width) + 'px'
-                element.style.height = Math.floor(viewport.height) + 'px'
-
                 const aTags = Array.from(element.getElementsByTagName('a'))
 
                 if (aTags.length > 0) {
                     for (const elem of aTags as HTMLAnchorElement[]) {
-                        elem.style.position = 'absolute'
-                        elem.style.top = '0'
-                        elem.style.left = '0'
-                        elem.style.width = '100%'
-                        elem.style.height = '100%'
                         elem.style.cursor = 'pointer'
                     }
                 }
@@ -102,5 +88,14 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
         return null
     }
 
-    return <div ref={drawAnnotation} className={cx('annotationLayer')} />
+    return (
+        <div
+            ref={drawAnnotation}
+            className={cx('annotationLayer')}
+            style={{
+                width: page ? `${Math.floor(page.getViewport({scale}).width)}px` : '100%',
+                height: page ? `${Math.floor(page.getViewport({scale}).height)}px` : '100%',
+            }}
+        />
+    )
 })
