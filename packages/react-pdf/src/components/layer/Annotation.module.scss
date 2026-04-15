@@ -18,34 +18,35 @@
         position: absolute;
     }
 
-    .linkAnnotation > a,
-    .buttonWidgetAnnotation.pushButton > a {
+    :global(.linkAnnotation) > a,
+    :global(.buttonWidgetAnnotation.pushButton) > a {
         position: absolute;
         font-size: 1em;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        cursor: pointer;
     }
 
-    .linkAnnotation > a,
-    .buttonWidgetAnnotation.pushButton > a {
+    :global(.linkAnnotation) > a,
+    :global(.buttonWidgetAnnotation.pushButton) > a {
         background: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7') 0 0 repeat;
     }
 
-    .linkAnnotation > a:hover,
-    .buttonWidgetAnnotation.pushButton > a:hover {
+    :global(.linkAnnotation) > a:hover,
+    :global(.buttonWidgetAnnotation.pushButton) > a:hover {
         opacity: 0.2;
         background: #ff0;
         box-shadow: 0px 2px 10px #ff0;
     }
 
-    .textAnnotation img {
+    :global(.textAnnotation) img {
         position: absolute;
         cursor: pointer;
     }
 
-    .textWidgetAnnotation {
+    :global(.textWidgetAnnotation) {
         input,
         textarea {
             background-color: rgba(0, 54, 255, 0.13);
@@ -60,7 +61,7 @@
         }
     }
 
-    .choiceWidgetAnnotation select {
+    :global(.choiceWidgetAnnotation) select {
         background-color: rgba(0, 54, 255, 0.13);
         border: 1px solid transparent;
         box-sizing: border-box;
@@ -72,30 +73,28 @@
         width: 100%;
     }
 
-    .buttonWidgetAnnotation {
-        &.checkBox input,
-        &.radioButton input {
-            background-color: rgba(0, 54, 255, 0.13);
-            border: 1px solid transparent;
-            box-sizing: border-box;
-            font-size: 9px;
-            height: 100%;
-            margin: 0;
-            padding: 0 3px;
-            vertical-align: top;
-            width: 100%;
-        }
+    :global(.buttonWidgetAnnotation.checkBox) input,
+    :global(.buttonWidgetAnnotation.radioButton) input {
+        background-color: rgba(0, 54, 255, 0.13);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        font-size: 9px;
+        height: 100%;
+        margin: 0;
+        padding: 0 3px;
+        vertical-align: top;
+        width: 100%;
     }
 
-    .choiceWidgetAnnotation select option {
+    :global(.choiceWidgetAnnotation) select option {
         padding: 0;
     }
 
-    .buttonWidgetAnnotation.radioButton input {
+    :global(.buttonWidgetAnnotation.radioButton) input {
         border-radius: 50%;
     }
 
-    .textWidgetAnnotation {
+    :global(.textWidgetAnnotation) {
         textarea {
             font: message-box;
             font-size: 9px;
@@ -110,40 +109,36 @@
         }
     }
 
-    .choiceWidgetAnnotation select[disabled] {
+    :global(.choiceWidgetAnnotation) select[disabled] {
         background: none;
         border: 1px solid transparent;
         cursor: not-allowed;
     }
 
-    .buttonWidgetAnnotation {
-        &.checkBox input[disabled],
-        &.radioButton input[disabled] {
-            background: none;
-            border: 1px solid transparent;
-            cursor: not-allowed;
-        }
+    :global(.buttonWidgetAnnotation.checkBox) input[disabled],
+    :global(.buttonWidgetAnnotation.radioButton) input[disabled] {
+        background: none;
+        border: 1px solid transparent;
+        cursor: not-allowed;
     }
 
-    .textWidgetAnnotation {
+    :global(.textWidgetAnnotation) {
         input:hover,
         textarea:hover {
             border: 1px solid #000;
         }
     }
 
-    .choiceWidgetAnnotation select:hover {
+    :global(.choiceWidgetAnnotation) select:hover {
         border: 1px solid #000;
     }
 
-    .buttonWidgetAnnotation {
-        &.checkBox input:hover,
-        &.radioButton input:hover {
-            border: 1px solid #000;
-        }
+    :global(.buttonWidgetAnnotation.checkBox) input:hover,
+    :global(.buttonWidgetAnnotation.radioButton) input:hover {
+        border: 1px solid #000;
     }
 
-    .textWidgetAnnotation {
+    :global(.textWidgetAnnotation) {
         input:focus,
         textarea:focus {
             background: none;
@@ -151,56 +146,54 @@
         }
     }
 
-    .choiceWidgetAnnotation select:focus {
+    :global(.choiceWidgetAnnotation) select:focus {
         background: none;
         border: 1px solid transparent;
     }
 
-    .buttonWidgetAnnotation {
-        &.checkBox input:checked {
-            &:before,
-            &:after {
-                background-color: #000;
-                content: '';
-                display: block;
-                position: absolute;
-            }
-        }
-
-        &.radioButton input:checked:before {
+    :global(.buttonWidgetAnnotation.checkBox) input:checked {
+        &:before,
+        &:after {
             background-color: #000;
             content: '';
             display: block;
             position: absolute;
         }
+    }
 
-        &.checkBox input:checked {
-            &:before,
-            &:after {
-                height: 80%;
-                left: 45%;
-                width: 1px;
-            }
+    :global(.buttonWidgetAnnotation.radioButton) input:checked:before {
+        background-color: #000;
+        content: '';
+        display: block;
+        position: absolute;
+    }
 
-            &:before {
-                transform: rotate(45deg);
-            }
-
-            &:after {
-                transform: rotate(-45deg);
-            }
+    :global(.buttonWidgetAnnotation.checkBox) input:checked {
+        &:before,
+        &:after {
+            height: 80%;
+            left: 45%;
+            width: 1px;
         }
 
-        &.radioButton input:checked:before {
-            border-radius: 50%;
-            height: 50%;
-            left: 30%;
-            top: 20%;
-            width: 50%;
+        &:before {
+            transform: rotate(45deg);
+        }
+
+        &:after {
+            transform: rotate(-45deg);
         }
     }
 
-    .textWidgetAnnotation input.comb {
+    :global(.buttonWidgetAnnotation.radioButton) input:checked:before {
+        border-radius: 50%;
+        height: 50%;
+        left: 30%;
+        top: 20%;
+        width: 50%;
+    }
+
+    :global(.textWidgetAnnotation) input:global(.comb) {
         font-family: monospace;
         padding-left: 2px;
         padding-right: 0;
@@ -216,23 +209,21 @@
         }
     }
 
-    .buttonWidgetAnnotation {
-        &.checkBox input,
-        &.radioButton input {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            -ms-appearance: none;
-            appearance: none;
-            padding: 0;
-        }
+    :global(.buttonWidgetAnnotation.checkBox) input,
+    :global(.buttonWidgetAnnotation.radioButton) input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        padding: 0;
     }
 
-    .popupWrapper {
+    :global(.popupWrapper) {
         position: absolute;
         width: 20em;
     }
 
-    .popup {
+    :global(.popup) {
         position: absolute;
         z-index: 200;
         max-width: 20em;
@@ -258,17 +249,17 @@
         }
     }
 
-    .highlightAnnotation,
-    .underlineAnnotation,
-    .squigglyAnnotation,
-    .strikeoutAnnotation,
-    .lineAnnotation svg line,
-    .squareAnnotation svg rect,
-    .circleAnnotation svg ellipse,
-    .polylineAnnotation svg polyline,
-    .polygonAnnotation svg polygon,
-    .stampAnnotation,
-    .fileAttachmentAnnotation {
+    :global(.highlightAnnotation),
+    :global(.underlineAnnotation),
+    :global(.squigglyAnnotation),
+    :global(.strikeoutAnnotation),
+    :global(.lineAnnotation) svg line,
+    :global(.squareAnnotation) svg rect,
+    :global(.circleAnnotation) svg ellipse,
+    :global(.polylineAnnotation) svg polyline,
+    :global(.polygonAnnotation) svg polygon,
+    :global(.stampAnnotation),
+    :global(.fileAttachmentAnnotation) {
         cursor: pointer;
     }
 }

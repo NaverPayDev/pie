@@ -42,10 +42,13 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 /**
                  * rerender 전에 해당 layer를 초기화합니다.
                  */
-                const children = element.children
-                Array.from(children).map((el) => el.remove())
+                Array.from(element.children).forEach((el) => el.remove())
 
                 const viewport = page.getViewport({scale}).clone({dontFlip: true})
+
+                // 부모 요소에 viewport 크기를 설정하여 모든 annotation의 a 태그가 올바른 클릭 영역을 가지도록 함
+                element.style.width = `${Math.floor(viewport.width)}px`
+                element.style.height = `${Math.floor(viewport.height)}px`
 
                 const annotationLayerParameters = {
                     // useless parameters
@@ -70,25 +73,10 @@ export const AnnotationLayer = memo(function AnnotationLayer() {
                 }
 
                 await new PdfAnnotationLayer(annotationLayerParameters).render(parameters).catch(() => {
-                    // Do nothing
+                    // PDF annotation rendering failed - silently ignore for now
                 })
 
-                if (children.length > 0 && children?.[0]) {
-                    const firstChildren = children[0] as HTMLElement
-                    firstChildren.style.position = 'absolute'
-
-                    const aTags = firstChildren.getElementsByTagName('a') as unknown as HTMLAnchorElement[]
-
-                    if (aTags.length > 0) {
-                        for (const elem of aTags) {
-                            elem.style.position = 'absolute'
-                            elem.style.top = '0'
-                            elem.style.left = '0'
-                            elem.style.width = '100%'
-                            elem.style.height = '100%'
-                        }
-                    }
-                }
+                // cursor: pointer는 SCSS에서 처리됨
             })
         },
         [annotations, pdfLinkService, page, scale],
