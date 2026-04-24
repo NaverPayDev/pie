@@ -1,5 +1,13 @@
 # @naverpay/react-pdf
 
+## 1.1.2
+
+### Patch Changes
+
+-   fa2c74e: [react-pdf] a 태그 관련 수정
+
+    PR: [[react-pdf] a 태그 관련 수정](https://github.com/NaverPayDev/pie/pull/219)
+
 ## 1.1.1
 
 ### Patch Changes
