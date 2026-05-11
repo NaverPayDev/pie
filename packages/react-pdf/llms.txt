@@ -1,0 +1,53 @@
+# @naverpay/react-pdf
+
+> React PDF viewer component built on pdfjs-dist, optimized for Korean documents. Supports lazy page loading, text selection, annotation layers, and clickable word callbacks.
+
+## Installation
+
+```bash
+npm install @naverpay/react-pdf
+```
+
+Import the stylesheet separately:
+
+```ts
+import '@naverpay/react-pdf/style.css'
+```
+
+## Usage
+
+```tsx
+import { PdfViewer } from '@naverpay/react-pdf'
+import '@naverpay/react-pdf/style.css'
+
+<PdfViewer
+  pdfUrl="https://example.com/document.pdf"
+  pdfWorkerSource="/pdf.worker.min.js"
+  onLoadPDFRender={() => console.log('loaded')}
+  onErrorPDFRender={(e) => console.error(e)}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `pdfUrl` | `string` | required | URL of the PDF file |
+| `pdfWorkerSource` | `string` | — | Path to `pdf.worker.js` |
+| `cMapUrl` | `string` | — | URL for cmap files (Korean font support for older PDFs) |
+| `cMapCompressed` | `boolean` | — | Whether cmap files are compressed |
+| `withCredentials` | `boolean` | — | Send cookies with the PDF request |
+| `lazyLoading` | `boolean` | `true` | Defer rendering of off-screen pages via IntersectionObserver |
+| `externalLinkTarget` | `string` | `'_blank'` | Target for annotation links |
+| `onClickWords` | `{ target: string \| RegExp, callback: () => void }[]` | — | Callbacks for clicking specific words in the text layer |
+| `header` | `ReactNode` | — | Rendered above the PDF pages |
+| `footer` | `ReactNode` | — | Rendered below the PDF pages |
+| `style` | `CSSProperties` | `{}` | Style for the outermost container `<div>` |
+| `onLoadPDFRender` | `() => void` | — | Called after PDF loads successfully |
+| `onErrorPDFRender` | `(e: unknown) => void` | — | Called if PDF loading fails |
+
+## Notes
+
+- The consumer is responsible for hosting `pdf.worker.js` and providing its path via `pdfWorkerSource`.
+- `tokenize` is automatically enabled when `onClickWords` is provided.
+- PDF fingerprints are compared to avoid re-rendering when the same URL reloads.

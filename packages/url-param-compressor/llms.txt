@@ -1,0 +1,47 @@
+# @naverpay/url-param-compressor
+
+> Compresses URL query parameters using deflate (fflate) + URL-safe base64 encoding. Works in both Node.js and browser environments.
+
+## Installation
+
+```bash
+npm install @naverpay/url-param-compressor
+```
+
+## Usage
+
+```ts
+import { URLParamCompressor } from '@naverpay/url-param-compressor'
+
+const compressor = new URLParamCompressor({ cacheCapacity: 100, debug: false })
+
+// Compress: Record<string, string> → string
+const { result, isCompressed } = compressor.compress({ userId: '123', tab: 'history' })
+
+// Decompress: string → Record<string, string> | null
+const params = compressor.decompress(result)
+
+// Get single key (uses LRU cache to avoid re-decompressing)
+const userId = compressor.get(result, 'userId')
+```
+
+## Constructor Options
+
+```ts
+new URLParamCompressor({
+  cacheCapacity?: number      // LRU cache size for decompress results (default: 100)
+  debug?: boolean             // logs compression ratio or skip reason to console
+  deflateOptions?: {
+    level?: 0-9              // compression level (default: 6)
+    mem?: number             // memory level
+    dictionary?: Uint8Array  // preset dictionary for domain-specific compression
+  }
+})
+```
+
+## Behavior
+
+- `compress` always returns a result. If the compressed form is larger than the original, it returns the raw `URLSearchParams` string and sets `isCompressed: false`.
+- `decompress` returns `null` on failure (malformed input) instead of throwing.
+- URL-safe base64: replaces `+` with `-`, `/` with `_`, strips trailing `=`.
+- In Node.js, uses `Buffer`; in browser, uses `btoa`/`atob`.

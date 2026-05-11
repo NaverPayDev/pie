@@ -34,7 +34,8 @@
         "compressor"
     ],
     "files": [
-        "dist"
+        "dist",
+        "llms.txt"
     ],
     "scripts": {
         "clean": "rm -rf dist",

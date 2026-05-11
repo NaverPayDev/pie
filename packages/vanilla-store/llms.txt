@@ -1,0 +1,67 @@
+# @naverpay/vanilla-store
+
+> Framework-agnostic state management library with optional React bindings, SSR safety, and localStorage/sessionStorage persistence.
+
+## Installation
+
+```bash
+npm install @naverpay/vanilla-store
+```
+
+## Core Concepts
+
+A store is created with `createVanillaStore`. It holds state, supports subscriptions, and integrates with React via `useSyncExternalStore`. On the server (`typeof window === 'undefined'`), `set` is a no-op that logs an error — the store is read-only.
+
+## API
+
+### Store
+
+```ts
+const store = createVanillaStore(initialState, equalityFn?, options?)
+
+store.get()           // returns current state
+store.set(next)       // sets state; accepts value or updater fn (prev) => next
+store.subscribe(cb)   // subscribes to changes; returns unsubscribe fn
+```
+
+Equality defaults to shallow comparison. Pass a custom `equalityFn` as the second argument.
+
+### React Hooks
+
+```ts
+// Full access — returns [value, set]
+const [value, set] = useStore(store, initialValue?)
+
+// Read-only
+const value = useGetStore(store, initialValue?)
+
+// Write-only
+const set = useSetStore(store, initialValue?)
+
+// Selector — returns [selectedValue, set]
+const [selected, set] = useStoreSelector(store, selector, { initialStoreValue?, isEqual? })
+```
+
+### Derived Store (read-only)
+
+```ts
+const derived = createVanillaSelect(store, (state) => state.someField)
+// Use with the same hooks; set is typed as `never`
+```
+
+### Persistence
+
+```ts
+import { LocalStoragePersist, SessionStoragePersist } from '@naverpay/vanilla-store'
+
+const store = createVanillaStore(initialState, undefined, {
+  persist: new LocalStoragePersist('my-key', initialState, (v): v is MyType => true),
+})
+```
+
+`Persistent` requires a `typeAssertion` guard to validate deserialized values before applying them.
+
+## Notes
+
+- Calling `set` on the server logs a console error and returns `initialState` — it does not throw.
+- `useStoreSelector` uses a ref-based comparison to skip re-renders when the selected value is unchanged.

@@ -38,7 +38,8 @@
         "build": "npm run clean && vite build"
     },
     "files": [
-        "dist"
+        "dist",
+        "llms.txt"
     ],
     "devDependencies": {
         "@types/react": "catalog:",
