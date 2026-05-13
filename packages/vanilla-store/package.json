@@ -52,6 +52,7 @@
         "react": "catalog:"
     },
     "files": [
-        "dist"
+        "dist",
+        "llms.txt"
     ]
 }

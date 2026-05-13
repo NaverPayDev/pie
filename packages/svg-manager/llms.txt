@@ -1,0 +1,54 @@
+# @naverpay/svg-manager
+
+> React component that makes SVG `id` attributes unique across multiple instances of the same inline SVG, preventing ID collisions in the DOM.
+
+## Installation
+
+```bash
+npm install @naverpay/svg-manager
+```
+
+## Problem
+
+When the same SVG component is rendered multiple times, `id` attributes (used for gradients, masks, clip paths, etc.) collide in the DOM because IDs must be globally unique. `SvgUniqueID` rewrites all `id`, `url(#...)`, and `xlinkHref="#..."` references to scoped unique values per instance.
+
+## Usage
+
+```tsx
+import { SvgUniqueID } from '@naverpay/svg-manager'
+
+function MyIcon() {
+  return (
+    <SvgUniqueID>
+      <svg>
+        <defs>
+          <linearGradient id="gradient">...</linearGradient>
+        </defs>
+        <rect fill="url(#gradient)" />
+      </svg>
+    </SvgUniqueID>
+  )
+}
+
+// Render multiple times — IDs are automatically scoped per instance
+<MyIcon />
+<MyIcon />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `prefixId` | `string` | `'__SVG_ID__'` | Prefix for generated IDs |
+| `id` | `string` | `generateRandomString()` | Unique identifier for this instance (auto-generated) |
+| `children` | `ReactNode` | required | SVG content to scope |
+
+## Exports
+
+```ts
+import { SvgUniqueID, toSingleton } from '@naverpay/svg-manager'
+import type { SVGStyleProps } from '@naverpay/svg-manager'
+```
+
+- `toSingleton(factory)` — wraps a factory function so it returns the same instance on every call
+- `SVGStyleProps` — TypeScript type for SVG style properties

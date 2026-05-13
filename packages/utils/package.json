@@ -44,6 +44,7 @@
         "vitest": "^3.1.1"
     },
     "files": [
-        "dist"
+        "dist",
+        "llms.txt"
     ]
 }

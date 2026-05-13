@@ -1,0 +1,62 @@
+# @naverpay/utils
+
+> JavaScript/TypeScript utility library for Naver Financial frontend teams. Provides formatting, masking, Korean language helpers, validation, async utilities, and more.
+
+## Installation
+
+```bash
+npm install @naverpay/utils
+```
+
+## API
+
+### Number / String Formatting
+
+- `formatNumberWithComma(value)` — adds thousand separators (e.g. `1234567` → `"1,234,567"`)
+- `formatTenThousandUnitsAmount(value)` — Korean 만(萬) unit formatting
+- `createNumberFormatter(options)` — factory for locale-aware Intl.NumberFormat wrappers
+- `formatKoreanPhoneNumber(digits)` — formats raw digits to `010-XXXX-XXXX`
+- `formatBusinessRegistrationNumber(digits)` — formats to `XXX-XX-XXXXX`
+
+### Masking
+
+- `maskString(str, options)` — generic masking with configurable keep/mask ranges
+- `maskEmail(email)` — masks the local part of an email
+- `maskPhoneNumber(phone)` — masks middle digits of a phone number
+- `maskAccountNumber(account)` — masks middle digits of a bank account number
+- `maskCardNumber(card)` — masks middle digits of a card number
+- `maskPassportNumber(passport)` — masks middle characters of a passport number
+
+### Korean Language
+
+- `get조사(word, 은는 | 이가 | 을를 | 으로로 | 와과)` — returns correct Korean postposition for a word
+- `with조사(word, postposition)` — returns word + correct postposition
+- `getKoreanWithSuffix(word, suffix)` — appends Korean suffix based on final consonant
+- `마지막_문자_받침_여부(char)` — checks if last character has a final consonant (받침)
+- `한글_여부(char)` — checks if a character is Korean (Hangul)
+- `disassemble문자(str)` — decomposes Korean characters into individual jamo
+
+### Validation
+
+- `isValidKoreanPhoneNumber(phone)` — validates Korean phone number format
+- `isValidBusinessRegistrationNumber(brn)` — validates Korean business registration number checksum
+
+### Async / Performance
+
+- `debounce(fn, wait)` — debounces a function
+- `throttle(fn, wait)` — throttles a function
+- `sleep(ms)` — returns a Promise that resolves after `ms` milliseconds
+- `DeferredPromise` — a Promise with externally accessible `resolve` and `reject`
+
+### Misc
+
+- `isEmpty(value)` — returns `true` for `null`, `undefined`, `""`, `[]`, `{}`
+- `deepMerge(target, ...sources)` — deep merges plain objects
+- `createKeyValuePairObject(keys, values)` — creates a typed key-value pair object
+- `createSeededRandom(seed)` — deterministic pseudo-random number generator (mulberry32)
+- `getSecureMathRandom()` — `crypto.getRandomValues`-based replacement for `Math.random`
+- `generateRandomString(length?)` — generates a random alphanumeric string
+- `getRandomNumber(min, max)` — returns a random integer in [min, max]
+- `encodeHTMLEntity(str)` — encodes `<`, `>`, `&`, `"`, `'` to HTML entities
+- `replaceNoBreakSpace(str)` — replaces non-breaking spaces (`\u00A0`) with regular spaces
+- `backOrClose()` — calls `history.back()` or `window.close()` depending on history length

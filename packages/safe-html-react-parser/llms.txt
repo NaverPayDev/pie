@@ -1,0 +1,48 @@
+# @naverpay/safe-html-react-parser
+
+> A secure wrapper that sanitizes HTML with DOMPurify (isomorphic-dompurify) before parsing it into React elements with html-react-parser. Works in SSR and browser environments.
+
+## Installation
+
+```bash
+npm install @naverpay/safe-html-react-parser
+```
+
+## Usage
+
+```tsx
+import { safeParse } from '@naverpay/safe-html-react-parser'
+
+// Basic usage — uses DEFAULT_SANITIZE_CONFIG
+const element = safeParse('<p>Hello <strong>world</strong></p>')
+
+// Custom DOMPurify config
+const element = safeParse(html, {
+  sanitizeConfig: {
+    ALLOWED_TAGS: ['p', 'strong', 'em', 'a'],
+    ALLOWED_ATTR: ['href'],
+  },
+})
+
+// Preserve custom tags (e.g. <highlight>) through sanitization
+const element = safeParse(html, {
+  preserveCustomTags: ['highlight'],
+})
+
+// Pass html-react-parser options (e.g. replace)
+const element = safeParse(html, {
+  replace: (domNode) => { /* ... */ },
+})
+```
+
+## Default Allowed Tags
+
+`p br strong em b i u span div h1 h2 h3 h4 h5 h6 h ul ol li dl dt dd a img`
+
+`KEEP_CONTENT: true` — when a disallowed tag is stripped, its text content is preserved.
+
+## Notes
+
+- Returns `null` if the sanitized result is empty.
+- `preserveCustomTags` works by temporarily converting unknown tags to `<span data-custom-tag="...">` before sanitization, then restoring them. Only works for simple wrapping tags without attributes.
+- The internal CJS/ESM resolution of `html-react-parser` is handled automatically — do not re-import `parse` directly.

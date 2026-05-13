@@ -1,0 +1,41 @@
+# @naverpay/es-http-status-codes
+
+> Lightweight, tree-shakable HTTP status code constants and reason phrases for TypeScript/JavaScript. Auto-generated from a canonical data source, ESM-compatible.
+
+## Installation
+
+```bash
+npm install @naverpay/es-http-status-codes
+```
+
+## Usage
+
+```ts
+import { HttpStatusCodes, ReasonPhrases, HttpStatusCodeKeys } from '@naverpay/es-http-status-codes'
+
+// Status code constants
+HttpStatusCodes.OK           // 200
+HttpStatusCodes.NOT_FOUND    // 404
+HttpStatusCodes.INTERNAL_SERVER_ERROR  // 500
+
+// Reason phrases by numeric code
+ReasonPhrases[200]  // "OK"
+ReasonPhrases[404]  // "Not Found"
+ReasonPhrases[500]  // "Internal Server Error"
+
+// All constant name strings
+HttpStatusCodeKeys  // ['CONTINUE', 'SWITCHING_PROTOCOLS', 'OK', ...]
+```
+
+## Types
+
+```ts
+type HttpStatusCode    // union of all numeric status codes: 100 | 101 | 200 | 201 | ...
+type HttpStatusCodeKey // union of all constant name strings: 'OK' | 'NOT_FOUND' | ...
+```
+
+## Notes
+
+- `HttpStatusCodes` is a `const` object — values are inferred as literal number types, enabling exhaustive checks.
+- `sideEffects: false` — individual constants are tree-shakable in bundlers that support it.
+- The source files (`src/status-code.ts`, `src/reason-phrase.ts`) are auto-generated from `data.json`. Do not edit them directly.
