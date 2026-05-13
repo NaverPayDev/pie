@@ -1,5 +1,13 @@
 # @naverpay/url-param-compressor
 
+## 0.0.3
+
+### Patch Changes
+
+-   ab4c2d8: llms.txt 추가
+
+    -   npm 배포 결과물에 `llms.txt` 포함 (`files` 배열 업데이트)
+
 ## 0.0.2
 
 ### Patch Changes
