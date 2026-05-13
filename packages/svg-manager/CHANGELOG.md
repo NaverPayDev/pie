@@ -1,5 +1,13 @@
 # @naverpay/svg-manager
 
+## 1.0.1
+
+### Patch Changes
+
+-   ab4c2d8: llms.txt 추가
+
+    -   npm 배포 결과물에 `llms.txt` 포함 (`files` 배열 업데이트)
+
 ## 1.0.0
 
 ### Major Changes
