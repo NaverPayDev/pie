@@ -10,8 +10,8 @@
 
 ### 시스템 요구 사항
 
-- node: node@18.12.0 버전. `node -v` 명령어로 확인하실 수 있습니다.
-- pnpm: pnpm@8.6.6 버전. `pnpm -v` 명령어로 확인하실 수 있습니다.
+- node: `.nvmrc` 기준 node@22.11.0 버전. `node -v` 명령어로 확인하실 수 있습니다.
+- pnpm: `package.json`의 `packageManager` 기준 pnpm@10.5.2 버전. `pnpm -v` 명령어로 확인하실 수 있습니다.
 
 ### 개발
 
