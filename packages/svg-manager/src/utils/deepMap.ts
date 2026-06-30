@@ -7,14 +7,7 @@ function hasChildren(element: ReactNode): element is ReactElement<{children: Rea
 }
 
 function hasComplexChildren(element: ReactNode): element is ReactElement<{children: ReactNode | ReactNode[]}> {
-    return (
-        isValidElement(element) &&
-        hasChildren(element) &&
-        Children.toArray(element.props.children).reduce(
-            (response: boolean, child: ReactNode): boolean => response || isValidElement(child),
-            false,
-        )
-    )
+    return hasChildren(element) && Children.toArray(element.props.children).some((child) => isValidElement(child))
 }
 
 function deepMap(
@@ -22,7 +15,7 @@ function deepMap(
     deepMapFn: (child: ReactNode, index?: number, mapChildren?: ReactNode[]) => ReactNode,
 ): ReactNode[] {
     return Children.toArray(children).map((child: ReactNode, index: number, mapChildren: ReactNode[]) => {
-        if (isValidElement(child) && hasComplexChildren(child)) {
+        if (hasComplexChildren(child)) {
             // Clone the child that has children and map them too
             return deepMapFn(
                 cloneElement(child, {
