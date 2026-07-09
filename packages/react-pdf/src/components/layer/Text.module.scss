@@ -1,12 +1,16 @@
 .text-layer {
     pointer-events: none;
+    line-height: 1;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
 .text-layer-item {
     height: 1em;
     font-family: sans-serif;
     position: absolute;
-    transform-origin: left bottom;
+    transform-origin: 0% 0%;
     white-space: pre;
     pointer-events: all;
 }

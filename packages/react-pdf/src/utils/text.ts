@@ -3,19 +3,27 @@ import type {TextItem, TextMarkedContent} from 'pdfjs-dist/types/src/display/api
 function tokenizeTextItems(texts: TextItem[]) {
     return texts.reduce((result, textItem) => {
         const {str, width, transform, ...rest} = textItem
-        const splittedStr = str.split(' ')
-        const strLength = str.length
-        const tokenizedStr = splittedStr.reduce((calculatedStr, s) => {
-            const currentStrWidth = s.trim().length === 0 ? 4.5 : Math.ceil((width / strLength) * s.length) + 5
-            const reducedStrsLength = calculatedStr.length
-            const {width: lastWidth, transform: lastTransform} =
-                reducedStrsLength === 0 ? {width: 0, transform: [...transform]} : calculatedStr[reducedStrsLength - 1]
-            const newTransform = [...lastTransform]
-            newTransform[4] += lastWidth + (reducedStrsLength === 0 ? 0 : 3.5)
-            calculatedStr.push({str: s, width: currentStrWidth, transform: newTransform, ...rest})
-            return calculatedStr
+        const words = str.split(' ')
+        const totalChars = str.length
+
+        if (totalChars === 0) {
+            return result
+        }
+
+        const charWidth = width / totalChars
+        let charOffset = 0
+
+        const tokenized = words.reduce((acc, word, wordIndex) => {
+            if (word.length > 0) {
+                const newTransform = [...transform]
+                newTransform[4] += charWidth * charOffset
+                acc.push({str: word, width: charWidth * word.length, transform: newTransform, ...rest})
+            }
+            charOffset += word.length + (wordIndex < words.length - 1 ? 1 : 0)
+            return acc
         }, [] as TextItem[])
-        return [...result, ...tokenizedStr]
+
+        return [...result, ...tokenized]
     }, [] as TextItem[])
 }
 
@@ -31,8 +39,11 @@ export function mergeTextItems(texts: (TextItem | TextMarkedContent)[], options?
         const prev = result[result.length - 1]
         // y 값을 비교하여, 같은 줄인지 확인
         if (prev.transform[5] === token.transform[5]) {
+            // item 간 gap을 포함한 전체 visual span 계산
+            const prevEndX = prev.transform[4] + prev.width
+            const gap = token.transform[4] - prevEndX
             prev.str = prev.str + token.str
-            prev.width = prev.width + token.width
+            prev.width = prev.width + Math.max(0, gap) + token.width
         } else {
             result.push(token)
         }
