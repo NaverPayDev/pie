@@ -48,6 +48,7 @@ Key props on `<PdfViewer>`:
 - `header`, `footer` — ReactNode rendered above/below the PDF pages
 - `onLoadPDFRender`, `onErrorPDFRender` — load lifecycle callbacks
 - `externalLinkTarget` — default `'_blank'`
+- `maxPageWidth` — default `568`, max page width in px (canvas width + `.document` max-width)
 
 ## Key Details
 

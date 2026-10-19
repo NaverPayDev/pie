@@ -40,6 +40,7 @@ import '@naverpay/react-pdf/style.css'
 | `lazyLoading` | `boolean` | `true` | Defer rendering of off-screen pages via IntersectionObserver |
 | `externalLinkTarget` | `string` | `'_blank'` | Target for annotation links |
 | `onClickWords` | `{ target: string \| RegExp, callback: () => void }[]` | — | Callbacks for clicking specific words in the text layer |
+| `maxPageWidth` | `number` | `568` | Maximum page width in px (applies to canvas rendering width and page container `max-width`) |
 | `header` | `ReactNode` | — | Rendered above the PDF pages |
 | `footer` | `ReactNode` | — | Rendered below the PDF pages |
 | `style` | `CSSProperties` | `{}` | Style for the outermost container `<div>` |
