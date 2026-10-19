@@ -42,7 +42,7 @@ export const Page = memo(function Page({pageNumber}: {pageNumber: number}) {
 })
 
 export const Pages = memo(function Pages({children}: {children?: ReactNode}) {
-    const {pdf, lazyLoading} = usePdfContext()
+    const {pdf, lazyLoading, maxPageWidth} = usePdfContext()
     const [pageNumbers, setPageNumbers] = useState<number[]>([])
     const [renderPages, setRenderPages] = useState<number[]>([])
 
@@ -78,7 +78,7 @@ export const Pages = memo(function Pages({children}: {children?: ReactNode}) {
                         key={pageNumber}
                         ref={lazyLoading && renderPages.length === pageNumber ? ref : null}
                         className={cx('document')}
-                        style={{position: 'relative'}}
+                        style={{position: 'relative', maxWidth: maxPageWidth}}
                         data-page-number={pageNumber}
                     >
                         <Page pageNumber={pageNumber} />

@@ -6,7 +6,7 @@ import {Pages} from './Pages'
 import styles from './PdfViewer.module.scss'
 import {PdfProvider} from '../contexts/pdf'
 import {useIsomorphicLayoutEffect} from '../hooks/useIsomorphicLayoutEffect'
-import usePdfViewerPageWidth from '../hooks/usePdfViewerPageWidth'
+import usePdfViewerPageWidth, {DEFAULT_MAX_PAGE_WIDTH} from '../hooks/usePdfViewerPageWidth'
 import {getPdfDocument} from '../utils/pdf'
 
 import type {PdfProviderContext} from '../contexts/pdf'
@@ -41,6 +41,11 @@ export type PdfViewerProps = PdfRenderProps & {
     header?: ReactNode
     footer?: ReactNode
     /**
+     * 페이지 최대 폭 (px)
+     * @default 568
+     */
+    maxPageWidth?: number
+    /**
      * pdf viewer 최상단 div style
      */
     style?: CSSProperties
@@ -57,12 +62,13 @@ export function PdfViewer({
     externalLinkTarget = '_blank',
     onLoadPDFRender,
     onErrorPDFRender,
+    maxPageWidth = DEFAULT_MAX_PAGE_WIDTH,
     style = {},
     ...options
 }: PdfViewerProps) {
     const [pdf, setPdf] = useState<PDFDocumentProxy | undefined>()
     const ref = useRef<HTMLDivElement>(null)
-    const {width, getClientWidth} = usePdfViewerPageWidth(ref)
+    const {width, getClientWidth} = usePdfViewerPageWidth(ref, maxPageWidth)
 
     const loadPdfConfig = useMemo(
         () => ({
@@ -138,6 +144,7 @@ export function PdfViewer({
         <PdfProvider
             pdf={pdf}
             width={width}
+            maxPageWidth={maxPageWidth}
             lazyLoading={lazyLoading}
             externalLinkTarget={externalLinkTarget}
             tokenize={injectedTokenize ?? (onClickWords || []).length > 0}

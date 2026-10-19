@@ -4,19 +4,22 @@ import {debounce} from '../utils/debounce'
 
 import type {RefObject} from 'react'
 
-const MAX_PAGE_WIDTH = 568
+export const DEFAULT_MAX_PAGE_WIDTH = 568
 const PADDING_WIDTH = 14
 
-const calculatedPageWidth = (windowWidth: number | undefined) => {
+const calculatedPageWidth = (windowWidth: number | undefined, maxPageWidth: number) => {
     if (!windowWidth) {
         return windowWidth
     }
     const adjustedWidth = windowWidth - PADDING_WIDTH
 
-    return Math.min(adjustedWidth, MAX_PAGE_WIDTH)
+    return Math.min(adjustedWidth, maxPageWidth)
 }
 
-const usePdfViewerPageWidth = (refElement: RefObject<HTMLDivElement>) => {
+const usePdfViewerPageWidth = (
+    refElement: RefObject<HTMLDivElement>,
+    maxPageWidth: number = DEFAULT_MAX_PAGE_WIDTH,
+) => {
     const [windowWidth, setWindowWidth] = useState<number>()
 
     const getClientWidth = debounce(() => {
@@ -34,9 +37,9 @@ const usePdfViewerPageWidth = (refElement: RefObject<HTMLDivElement>) => {
     return useMemo(
         () => ({
             getClientWidth,
-            width: calculatedPageWidth(windowWidth),
+            width: calculatedPageWidth(windowWidth, maxPageWidth),
         }),
-        [getClientWidth, windowWidth],
+        [getClientWidth, windowWidth, maxPageWidth],
     )
 }
 

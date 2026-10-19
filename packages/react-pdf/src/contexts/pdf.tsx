@@ -10,6 +10,10 @@ export interface PdfProviderContext {
      * pdf 렌더링 시 필요한 props
      */
     width?: number
+    /**
+     * 페이지 최대 폭 (px)
+     */
+    maxPageWidth?: number
     lazyLoading?: boolean
     tokenize?: boolean
     externalLinkTarget?: ExternalLinkTarget
