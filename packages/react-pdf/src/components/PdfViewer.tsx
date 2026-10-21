@@ -137,7 +137,9 @@ export function PdfViewer({
     )
 
     if (!pdf || !width) {
-        return null
+        /* 첫 렌더에서도 컨테이너 폭을 측정할 수 있도록 높이 0인 div에 ref를 연결한다.
+         * ref가 없으면 window.innerWidth로 계산되어 컨테이너보다 넓게 그려진다. */
+        return <div ref={ref} style={style} />
     }
 
     return (
