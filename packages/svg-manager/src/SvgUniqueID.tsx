@@ -1,95 +1,52 @@
-import {cloneElement} from 'react'
+'use client'
 
-import {generateRandomString, toSingleton} from './utils'
+import {cloneElement, isValidElement, useId} from 'react'
+
 import deepMap from './utils/deepMap'
+import toSafeId from './utils/toSafeId'
 
-import type {PropsWithChildren, ReactElement} from 'react'
+import type {PropsWithChildren} from 'react'
 
-const reactRecursiveChildrenMap = deepMap.bind(deepMap)
-
-const generateLocalIdMap = toSingleton(() => new Map<string, number>())
-const localIdsMap = generateLocalIdMap()
-
-const SvgUniqueID = ({
-    children,
-    prefixId = '__SVG_ID__',
-    id = generateRandomString(),
-}: PropsWithChildren<{prefixId?: string; id?: string}>) => {
-    let lastLocalId = 0
-
-    const getHookedId = (originalId?: string) => {
-        if (!originalId) {
-            return null
-        }
-        if (!localIdsMap.has(originalId)) {
-            localIdsMap.set(originalId, lastLocalId++)
-        }
-
-        const localId = localIdsMap.get(originalId)
-        return `${prefixId}${id}__${localId}__`
+// id/xlinkHref 외 모든 prop은 url(#...) 형태로 처리하며, 패턴이 안 맞으면 원본을 그대로 반환한다.
+function rewrite(key: string, value: unknown, rename: (id: string) => string): unknown {
+    if (typeof value !== 'string') {
+        return value
     }
-
-    const fixPropWithUrl = (prop: string) => {
-        if (typeof prop !== 'string') {
-            return prop
-        }
-
-        const [, originalId] = prop.match(/^url\(#(.*)\)$/) || [null, null]
-
-        if (originalId === null) {
-            return prop
-        }
-
-        const fixedId = getHookedId(originalId)
-
-        if (fixedId === null) {
-            return prop
-        }
-
-        return `url(#${fixedId})`
+    if (key === 'id') {
+        return rename(value)
     }
-
-    const getHookedXlinkHref = (prop: string) => {
-        if (typeof prop !== 'string' || !prop.startsWith('#')) {
-            return prop
-        }
-
-        const originalId = prop.replace('#', '')
-
-        const fixedId = getHookedId(originalId)
-        if (fixedId === null) {
-            return prop
-        }
-
-        return `#${fixedId}`
+    if (key === 'xlinkHref') {
+        return value.replace(/^#(.*)$/, (_, id) => `#${rename(id)}`)
     }
+    return value.replace(/^url\(#(.*)\)$/, (_, id) => `url(#${rename(id)})`)
+}
+
+interface SvgUniqueIDProps {
+    prefixId?: string
+    id?: string
+}
+
+const SvgUniqueID = ({children, prefixId = '__SVG_ID__', id}: PropsWithChildren<SvgUniqueIDProps>) => {
+    const autoId = toSafeId(useId())
+    const instanceId = id ?? autoId
+
+    // 원본 id를 인스턴스별 고유 id로 변환한다.
+    const renameId = (originalId: string) =>
+        originalId ? `${prefixId}${instanceId}__${toSafeId(originalId)}__` : originalId
 
     return (
         <>
-            {reactRecursiveChildrenMap(children, (child) => {
-                if (
-                    !child ||
-                    typeof child === 'string' ||
-                    typeof child === 'number' ||
-                    !('props' in (child as ReactElement))
-                ) {
+            {deepMap(children, (child) => {
+                if (!isValidElement(child)) {
                     return null
                 }
 
-                const ch = child as ReactElement
-
-                const fixedId = getHookedId(ch.props.id)
-
-                const fixedProps = {
-                    ...ch.props,
+                const rewrittenProps: Record<string, unknown> = {}
+                for (const [key, value] of Object.entries(child.props)) {
+                    rewrittenProps[key] = rewrite(key, value, renameId)
                 }
 
-                Object.keys(fixedProps).map((key) => (fixedProps[key] = fixPropWithUrl(fixedProps[key])))
-                return cloneElement(ch, {
-                    ...fixedProps,
-                    id: fixedId,
-                    xlinkHref: getHookedXlinkHref(ch.props.xlinkHref),
-                })
+                return cloneElement(child, rewrittenProps)
             })}
         </>
     )

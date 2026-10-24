@@ -40,15 +40,15 @@ function MyIcon() {
 | Prop | Type | Default | Description |
 |---|---|---|---|
 | `prefixId` | `string` | `'__SVG_ID__'` | Prefix for generated IDs |
-| `id` | `string` | `generateRandomString()` | Unique identifier for this instance (auto-generated) |
+| `id` | `string` | auto (`useId`) | Optional explicit instance id; auto-generated (hydration-safe) when omitted |
 | `children` | `ReactNode` | required | SVG content to scope |
 
 ## Exports
 
 ```ts
-import { SvgUniqueID, toSingleton } from '@naverpay/svg-manager'
+import { SvgUniqueID } from '@naverpay/svg-manager'
 import type { SVGStyleProps } from '@naverpay/svg-manager'
 ```
 
-- `toSingleton(factory)` — wraps a factory function so it returns the same instance on every call
+- `SvgUniqueID` — wrapper component that scopes SVG ids per instance
 - `SVGStyleProps` — TypeScript type for SVG style properties
